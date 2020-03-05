@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/spring-boot-04-web-restfulcrud.iml" filepath="$PROJECT_DIR$/spring-boot-04-web-restfulcrud.iml" />
+      <module fileurl="file://$PROJECT_DIR$/e_learning.iml" filepath="$PROJECT_DIR$/e_learning.iml" />
     </modules>
   </component>
 </project>
