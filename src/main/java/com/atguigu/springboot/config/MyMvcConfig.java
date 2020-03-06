@@ -39,10 +39,6 @@ public class MyMvcConfig implements WebMvcConfigurer {
         registry.addViewController("/main.html").setViewName("dashboard");
     }
 
-    //所有的WebMvcConfigurerAdapter组件都会一起起作用  这个地方 已经放弃用了，所以我不写了  与Controller的index方法一样
-    /*public WebMvcConfigurer webMvcConfigurer(){
-
-    }*/
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -59,6 +55,6 @@ public class MyMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/**").addResourceLocations("classpath:/static/","classpath:/resources/");
+        registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
     }
 }

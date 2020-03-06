@@ -15,18 +15,18 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-@Configuration
+//@Configuration
 public class DruidConfig {
 
-    @ConfigurationProperties(prefix = "spring.datasource")
+    /*@ConfigurationProperties(prefix = "spring.datasource")
     @Bean
     public DataSource druid(){
         return new DruidDataSource();
-    }
+    }*/
 
     //配置Druid的监控
     //1、配置一个管理后台的Servlet
-    @Bean
+   /* @Bean
     public ServletRegistrationBean statViewServlet(){
         ServletRegistrationBean bean = new ServletRegistrationBean(new StatViewServlet(),"/druid/*");
         Map<String,String> initParams = new HashMap<>();
@@ -38,10 +38,10 @@ public class DruidConfig {
 
         bean.setInitParameters(initParams);
         return bean;
-    }
+    }*/
 
     //2、配置一个监控的filter
-    @Bean
+    /*@Bean
     public FilterRegistrationBean webStatFilter(){
         FilterRegistrationBean<Filter> bean = new FilterRegistrationBean<>();
         bean.setFilter(new WebStatFilter());
@@ -53,5 +53,5 @@ public class DruidConfig {
 
 
         return bean;
-    }
+    }*/
 }
