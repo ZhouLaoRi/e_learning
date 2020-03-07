@@ -2,6 +2,7 @@ package com.atguigu.springboot.service;
 
 import com.atguigu.springboot.entity.*;
 import com.atguigu.springboot.mapper.CourseMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

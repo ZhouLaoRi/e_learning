@@ -3,6 +3,8 @@ package com.atguigu.springboot.controller;
 import com.atguigu.springboot.entity.Course;
 import com.atguigu.springboot.entity.CourseExample;
 import com.atguigu.springboot.service.CourseService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,9 +21,13 @@ public class CourseController {
 
     //查询所有课程返回列表页面
     @GetMapping("/courses")
-    public String listCourse(Model model){
-        Collection<Course> courses = courseService.selectByExample(new CourseExample());
+    public String listCourse(@RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,Model model){
+
+        PageHelper.startPage(pageNum, 5);
+        List<Course> courses = courseService.selectByExample(new CourseExample());
+        PageInfo<Course> pageInfo = new PageInfo<Course>(courses);
         model.addAttribute("courses",courses);
+        model.addAttribute("pageInfo",pageInfo);
         return "course/list";
     }
     //来到课程添加页面

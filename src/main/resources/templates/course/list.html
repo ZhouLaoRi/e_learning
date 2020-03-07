@@ -42,6 +42,47 @@
 								</tr>
 							</tbody>
 						</table>
+						<p>
+							<span>第[[${pageInfo.pageNum}]]页/共[[${pageInfo.pages}]]页</span><br/>
+							<!--当前页是第1页时，那首页和上一页变成不可点击链接，当前页是最后一页时，那下一页、尾页不可点击链接-->
+
+
+							<!--        上一页-->
+							<!--        如果为第一页，则没有a标签-->
+							<th:block th:if="${pageInfo.pageNum==1}">
+								<span class="btn btn-sm btn-primary">首页</span>
+							</th:block>
+
+							<th:block th:if="${pageInfo.pageNum>1}">
+								<a class="btn btn-sm btn-primary" th:href="@{/courses(pageNum=${pageInfo.pageNum-1})}">
+									<span>上一页</span>
+								</a>
+							</th:block>
+
+							<!--        页码遍历-->
+							<th:block th:each="i :${#numbers.sequence(1, pageInfo.pages)}">
+								<a class="btn btn-sm btn-primary " th:href="@{/courses(pageNum=${i})}">
+									<!--                当前页样式为on-->
+									<span th:style="${pageInfo.pageNum == i}? 'background: #6610f2':''"
+										  th:class="${pageInfo.pageNum == i}? 'btn-sm':''">
+                						<th:block th:text="${i}"></th:block>
+            						</span>
+								</a>
+							</th:block>
+
+							<!--下一页-->
+							<!--        如果为最后一页也没有a标签--><!-- 先看是不是最后一页，是就这样，不是就下一个框 -->
+							<th:block th:if="${pageInfo.pageNum==pageInfo.pages}">
+								<span class="btn btn-sm btn-primary">最后一页</span>
+							</th:block>
+
+							<th:block th:if="${pageInfo.pageNum<pageInfo.pages}">
+								<a class="btn btn-sm btn-primary" th:href="@{/courses(pageNum=${pageInfo.pageNum+1})}">
+									<span>下一页</span>
+								</a>
+							</th:block>
+
+						</p>
 					</div>
 				</main>
 				<!--<form th:action="@{/emp/}+${emp.id}" method="post">-->
