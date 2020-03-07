@@ -30,4 +30,6 @@ public interface DataMapper {
     int updateByPrimaryKeySelective(Data record);
 
     int updateByPrimaryKey(Data record);
+
+    int updateDataPath(@Param("dataId") Integer dataId ,@Param("dataPath") String dataPath);
 }

@@ -226,4 +226,10 @@
       course_id = #{courseId,jdbcType=INTEGER}
     where data_id = #{dataId,jdbcType=INTEGER}
   </update>
+  <update id="updateDataPath" parameterType="com.atguigu.springboot.entity.Data" >
+    update data
+    set
+      data_path = #{dataPath,jdbcType=VARCHAR}
+    where data_id = #{dataId,jdbcType=INTEGER}
+  </update>
 </mapper>

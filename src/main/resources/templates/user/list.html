@@ -87,7 +87,7 @@
 					</div>
 				</main>
 				<!--<form th:action="@{/emp/}+${emp.id}" method="post">-->
-				<form id="deleteuserForm" method="post">
+				<form id="deleteUserForm" method="post">
 					<input type="hidden" name="_method" value="delete"/>
 				</form>
 			</div>
@@ -141,7 +141,7 @@
 		<script>
 			$(".deleteBtn").click(function () {
 				//删除当前课程的
-				$("#deleteuserForm").attr("action",$(this).attr("del_uri")).submit();
+				$("#deleteUserForm").attr("action",$(this).attr("del_uri")).submit();
 				return false;
             });
 		</script>

@@ -13,18 +13,30 @@
 		<div class="container-fluid">
 			<div class="row">
 				<!-- 引入侧边栏 -->
-				<div th:replace="~{commons/bar::#sidebar(activeUri='courses')}"></div>
+				<div th:replace="~{commons/bar::#sidebar(activeUri='datas')}"></div>
 
 				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-					<form th:action="@{/course}" method="post">
-						<!--<input type="hidden" name="courseId" th:value="${course.courseId}">-->
+					<form th:action="@{/data}" method="post">
+						<input type="hidden" name="dataId">
 						<div class="form-group">
-							<label>课程名字</label>
-							<input name="courseName" type="text" class="form-control" placeholder="C语言"th:value="${course.courseName}">
+							<label>资料所属课程</label>
+							<input name="courseId" type="text" class="form-control" placeholder="C语言">
 						</div>
 						<div>
-							<label>课程简介</label>
-							<input name="courseIntro" type="text" class="form-control" placeholder="C语言是最难学的语言" th:value="${course.courseIntro}">
+							<label>课程资料名字</label>
+							<input name="dataName" type="text" class="form-control" placeholder="C语言教程A">
+						</div>
+						<div>
+							<label>课程资料路径</label>
+							<input name="dataPath" type="file" class="form-control" placeholder="/uploads/*">
+						</div>
+						<div>
+							<label>课程资料难易度等级</label>
+							<input name="dataLevel" type="text" class="form-control" placeholder="1">
+						</div>
+						<div>
+							<label>课程资料简介</label>
+							<input name="dataIntro" type="text" class="form-control" placeholder="C语言是最难学的语言">
 						</div>
 						<button type="submit" class="btn btn-primary" >添加</button>
 					</form>

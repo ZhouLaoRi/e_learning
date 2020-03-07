@@ -1,4 +1,4 @@
-package com.atguigu.springboot.controller;
+package com.atguigu.springboot.controller.back;
 
 import com.atguigu.springboot.entity.*;
 import com.atguigu.springboot.service.CommentService;
@@ -15,15 +15,15 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.HashMap;
@@ -54,6 +54,71 @@ public class DataController {
     public String addDataGuide(){
         return "data/add";
     }
+
+
+    //课程添加
+    @PostMapping("/data")
+    public String addCourse(Data data){
+        dataService.insert(data);
+        return "redirect:/datas";
+    }
+
+    //来到修改页面，查出当前，在页面回显
+    @GetMapping("/data/{dataId}")
+    public String toEditPage(@PathVariable Integer dataId, Model model){
+        Data data = dataService.selectByPrimaryKey(dataId);
+        model.addAttribute("data",data);
+        return "data/edit";
+    }
+
+    //课程修改:需要提交课程id;
+    @PutMapping("/data")
+    public String updateCourse(Data data){
+        dataService.updateByPrimaryKey(data);
+        return "redirect:/datas";
+    }
+
+    //课程删除
+    @DeleteMapping("/data/{id}")
+    public String deleteCourse(@PathVariable Integer id){
+        DataExample dataExample = new DataExample();
+        DataExample.Criteria cri = dataExample.createCriteria();
+        cri.andCourseIdEqualTo(id);
+        dataService.deleteByExample(dataExample);
+        return "redirect:/datas";
+    }
+
+    @RequestMapping("/dataUpload/{dataId}")
+    public String dataUpload(@PathVariable Integer dataId,MultipartFile file) {
+        String fileName = file.getOriginalFilename();
+        byte[] bytes = new byte[0];
+        try {
+            bytes = file.getBytes();
+            String path = "F:\\JetBrains\\IdeaProjects2\\e_learning\\src\\main\\resources\\uploads";
+            //destination 目的地
+            File dest = new File(path + "/" + fileName);
+            String dataPath = "/uploads/" + fileName;
+            dataService.updateDataPath(dataId, dataPath);
+            file.transferTo(dest);
+//            FileUtils.writeByteArrayToFile(new File("D:/" + fileName), bytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "redirect:/datas";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @RequestMapping("/showDataById")
     public String showDataById(Model model, Integer dataId, HttpServletRequest request){

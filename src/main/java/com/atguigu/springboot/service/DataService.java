@@ -17,8 +17,16 @@ public class DataService {
         return dataMapper.selectByExample(example);
     }
 
+    public Data selectByPrimaryKey(Integer dataId){
+        return dataMapper.selectByPrimaryKey(dataId);
+    }
+
     public int updateByPrimaryKey(Data data){
         return dataMapper.updateByPrimaryKey(data);
+    }
+
+    public int updateDataPath(Integer dataId ,String dataPath){
+        return dataMapper.updateDataPath(dataId, dataPath);
     }
 
     public int insert(Data data){
