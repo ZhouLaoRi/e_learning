@@ -11,9 +11,13 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;*/
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -35,19 +39,20 @@ public class DataController {
     @Resource
     private HistoryService historyService;
 
-    /*@RequestMapping("/showData")
-    public String showData(Model model){
-        DataExample dataExample = new DataExample();
-        List<Data> datas = dataService.selectByExample(dataExample);
-        model.addAttribute("datas",datas);
-        return "data";
-    }*/
-
-    @RequestMapping("/showAllData")
-    public String showAllData(Model model){
+    @GetMapping("/datas")
+    public String showAllData(@RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum, Model model){
+        PageHelper.startPage(pageNum, 5);
         List<Data> datas = dataService.selectByExample(new DataExample());
+        PageInfo<Data> pageInfo = new PageInfo<Data>(datas);
         model.addAttribute("datas",datas);
-        return "showAllData";
+        model.addAttribute("pageInfo",pageInfo);
+        return "data/list";
+    }
+
+    //来到数据添加页面
+    @RequestMapping("/data")
+    public String addDataGuide(){
+        return "data/add";
     }
 
     @RequestMapping("/showDataById")
@@ -245,10 +250,6 @@ public class DataController {
         return "showAllData";
     }
 
-    @RequestMapping("/addDataGuide")
-    public String addDataGuide(){
-        return "addData";
-    }
 
     @RequestMapping("/searchDatas")
     public String searchDatas(Model model, Integer dataLevel, Integer courseId){

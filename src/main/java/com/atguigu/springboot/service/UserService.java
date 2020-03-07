@@ -17,6 +17,10 @@ public class UserService {
         return userMapper.selectByExample(example);
     }
 
+    public User selectByPrimaryKey(Integer userId){
+        return userMapper.selectByPrimaryKey(userId);
+    }
+
     public int updateByPrimaryKey(User user){
         return userMapper.updateByPrimaryKey(user);
     }

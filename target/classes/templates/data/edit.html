@@ -13,27 +13,19 @@
 <div class="container-fluid">
 	<div class="row">
 		<!-- 引入侧边栏 -->
-		<div th:replace="~{commons/bar::#sidebar(activeUri='users')}"></div>
+		<div th:replace="~{commons/bar::#sidebar(activeUri='courses')}"></div>
 
 		<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-			<form th:action="@{/user}" method="post">
+			<form th:action="@{/course}" method="post">
 				<input type="hidden" name="_method" value="put"/>
-				<input type="hidden" name="userId" th:value="${user.userId}">
+				<input type="hidden" name="courseId" th:value="${course.courseId}">
 				<div class="form-group">
-					<label>登录用户名</label>
-					<input name="userName" type="text" class="form-control" th:value="${user.userName}">
+					<label>课程名字</label>
+					<input name="courseName" type="text" class="form-control" placeholder="C语言"th:value="${course.courseName}">
 				</div>
-				<div class="form-group">
-					<label>登录密码</label>
-					<input name="userPassword" type="text" class="form-control" th:value="${user.userPassword}">
-				</div>
-				<div class="form-group">
-					<label>学习难易度等级</label>
-					<input name="userLevel" type="text" class="form-control" th:value="${user.userLevel}">
-				</div>
-				<div class="form-group">
-					<label>学习方向</label>
-					<input name="userDirection" type="text" class="form-control" th:value="${user.userDirection}">
+				<div>
+					<label>课程简介</label>
+					<input name="courseIntro" type="text" class="form-control" placeholder="C语言是最难学的语言" th:value="${course.courseIntro}">
 				</div>
 				<button type="submit" class="btn btn-primary" >修改</button>
 			</form>

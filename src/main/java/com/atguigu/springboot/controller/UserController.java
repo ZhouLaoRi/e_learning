@@ -8,9 +8,11 @@ import com.atguigu.springboot.service.CourseService;
 import com.atguigu.springboot.service.HistoryService;
 import com.atguigu.springboot.service.ManagerService;
 import com.atguigu.springboot.service.UserService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -21,75 +23,47 @@ public class UserController {
     @Resource
     private UserService userService;
 
-    @Resource
-    private CourseService courseService;
+    @GetMapping("/users")
+    public String login(@RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum, Model model){
 
-    @Resource
-    private HistoryService historyService;
-
-    @Resource
-    private ManagerService managerService;
-
-
-    @RequestMapping("/login")
-    public String login(Model model, String username, String password, HttpSession session){
-        UserExample userExample = new UserExample();
-        UserExample.Criteria cri = userExample.createCriteria();
-        cri.andUserNameEqualTo(username);
-        cri.andUserPasswordEqualTo(password);
-        List<User> users = userService.selectByExample(userExample);
-
-        ManagerExample managerExample = new ManagerExample();
-        ManagerExample.Criteria managerCri = managerExample.createCriteria();
-        managerCri.andManagerNameEqualTo(username);
-        managerCri.andManagerPasswordEqualTo(password);
-        List<Manager> managers = managerService.selectByExample(managerExample);
-
-        if(users!=null && users.size()>0){
-            //这是与用户匹配
-            //登陆成功
-            /*return "redirect:findHistory";*/
-            /*return "index";*/
-            session.setAttribute("user",users.get(0));
-            return "redirect:/";
-        }else if (managers!=null && managers.size()>0){
-            //这是与管理员匹配
-            session.setAttribute("manager",managers.get(0));
-            return "redirect:/showAllData";
-        }else{
-            //登陆失败
-            return "index";
-        }
-    }
-
-    /*@RequestMapping("/login")
-    public String login(Model model, String username, String password, HttpSession session){
-        UserExample userExample = new UserExample();
-        UserExample.Criteria cri = userExample.createCriteria();
-        cri.andUserNameEqualTo(username);
-        cri.andUserPasswordEqualTo(password);
-        List<User> users = userService.selectByExample(userExample);
-        if(users!=null && users.size()>0){
-            //登陆成功
-            *//*return "redirect:findHistory";*//*
-            *//*return "index";*//*
-            session.setAttribute("user",users.get(0));
-            return "redirect:/";
-        }else{
-            //登陆失败
-            return "index";
-        }
-    }*/
-
-    @RequestMapping("/showAllUsers")
-    public String login(Model model){
-        UserExample userExample = new UserExample();
-        List<User> users = userService.selectByExample(userExample);
+        PageHelper.startPage(pageNum, 5);
+        List<User> users = userService.selectByExample(new UserExample());
+        PageInfo<User> pageInfo = new PageInfo<User>(users);
         model.addAttribute("users",users);
-        return "showAllUsers";
+        model.addAttribute("pageInfo",pageInfo);
+        return "user/list";
     }
 
-    @RequestMapping("/findUserById")
+    //来到修改页面，查出当前，在页面回显
+    @GetMapping("/user/{userId}")
+    public String toEditPage(@PathVariable Integer userId, Model model){
+        User user = userService.selectByPrimaryKey(userId);
+        model.addAttribute("user",user);
+        return "user/edit";
+    }
+
+    //用户修改:需要提交用户id;
+    @PutMapping("/user")
+    public String updateCourse(User user){
+        userService.updateByPrimaryKey(user);
+        return "redirect:/users";
+    }
+
+    //课程删除
+    @DeleteMapping("/user/{id}")
+    public String deleteCourse(@PathVariable Integer id){
+        UserExample userExample = new UserExample();
+        UserExample.Criteria cri = userExample.createCriteria();
+        cri.andUserIdEqualTo(id);
+        userService.deleteByExample(userExample);
+        return "redirect:/users";
+    }
+
+
+
+
+
+    /*@RequestMapping("/findUserById")
     public String findByUserId(Model model, HttpSession session){
         User user = (User) session.getAttribute("user");
         model.addAttribute("user",user);
@@ -148,5 +122,5 @@ public class UserController {
         cri.andUserIdEqualTo(userId);
         userService.deleteByExample(userExample);
         return "redirect:/showAllUsers";
-    }
+    }*/
 }
