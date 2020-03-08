@@ -4,6 +4,9 @@
 *.iml
 .idea/
 
+# uploads的文件
+scr/main/resources/uploads/
+
 # Log file
 *.log
 
@@ -11,7 +14,7 @@
 *.ctxt
 
 # target files
-target/*
+target/
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/

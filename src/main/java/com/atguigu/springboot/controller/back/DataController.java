@@ -21,14 +21,14 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.net.URLEncoder;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static javax.xml.transform.OutputKeys.ENCODING;
 
 @Controller
 public class DataController {
@@ -90,6 +90,9 @@ public class DataController {
 
     @RequestMapping("/dataUpload/{dataId}")
     public String dataUpload(@PathVariable Integer dataId,MultipartFile file) {
+        if(file == null) {
+            return "redirect:/datas";
+        }
         String fileName = file.getOriginalFilename();
         byte[] bytes = new byte[0];
         try {
@@ -100,11 +103,51 @@ public class DataController {
             String dataPath = "/uploads/" + fileName;
             dataService.updateDataPath(dataId, dataPath);
             file.transferTo(dest);
-//            FileUtils.writeByteArrayToFile(new File("D:/" + fileName), bytes);
         } catch (IOException e) {
             e.printStackTrace();
         }
         return "redirect:/datas";
+    }
+
+
+    @RequestMapping("/dataDownload/{dataId}")
+    public void dataDownload(@PathVariable Integer dataId,HttpServletResponse response) {
+        Data data = dataService.selectByPrimaryKey(dataId);
+        String path = data.getDataPath();
+        String[] strings = path.split("/");
+        String fileName = strings[strings.length-1];
+        // 告诉浏览器输出内容为流
+        response.setHeader("content-type", "application/octet-stream;charset=utf-8");
+
+        try {
+            response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes("UTF-8"), "ISO8859-1"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        byte[] buff = new byte[1024];
+        BufferedInputStream bis = null;
+        OutputStream os = null;
+        try {
+            os = response.getOutputStream();
+            bis = new BufferedInputStream(new FileInputStream(
+                    new File("F:\\JetBrains\\IdeaProjects2\\e_learning\\src\\main\\resources\\uploads\\"+ fileName)));
+            int i = bis.read(buff);
+            while (i != -1) {
+                os.write(buff, 0, buff.length);
+                os.flush();
+                i = bis.read(buff);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (bis != null) {
+                try {
+                    bis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
 
