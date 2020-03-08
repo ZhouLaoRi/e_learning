@@ -4,9 +4,6 @@
 *.iml
 .idea/
 
-# uploads的文件
-scr/main/resources/uploads/
-
 # Log file
 *.log
 
@@ -30,3 +27,6 @@ target/
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# uploads的文件
+src/main/resources/uploads/
