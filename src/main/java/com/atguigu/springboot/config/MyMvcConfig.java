@@ -37,6 +37,7 @@ public class MyMvcConfig implements WebMvcConfigurer {
         registry.addViewController("/").setViewName("login");
         registry.addViewController("/index.html").setViewName("login");
         registry.addViewController("/main.html").setViewName("dashboard");
+        registry.addViewController("/pdfview.html").setViewName("pdfview");
     }
 
 
@@ -55,6 +56,6 @@ public class MyMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/**").addResourceLocations("classpath:/static/","classpath:/mybatis/");
+        registry.addResourceHandler("/**").addResourceLocations("classpath:/static/","classpath:/mybatis/","classpath:/media/");
     }
 }

@@ -7,6 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Locale;
 
+/**
+ * 用来国际化的
+ */
+
 public class MyLocaleResolver implements LocaleResolver {
     @Override
     public Locale resolveLocale(HttpServletRequest httpServletRequest) {

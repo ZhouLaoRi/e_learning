@@ -90,6 +90,28 @@
         </dependency>
 
 
+        <!--excel导入导出-->
+        <!--<dependency>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-web</artifactId>
+            <version>4.0.0</version>
+        </dependency>-->
+        <!--jodconverter 核心包 -->
+        <!-- https://mvnrepository.com/artifact/org.jodconverter/jodconverter-core -->
+        <!--<dependency>
+            <groupId>org.jodconverter</groupId>
+            <artifactId>jodconverter-core</artifactId>
+            <version>4.2.2</version>
+        </dependency>-->
+        <!--jodconverter 本地支持包 -->
+        <!-- https://mvnrepository.com/artifact/org.jodconverter/jodconverter-local -->
+        <!--<dependency>
+            <groupId>org.jodconverter</groupId>
+            <artifactId>jodconverter-local</artifactId>
+            <version>4.2.2</version>
+        </dependency>-->
+
+
 
 
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->

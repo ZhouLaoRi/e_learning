@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<script>
+    function onLineReadPDF() {
+        window.open("/crud/preview");
+    }
+</script>
+<body>
+<h1 onclick="onLineReadPDF()">在线阅读PDF文件</h1>
+<!--<video src="F:\JetBrains\IdeaProjects\test0717\src\main\webapp\WEB-INF\media\data1.mp4" controls="controls"></video>-->
+
+<audio th:src="@{'/music'+${musicPath}}" controls="controls"></audio>
+
+
+<div class="panel panel-default">
+    <div class="panel-body" align="center">
+        <div id="a1" align="center" th:text="${title}"></div><br/>
+        <video width="600" height="400" align="center" controls>
+            <!--<source src="/media/data1.mp4" type="video/mp4">-->
+            <source th:src="@{'/media'+${path}}" type="video/mp4">
+
+            您的浏览器不支持 HTML5 video 标签。
+        </video>
+
+    </div>
+</div>
+
+
+</body>
+</html>

@@ -6,6 +6,9 @@ import org.springframework.web.context.request.WebRequest;
 
 import java.util.Map;
 
+/**
+ * 错误页面
+ */
 @Component
 public class MyErrorAttributes extends DefaultErrorAttributes {
 

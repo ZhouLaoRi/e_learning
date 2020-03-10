@@ -30,3 +30,5 @@ hs_err_pid*
 
 # uploads的文件
 src/main/resources/uploads/
+src/main/resources/static/media/
+src/main/resources/static/music/
