@@ -179,4 +179,10 @@
       course_intro = #{courseIntro,jdbcType=VARCHAR}
     where course_id = #{courseId,jdbcType=INTEGER}
   </update>
+  <select id="selectByQuery" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from course
+    where course_name like concat(concat('%',#{query,jdbcType=VARCHAR}) ,'%')
+  </select>
 </mapper>

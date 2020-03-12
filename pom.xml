@@ -112,7 +112,11 @@
         </dependency>-->
 
 
-
+        <!-- blog用了JPA -->
+        <!--<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>-->
 
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
         <dependency>

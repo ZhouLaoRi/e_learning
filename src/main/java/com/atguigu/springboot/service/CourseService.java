@@ -31,4 +31,13 @@ public class CourseService {
     public Course selectByPrimaryKey(Integer courseId){
         return courseMapper.selectByPrimaryKey(courseId);
     }
+
+    /**
+     * 模糊查询
+     * @param query
+     * @return
+     */
+    public List<Course> selectByQuery(String query) {
+        return courseMapper.selectByQuery(query);
+    }
 }
