@@ -1,8 +1,9 @@
 package com.atguigu.springboot.controller.home;
 
-import com.atguigu.springboot.entity.Course;
-import com.atguigu.springboot.entity.CourseExample;
+import com.atguigu.springboot.entity.*;
+import com.atguigu.springboot.service.CommentService;
 import com.atguigu.springboot.service.CourseService;
+import com.atguigu.springboot.service.DataService;
 import com.atguigu.springboot.service.TypeService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -21,17 +22,23 @@ import java.util.List;
 @RequestMapping("/home")
 public class IndexController {
 
-    @Autowired
+    @Resource
     private CourseService courseService;
 
     @Resource
     private TypeService typeService;
 
+    @Resource
+    private CommentService commentService;
+
+    @Resource
+    private DataService dataService;
+
     /*@Autowired
     private TagService tagService;*/
 
     @GetMapping("/index")
-    public String index(@RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,Model model) {
+    public String index(@RequestParam(value = "pageNum",required = false,defaultValue = "1") Integer pageNum,Model model) {
 
         PageHelper.startPage(pageNum, 5);
         List<Course> courses = courseService.selectByExample(new CourseExample());
@@ -53,10 +60,23 @@ public class IndexController {
         return "search";
     }
 
-    @GetMapping("/course/{id}")
-    public String blog(@PathVariable Integer id, Model model) {
-        model.addAttribute("course", courseService.selectByPrimaryKey(id));
-        return "course";
+    @GetMapping("/course/{courseId}")
+    public String blog(@PathVariable Integer courseId, Model model) {
+        //找到那个courseId
+        model.addAttribute("course", courseService.selectByPrimaryKey(courseId));
+        //还要找到所有的dataId
+        DataExample dataExample = new DataExample();
+        DataExample.Criteria criteria = dataExample.createCriteria();
+        criteria.andCourseIdEqualTo(courseId);
+        model.addAttribute("datas",dataService.selectByExample(dataExample));
+        //获取评论区
+        /*CommentExample commentExample = new CommentExample();
+        CommentExample.Criteria criteria = commentExample.createCriteria();
+        criteria.andDataIdEqualTo(courseId);
+        List<Comment> comments = commentService.selectByExample(commentExample);
+        model.addAttribute("comments");*/
+
+        return "home/data";
     }
 
     /*@GetMapping("/footer/newblog")
