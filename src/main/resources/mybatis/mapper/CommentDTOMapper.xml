@@ -3,27 +3,31 @@
 <mapper namespace="com.atguigu.springboot.mapper.CommentDTOMapper" >
   <resultMap id="BaseResultMap" type="com.atguigu.springboot.dto.CommentDTO" >
     <id column="id" property="commentId" jdbcType="INTEGER" />
-    <result column="nickname" property="userId" jdbcType="INTEGER" />
-    <result column="time" property="commentDate" jdbcType="DATE" />
+    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+    <result column="avatar" property="avatar" jdbcType="VARCHAR" />
+    <result column="time" property="commentDate" jdbcType="DATETIMEOFFSET" />
     <result column="text" property="commentText" jdbcType="VARCHAR" />
     <result column="like" property="like" jdbcType="INTEGER" />
     <association property="parentComment" javaType="com.atguigu.springboot.dto.CommentDTO">
       <id column="fatherCommentId" property="commentId" jdbcType="INTEGER" />
-      <result column="fatherName" property="userId" jdbcType="INTEGER" />
-      <result column="fathertime" property="commentDate" jdbcType="DATE" />
+      <result column="fatherName" property="nickname" jdbcType="VARCHAR" />
+      <result column="fatherAvatar" property="avatar" jdbcType="VARCHAR" />
+      <result column="fathertime" property="commentDate" jdbcType="DATETIMEOFFSET" />
       <result column="fathertext" property="commentText" jdbcType="VARCHAR" />
       <result column="fatherlike" property="like" jdbcType="INTEGER" />
     </association>
     <collection property="replyComments" ofType="com.atguigu.springboot.dto.CommentDTO">
       <id column="replayId" property="commentId" jdbcType="INTEGER" />
-      <result column="replyNickname" property="userId" jdbcType="INTEGER" />
-      <result column="replyTime" property="commentDate" jdbcType="DATE" />
+      <result column="replyNickname" property="nickname" jdbcType="VARCHAR" />
+      <result column="replyAvatar" property="avatar" jdbcType="VARCHAR" />
+      <result column="replyTime" property="commentDate" jdbcType="DATETIMEOFFSET" />
       <result column="replytext" property="commentText" jdbcType="VARCHAR" />
       <result column="replylike" property="like" jdbcType="INTEGER" />
       <association property="parentComment" javaType="com.atguigu.springboot.dto.CommentDTO">
         <id column="replayFaId" property="commentId" jdbcType="INTEGER" />
-        <result column="replyFaNickname" property="userId" jdbcType="INTEGER" />
-        <result column="replyFaTime" property="commentDate" jdbcType="DATE" />
+        <result column="replyFaNickname" property="nickname" jdbcType="VARCHAR" />
+        <result column="replyFaAvatar" property="avatar" jdbcType="VARCHAR" />
+        <result column="replyFaTime" property="commentDate" jdbcType="DATETIMEOFFSET" />
         <result column="replyFatext" property="commentText" jdbcType="VARCHAR" />
         <result column="replyFalike" property="like" jdbcType="INTEGER" />
       </association>
@@ -32,22 +36,29 @@
   <select id="getAllCommentDTO" resultMap="BaseResultMap" parameterType="java.lang.Integer">
       SELECT
           t0.comment_id fatherCommentId,
-          t0.user_id fatherName,
+          t0.nickname fatherName,
+          t0.avatar fatherAvatar,
           t0.comment_date fathertime,
           t0.comment_text fathertext,
           t0.like fatherlike,
+
           t1.comment_id id,
-          t1.user_id nickname,
+          t1.nickname nickname,
+          t1.avatar avatar,
           t1.comment_date time,
           t1.comment_text text,
           t1.like 'like',
+
           t2.comment_id replayId,
-          t2.user_id replyNickname,
+          t2.nickname replyNickname,
+          t2.avatar replyAvatar,
           t2.comment_date replyTime,
           t2.comment_text replytext,
           t2.like replylike,
+
           t3.comment_id replayFaId,
-          t3.user_id replyFaNickname,
+          t3.nickname replyFaNickname,
+          t3.avatar replyFaAvatar,
           t3.comment_date replyFaTime,
           t3.comment_text replyFatext,
           t3.like replyFalike
@@ -64,4 +75,19 @@
       ORDER BY
           t1.like DESC
   </select>
+
+  <update id="likeCommentDTO" parameterType="java.lang.Integer">
+    UPDATE COMMENT
+	  SET COMMENT.like = COMMENT.like + 1
+    WHERE
+      comment_id = #{commentId,jdbcType=INTEGER}
+  </update>
+
+  <insert id="saveComment" parameterType="com.atguigu.springboot.vo.CommentVo">
+      insert into comment(user_id,nickname,avatar,comment_date,comment_text,comment.like,parent_comment_id,course_id)
+      values (#{userId,jdbcType=INTEGER},#{nickname,jdbcType=VARCHAR},
+      #{avatar,jdbcType=VARCHAR},#{commentDate,jdbcType=DATETIMEOFFSET},#{commentText,jdbcType=VARCHAR},
+      #{like,jdbcType=INTEGER},#{parentCommentId,jdbcType=INTEGER},#{courseId,jdbcType=INTEGER})
+  </insert>
+
 </mapper>

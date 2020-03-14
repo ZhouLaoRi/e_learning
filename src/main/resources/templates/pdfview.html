@@ -29,7 +29,20 @@
 
     </div>
 </div>
+<!-- 用来验证点赞的 但发现失败了
+ -->
+    <!--<button id="commentId" data-commentid="1" th:attr="data-commentid=1" onclick="like(this)">2</button>
+    <a>aaaa</a>
 
+    <script>
+
+        //点赞按钮，这个功能 暂时不会写。。。
+        function like(obj) {
+            var commentId = $(obj).data('commentid');
+            $("[id='commentId']").val(commentId+1);
+        }
+
+    </script>-->
 
 </body>
 </html>

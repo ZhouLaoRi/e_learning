@@ -16,9 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
 
-/**
- * Created by limi on 2017/10/13.
- */
 @Controller
 @RequestMapping("/home")
 public class IndexController {
@@ -29,8 +26,6 @@ public class IndexController {
     @Resource
     private TypeService typeService;
 
-    @Resource
-    private CommentService commentService;
 
     @Resource
     private DataService dataService;
@@ -61,15 +56,24 @@ public class IndexController {
         return "search";
     }
 
-    @GetMapping("/course/{courseId}")
-    public String blog(@PathVariable Integer courseId, Model model) {
+    @GetMapping(value = {"/course/{courseId}/{dataNum}","/course/{courseId}"})
+    public String blog(@PathVariable(value = "courseId") Integer courseId, @PathVariable(value = "dataNum",required = false) Integer dataNum, Model model) {
         //找到那个courseId
         model.addAttribute("course", courseService.selectByPrimaryKey(courseId));
         //还要找到所有的dataId
         DataExample dataExample = new DataExample();
         DataExample.Criteria criteria = dataExample.createCriteria();
         criteria.andCourseIdEqualTo(courseId);
-        model.addAttribute("datas",dataService.selectByExample(dataExample));
+
+        List<Data> dataList = dataService.selectByExample(dataExample);
+        model.addAttribute("datas",dataList);
+
+        if(dataNum == null || dataNum >= dataList.size()){
+            dataNum = 0;
+        }else{
+            dataNum -= 1;
+        }
+        model.addAttribute("dataNum",dataNum);
 
         //获取评论区,页面上有ajax 这样初始化请求了
         /*CommentExample commentExample = new CommentExample();
@@ -83,12 +87,6 @@ public class IndexController {
     }
 
 
-    @GetMapping("/comments/{courseId}")
-    public String comments(@PathVariable Integer courseId, Model model) {
-        List<CommentDTO> comments = commentService.getAllCommentDTO(courseId);
-        model.addAttribute("comments", comments);
-        return "home/data :: commentList";
-    }
 
     /*@GetMapping("/footer/newblog")
     public String newblogs(Model model) {

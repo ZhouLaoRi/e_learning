@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 
-@Controller
+
 public class CommentController {
     @Resource
     private CommentService commentService;

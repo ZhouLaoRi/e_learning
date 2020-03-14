@@ -32,3 +32,4 @@ hs_err_pid*
 src/main/resources/uploads/
 src/main/resources/static/media/
 src/main/resources/static/music/
+src/main/resources/static/blog/images/

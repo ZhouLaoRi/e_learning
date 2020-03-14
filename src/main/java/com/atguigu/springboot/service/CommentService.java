@@ -5,6 +5,7 @@ import com.atguigu.springboot.entity.Comment;
 import com.atguigu.springboot.entity.CommentExample;
 import com.atguigu.springboot.mapper.CommentDTOMapper;
 import com.atguigu.springboot.mapper.CommentMapper;
+import com.atguigu.springboot.vo.CommentVo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -27,5 +28,13 @@ public class CommentService {
     }
     public int insert(Comment comment){
         return commentMapper.insert(comment);
+    }
+
+    public void likeCommentDTO(Integer commentId) {
+        commentDTOMapper.likeCommentDTO(commentId);
+    }
+
+    public void saveComment(CommentVo commentVo) {
+        commentDTOMapper.saveComment(commentVo);
     }
 }
