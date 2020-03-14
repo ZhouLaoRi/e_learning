@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atguigu.springboot.mapper.CommentDTOMapper" >
+  <resultMap id="BaseResultMap" type="com.atguigu.springboot.dto.CommentDTO" >
+    <id column="id" property="commentId" jdbcType="INTEGER" />
+    <result column="nickname" property="userId" jdbcType="INTEGER" />
+    <result column="time" property="commentDate" jdbcType="DATE" />
+    <result column="text" property="commentText" jdbcType="VARCHAR" />
+    <result column="like" property="like" jdbcType="INTEGER" />
+    <association property="parentComment" javaType="com.atguigu.springboot.dto.CommentDTO">
+      <id column="fatherCommentId" property="commentId" jdbcType="INTEGER" />
+      <result column="fatherName" property="userId" jdbcType="INTEGER" />
+      <result column="fathertime" property="commentDate" jdbcType="DATE" />
+      <result column="fathertext" property="commentText" jdbcType="VARCHAR" />
+      <result column="fatherlike" property="like" jdbcType="INTEGER" />
+    </association>
+    <collection property="replyComments" ofType="com.atguigu.springboot.dto.CommentDTO">
+      <id column="replayId" property="commentId" jdbcType="INTEGER" />
+      <result column="replyNickname" property="userId" jdbcType="INTEGER" />
+      <result column="replyTime" property="commentDate" jdbcType="DATE" />
+      <result column="replytext" property="commentText" jdbcType="VARCHAR" />
+      <result column="replylike" property="like" jdbcType="INTEGER" />
+      <association property="parentComment" javaType="com.atguigu.springboot.dto.CommentDTO">
+        <id column="replayFaId" property="commentId" jdbcType="INTEGER" />
+        <result column="replyFaNickname" property="userId" jdbcType="INTEGER" />
+        <result column="replyFaTime" property="commentDate" jdbcType="DATE" />
+        <result column="replyFatext" property="commentText" jdbcType="VARCHAR" />
+        <result column="replyFalike" property="like" jdbcType="INTEGER" />
+      </association>
+    </collection>
+  </resultMap>
+  <select id="getAllCommentDTO" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+      SELECT
+          t0.comment_id fatherCommentId,
+          t0.user_id fatherName,
+          t0.comment_date fathertime,
+          t0.comment_text fathertext,
+          t0.like fatherlike,
+          t1.comment_id id,
+          t1.user_id nickname,
+          t1.comment_date time,
+          t1.comment_text text,
+          t1.like 'like',
+          t2.comment_id replayId,
+          t2.user_id replyNickname,
+          t2.comment_date replyTime,
+          t2.comment_text replytext,
+          t2.like replylike,
+          t3.comment_id replayFaId,
+          t3.user_id replyFaNickname,
+          t3.comment_date replyFaTime,
+          t3.comment_text replyFatext,
+          t3.like replyFalike
+      FROM
+          `comment` AS t0 #father
+          RIGHT JOIN `comment` AS t1 ON t0.comment_id = t1.parent_comment_id #me
+          LEFT JOIN COMMENT AS t2 #son
+          ON t1.comment_id = t2.parent_comment_id
+          LEFT JOIN COMMENT AS t3 #sonFa
+          ON t2.parent_comment_id = t3.comment_id
+      WHERE
+          t1.course_id = #{courseId,jdbcType=INTEGER}
+          AND t1.parent_comment_id is null
+      ORDER BY
+          t1.like DESC
+  </select>
+</mapper>

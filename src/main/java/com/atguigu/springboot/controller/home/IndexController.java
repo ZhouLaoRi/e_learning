@@ -1,5 +1,6 @@
 package com.atguigu.springboot.controller.home;
 
+import com.atguigu.springboot.dto.CommentDTO;
 import com.atguigu.springboot.entity.*;
 import com.atguigu.springboot.service.CommentService;
 import com.atguigu.springboot.service.CourseService;
@@ -69,14 +70,24 @@ public class IndexController {
         DataExample.Criteria criteria = dataExample.createCriteria();
         criteria.andCourseIdEqualTo(courseId);
         model.addAttribute("datas",dataService.selectByExample(dataExample));
-        //获取评论区
+
+        //获取评论区,页面上有ajax 这样初始化请求了
         /*CommentExample commentExample = new CommentExample();
-        CommentExample.Criteria criteria = commentExample.createCriteria();
-        criteria.andDataIdEqualTo(courseId);
-        List<Comment> comments = commentService.selectByExample(commentExample);
+        CommentExample.Criteria criteria2 = commentExample.createCriteria();
+        criteria2.andDataIdEqualTo(courseId);
+        List<Comment> comments = commentService.selectByExample(commentExample);*/
+        /*List<CommentDTO> comments = commentService.getAllCommentDTO(courseId);
         model.addAttribute("comments");*/
 
         return "home/data";
+    }
+
+
+    @GetMapping("/comments/{courseId}")
+    public String comments(@PathVariable Integer courseId, Model model) {
+        List<CommentDTO> comments = commentService.getAllCommentDTO(courseId);
+        model.addAttribute("comments", comments);
+        return "home/data :: commentList";
     }
 
     /*@GetMapping("/footer/newblog")
