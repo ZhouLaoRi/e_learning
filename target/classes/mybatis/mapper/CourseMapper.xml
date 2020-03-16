@@ -5,6 +5,15 @@
     <id column="course_id" property="courseId" jdbcType="INTEGER" />
     <result column="course_name" property="courseName" jdbcType="VARCHAR" />
     <result column="course_intro" property="courseIntro" jdbcType="VARCHAR" />
+    <result column="course_author" property="courseAuthor" jdbcType="VARCHAR" />
+    <result column="course_avatar" property="courseAvatar" jdbcType="VARCHAR" />
+    <result column="course_view" property="courseView" jdbcType="INTEGER" />
+    <result column="course_like" property="courseLike" jdbcType="INTEGER" />
+    <result column="course_level" property="courseLevel" jdbcType="INTEGER" />
+    <result column="type_id" property="typeId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="delete_time" property="deleteTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -65,7 +74,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    course_id, course_name, course_intro
+    course_id, course_name, course_intro, course_author, course_avatar, course_view, 
+    course_like, course_level, type_id, create_time, update_time, delete_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.atguigu.springboot.entity.CourseExample" >
     select
@@ -99,9 +109,15 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.atguigu.springboot.entity.Course" >
-    insert into course (course_id, course_name, course_intro
+    insert into course (course_id, course_name, course_intro, 
+      course_author, course_avatar, course_view, 
+      course_like, course_level, type_id, 
+      create_time, update_time, delete_time
       )
-    values (#{courseId,jdbcType=INTEGER}, #{courseName,jdbcType=VARCHAR}, #{courseIntro,jdbcType=VARCHAR}
+    values (#{courseId,jdbcType=INTEGER}, #{courseName,jdbcType=VARCHAR}, #{courseIntro,jdbcType=VARCHAR}, 
+      #{courseAuthor,jdbcType=VARCHAR}, #{courseAvatar,jdbcType=VARCHAR}, #{courseView,jdbcType=INTEGER}, 
+      #{courseLike,jdbcType=INTEGER}, #{courseLevel,jdbcType=INTEGER}, #{typeId,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleteTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.atguigu.springboot.entity.Course" >
@@ -116,6 +132,33 @@
       <if test="courseIntro != null" >
         course_intro,
       </if>
+      <if test="courseAuthor != null" >
+        course_author,
+      </if>
+      <if test="courseAvatar != null" >
+        course_avatar,
+      </if>
+      <if test="courseView != null" >
+        course_view,
+      </if>
+      <if test="courseLike != null" >
+        course_like,
+      </if>
+      <if test="courseLevel != null" >
+        course_level,
+      </if>
+      <if test="typeId != null" >
+        type_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="deleteTime != null" >
+        delete_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="courseId != null" >
@@ -126,6 +169,33 @@
       </if>
       <if test="courseIntro != null" >
         #{courseIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="courseAuthor != null" >
+        #{courseAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="courseAvatar != null" >
+        #{courseAvatar,jdbcType=VARCHAR},
+      </if>
+      <if test="courseView != null" >
+        #{courseView,jdbcType=INTEGER},
+      </if>
+      <if test="courseLike != null" >
+        #{courseLike,jdbcType=INTEGER},
+      </if>
+      <if test="courseLevel != null" >
+        #{courseLevel,jdbcType=INTEGER},
+      </if>
+      <if test="typeId != null" >
+        #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteTime != null" >
+        #{deleteTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -147,6 +217,33 @@
       <if test="record.courseIntro != null" >
         course_intro = #{record.courseIntro,jdbcType=VARCHAR},
       </if>
+      <if test="record.courseAuthor != null" >
+        course_author = #{record.courseAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courseAvatar != null" >
+        course_avatar = #{record.courseAvatar,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courseView != null" >
+        course_view = #{record.courseView,jdbcType=INTEGER},
+      </if>
+      <if test="record.courseLike != null" >
+        course_like = #{record.courseLike,jdbcType=INTEGER},
+      </if>
+      <if test="record.courseLevel != null" >
+        course_level = #{record.courseLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.typeId != null" >
+        type_id = #{record.typeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deleteTime != null" >
+        delete_time = #{record.deleteTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -156,7 +253,16 @@
     update course
     set course_id = #{record.courseId,jdbcType=INTEGER},
       course_name = #{record.courseName,jdbcType=VARCHAR},
-      course_intro = #{record.courseIntro,jdbcType=VARCHAR}
+      course_intro = #{record.courseIntro,jdbcType=VARCHAR},
+      course_author = #{record.courseAuthor,jdbcType=VARCHAR},
+      course_avatar = #{record.courseAvatar,jdbcType=VARCHAR},
+      course_view = #{record.courseView,jdbcType=INTEGER},
+      course_like = #{record.courseLike,jdbcType=INTEGER},
+      course_level = #{record.courseLevel,jdbcType=INTEGER},
+      type_id = #{record.typeId,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      delete_time = #{record.deleteTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -170,19 +276,62 @@
       <if test="courseIntro != null" >
         course_intro = #{courseIntro,jdbcType=VARCHAR},
       </if>
+      <if test="courseAuthor != null" >
+        course_author = #{courseAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="courseAvatar != null" >
+        course_avatar = #{courseAvatar,jdbcType=VARCHAR},
+      </if>
+      <if test="courseView != null" >
+        course_view = #{courseView,jdbcType=INTEGER},
+      </if>
+      <if test="courseLike != null" >
+        course_like = #{courseLike,jdbcType=INTEGER},
+      </if>
+      <if test="courseLevel != null" >
+        course_level = #{courseLevel,jdbcType=INTEGER},
+      </if>
+      <if test="typeId != null" >
+        type_id = #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteTime != null" >
+        delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where course_id = #{courseId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.atguigu.springboot.entity.Course" >
     update course
     set course_name = #{courseName,jdbcType=VARCHAR},
-      course_intro = #{courseIntro,jdbcType=VARCHAR}
+      course_intro = #{courseIntro,jdbcType=VARCHAR},
+      course_author = #{courseAuthor,jdbcType=VARCHAR},
+      course_avatar = #{courseAvatar,jdbcType=VARCHAR},
+      course_view = #{courseView,jdbcType=INTEGER},
+      course_like = #{courseLike,jdbcType=INTEGER},
+      course_level = #{courseLevel,jdbcType=INTEGER},
+      type_id = #{typeId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      delete_time = #{deleteTime,jdbcType=TIMESTAMP}
     where course_id = #{courseId,jdbcType=INTEGER}
   </update>
-  <select id="selectByQuery" resultMap="BaseResultMap" parameterType="java.lang.String" >
+
+  <select id="selectByQuery" parameterType="java.lang.String" resultMap="BaseResultMap">
+
     select
     <include refid="Base_Column_List" />
     from course
     where course_name like concat(concat('%',#{query,jdbcType=VARCHAR}) ,'%')
+    order by course_id
   </select>
+
+  <update id="recoverCourseByPrimaryKey" parameterType="java.lang.String">
+    update course set delete_time=NULL where course_id = #{courseId,jdbcType=INTEGER}
+  </update>
 </mapper>

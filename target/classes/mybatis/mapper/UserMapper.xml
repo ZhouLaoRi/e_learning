@@ -7,6 +7,16 @@
     <result column="user_password" property="userPassword" jdbcType="VARCHAR" />
     <result column="user_level" property="userLevel" jdbcType="INTEGER" />
     <result column="user_direction" property="userDirection" jdbcType="VARCHAR" />
+    <result column="avatar" property="avatar" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="login_state" property="loginState" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="delete_time" property="deleteTime" jdbcType="TIMESTAMP" />
+    <result column="isvip" property="isvip" jdbcType="INTEGER" />
+    <result column="money" property="money" jdbcType="VARCHAR" />
+    <result column="jifen" property="jifen" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -67,7 +77,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    user_id, user_name, user_password, user_level, user_direction
+    user_id, user_name, user_password, user_level, user_direction, avatar, email, telephone, 
+    login_state, create_time, update_time, delete_time, isvip, money, jifen
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.atguigu.springboot.entity.UserExample" >
     select
@@ -102,9 +113,17 @@
   </delete>
   <insert id="insert" parameterType="com.atguigu.springboot.entity.User" >
     insert into user (user_id, user_name, user_password, 
-      user_level, user_direction)
+      user_level, user_direction, avatar, 
+      email, telephone, login_state, 
+      create_time, update_time, delete_time, 
+      isvip, money, jifen
+      )
     values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}, 
-      #{userLevel,jdbcType=INTEGER}, #{userDirection,jdbcType=VARCHAR})
+      #{userLevel,jdbcType=INTEGER}, #{userDirection,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, #{loginState,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleteTime,jdbcType=TIMESTAMP}, 
+      #{isvip,jdbcType=INTEGER}, #{money,jdbcType=VARCHAR}, #{jifen,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.atguigu.springboot.entity.User" >
     insert into user
@@ -124,6 +143,36 @@
       <if test="userDirection != null" >
         user_direction,
       </if>
+      <if test="avatar != null" >
+        avatar,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="telephone != null" >
+        telephone,
+      </if>
+      <if test="loginState != null" >
+        login_state,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="deleteTime != null" >
+        delete_time,
+      </if>
+      <if test="isvip != null" >
+        isvip,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+      <if test="jifen != null" >
+        jifen,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="userId != null" >
@@ -140,6 +189,36 @@
       </if>
       <if test="userDirection != null" >
         #{userDirection,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null" >
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="loginState != null" >
+        #{loginState,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteTime != null" >
+        #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isvip != null" >
+        #{isvip,jdbcType=INTEGER},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=VARCHAR},
+      </if>
+      <if test="jifen != null" >
+        #{jifen,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -167,6 +246,36 @@
       <if test="record.userDirection != null" >
         user_direction = #{record.userDirection,jdbcType=VARCHAR},
       </if>
+      <if test="record.avatar != null" >
+        avatar = #{record.avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.telephone != null" >
+        telephone = #{record.telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginState != null" >
+        login_state = #{record.loginState,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deleteTime != null" >
+        delete_time = #{record.deleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isvip != null" >
+        isvip = #{record.isvip,jdbcType=INTEGER},
+      </if>
+      <if test="record.money != null" >
+        money = #{record.money,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jifen != null" >
+        jifen = #{record.jifen,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -178,7 +287,17 @@
       user_name = #{record.userName,jdbcType=VARCHAR},
       user_password = #{record.userPassword,jdbcType=VARCHAR},
       user_level = #{record.userLevel,jdbcType=INTEGER},
-      user_direction = #{record.userDirection,jdbcType=VARCHAR}
+      user_direction = #{record.userDirection,jdbcType=VARCHAR},
+      avatar = #{record.avatar,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      telephone = #{record.telephone,jdbcType=VARCHAR},
+      login_state = #{record.loginState,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      delete_time = #{record.deleteTime,jdbcType=TIMESTAMP},
+      isvip = #{record.isvip,jdbcType=INTEGER},
+      money = #{record.money,jdbcType=VARCHAR},
+      jifen = #{record.jifen,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -198,6 +317,36 @@
       <if test="userDirection != null" >
         user_direction = #{userDirection,jdbcType=VARCHAR},
       </if>
+      <if test="avatar != null" >
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="loginState != null" >
+        login_state = #{loginState,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteTime != null" >
+        delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isvip != null" >
+        isvip = #{isvip,jdbcType=INTEGER},
+      </if>
+      <if test="money != null" >
+        money = #{money,jdbcType=VARCHAR},
+      </if>
+      <if test="jifen != null" >
+        jifen = #{jifen,jdbcType=INTEGER},
+      </if>
     </set>
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
@@ -206,7 +355,17 @@
     set user_name = #{userName,jdbcType=VARCHAR},
       user_password = #{userPassword,jdbcType=VARCHAR},
       user_level = #{userLevel,jdbcType=INTEGER},
-      user_direction = #{userDirection,jdbcType=VARCHAR}
+      user_direction = #{userDirection,jdbcType=VARCHAR},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      login_state = #{loginState,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+      isvip = #{isvip,jdbcType=INTEGER},
+      money = #{money,jdbcType=VARCHAR},
+      jifen = #{jifen,jdbcType=INTEGER}
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -15,7 +15,7 @@ public class CommentController {
     @Resource
     private CommentService commentService;
 
-    @RequestMapping("/addComment")
+    /*@RequestMapping("/addComment")
     public String addComment(String commentText, HttpSession session, Integer dataId){
         Comment comment = new Comment();
         User user = (User) session.getAttribute("user");
@@ -25,5 +25,5 @@ public class CommentController {
         //comment.setDataId(1);
         commentService.insert(comment);
         return "redirect:/showDataById?dataId="+dataId;
-    }
+    }*/
 }

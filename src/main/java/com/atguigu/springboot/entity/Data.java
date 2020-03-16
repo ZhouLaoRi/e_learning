@@ -1,15 +1,21 @@
 package com.atguigu.springboot.entity;
 
+import java.util.Date;
+
 public class Data {
     private Integer dataId;
 
     private String dataName;
 
-    private String dataPath;
+    private String dataIntro;
 
     private Integer dataLevel;
 
-    private String dataIntro;
+    private Integer dataType;
+
+    private String dataPath;
+
+    private Date createTime;
 
     private Integer courseId;
 
@@ -29,12 +35,12 @@ public class Data {
         this.dataName = dataName == null ? null : dataName.trim();
     }
 
-    public String getDataPath() {
-        return dataPath;
+    public String getDataIntro() {
+        return dataIntro;
     }
 
-    public void setDataPath(String dataPath) {
-        this.dataPath = dataPath == null ? null : dataPath.trim();
+    public void setDataIntro(String dataIntro) {
+        this.dataIntro = dataIntro == null ? null : dataIntro.trim();
     }
 
     public Integer getDataLevel() {
@@ -45,12 +51,28 @@ public class Data {
         this.dataLevel = dataLevel;
     }
 
-    public String getDataIntro() {
-        return dataIntro;
+    public Integer getDataType() {
+        return dataType;
     }
 
-    public void setDataIntro(String dataIntro) {
-        this.dataIntro = dataIntro == null ? null : dataIntro.trim();
+    public void setDataType(Integer dataType) {
+        this.dataType = dataType;
+    }
+
+    public String getDataPath() {
+        return dataPath;
+    }
+
+    public void setDataPath(String dataPath) {
+        this.dataPath = dataPath == null ? null : dataPath.trim();
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public Integer getCourseId() {

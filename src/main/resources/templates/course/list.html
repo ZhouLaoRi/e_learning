@@ -53,7 +53,16 @@
 									<th>课程编号</th>
 									<th>课程名字</th>
 									<th>课程简介</th>
+									<th>上传者</th>
+									<th>封面路径</th>
+									<th>播放量</th>
+									<th>点赞</th>
+									<th>难易度</th>
+									<th>分类</th>
+									<th>上传时间</th>
+									<th>更新时间</th>
 									<th>操作</th>
+									<th>上传课程封面</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -61,14 +70,30 @@
 									<td th:text="${course.courseId}"></td>
 									<td th:text="${course.courseName}"></td>
 									<td th:text="${course.courseIntro}"></td>
+									<td th:text="${course.courseAuthor}"></td>
+									<td th:text="${course.courseAvatar}"></td>
+									<td th:text="${course.courseView}"></td>
+									<td th:text="${course.courseLike}"></td>
+									<td th:text="${course.courseLevel}"></td>
+									<td th:text="${course.typeId}"></td>
+									<td th:text="${#dates.format(course.createTime,'yyyy-MM-dd HH:mm')}"></td>
+									<td th:text="${#dates.format(course.updateTime,'yyyy-MM-dd HH:mm')}"></td>
 									<td>
 										<a class="btn btn-sm btn-primary" th:href="@{/course/}+${course.courseId}">编辑</a>
 										<button th:attr="del_uri=@{/course/}+${course.courseId}" type="submit" class="btn btn-sm btn-danger deleteBtn">删除</button>
-
+									</td>
+									<td>
+										<form th:action="@{/courseUpload/}+${course.courseId}" method="POST" class="file" enctype="multipart/form-data">
+											<input type="file" name="file"/>
+											<input type="submit" value="上传" onclick="upload()"/>
+										</form>
 									</td>
 								</tr>
 							</tbody>
 						</table>
+
+						<a th:href="@{/courseUpload/}+'19'">下载</a>
+
 						<p>
 							<span>第[[${pageInfo.pageNum}]]页/共[[${pageInfo.pages}]]页</span><br/>
 							<!--当前页是第1页时，那首页和上一页变成不可点击链接，当前页是最后一页时，那下一页、尾页不可点击链接-->
@@ -136,10 +161,21 @@
 
 		<script>
 			$(".deleteBtn").click(function () {
-				//删除当前课程的
-				$("#deleteCourseForm").attr("action",$(this).attr("del_uri")).submit();
+			    if(confirm("确定删除吗")){
+			        alert("删除成功");
+                    //删除当前课程的
+                    $("#deleteCourseForm").attr("action",$(this).attr("del_uri")).submit();
+					return true;
+				}
 				return false;
             });
+
+			function upload(){
+			    if(confirm("确定覆盖之前的封面，重新上传图片吗？")){
+			        return true;
+				}
+				return false;
+			}
 
 			//清空搜索条件的东西
             $('#clear-btn')

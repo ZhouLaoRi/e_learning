@@ -21,6 +21,6 @@ public class CommentVo {
 
     private String avatar;
     private Date commentDate;
-    private Integer like;
+    private Integer commentLike;
     private Integer commentID;
 }

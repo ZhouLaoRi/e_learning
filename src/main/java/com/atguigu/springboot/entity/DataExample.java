@@ -1,6 +1,7 @@
 package com.atguigu.springboot.entity;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class DataExample {
@@ -234,6 +235,196 @@ public class DataExample {
             return (Criteria) this;
         }
 
+        public Criteria andDataIntroIsNull() {
+            addCriterion("data_intro is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataIntroIsNotNull() {
+            addCriterion("data_intro is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataIntroEqualTo(String value) {
+            addCriterion("data_intro =", value, "dataIntro");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataIntroNotEqualTo(String value) {
+            addCriterion("data_intro <>", value, "dataIntro");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataIntroGreaterThan(String value) {
+            addCriterion("data_intro >", value, "dataIntro");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataIntroGreaterThanOrEqualTo(String value) {
+            addCriterion("data_intro >=", value, "dataIntro");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataIntroLessThan(String value) {
+            addCriterion("data_intro <", value, "dataIntro");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataIntroLessThanOrEqualTo(String value) {
+            addCriterion("data_intro <=", value, "dataIntro");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataIntroLike(String value) {
+            addCriterion("data_intro like", value, "dataIntro");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataIntroNotLike(String value) {
+            addCriterion("data_intro not like", value, "dataIntro");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataIntroIn(List<String> values) {
+            addCriterion("data_intro in", values, "dataIntro");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataIntroNotIn(List<String> values) {
+            addCriterion("data_intro not in", values, "dataIntro");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataIntroBetween(String value1, String value2) {
+            addCriterion("data_intro between", value1, value2, "dataIntro");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataIntroNotBetween(String value1, String value2) {
+            addCriterion("data_intro not between", value1, value2, "dataIntro");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataLevelIsNull() {
+            addCriterion("data_level is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataLevelIsNotNull() {
+            addCriterion("data_level is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataLevelEqualTo(Integer value) {
+            addCriterion("data_level =", value, "dataLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataLevelNotEqualTo(Integer value) {
+            addCriterion("data_level <>", value, "dataLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataLevelGreaterThan(Integer value) {
+            addCriterion("data_level >", value, "dataLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataLevelGreaterThanOrEqualTo(Integer value) {
+            addCriterion("data_level >=", value, "dataLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataLevelLessThan(Integer value) {
+            addCriterion("data_level <", value, "dataLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataLevelLessThanOrEqualTo(Integer value) {
+            addCriterion("data_level <=", value, "dataLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataLevelIn(List<Integer> values) {
+            addCriterion("data_level in", values, "dataLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataLevelNotIn(List<Integer> values) {
+            addCriterion("data_level not in", values, "dataLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataLevelBetween(Integer value1, Integer value2) {
+            addCriterion("data_level between", value1, value2, "dataLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataLevelNotBetween(Integer value1, Integer value2) {
+            addCriterion("data_level not between", value1, value2, "dataLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataTypeIsNull() {
+            addCriterion("data_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataTypeIsNotNull() {
+            addCriterion("data_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataTypeEqualTo(Integer value) {
+            addCriterion("data_type =", value, "dataType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataTypeNotEqualTo(Integer value) {
+            addCriterion("data_type <>", value, "dataType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataTypeGreaterThan(Integer value) {
+            addCriterion("data_type >", value, "dataType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("data_type >=", value, "dataType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataTypeLessThan(Integer value) {
+            addCriterion("data_type <", value, "dataType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("data_type <=", value, "dataType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataTypeIn(List<Integer> values) {
+            addCriterion("data_type in", values, "dataType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataTypeNotIn(List<Integer> values) {
+            addCriterion("data_type not in", values, "dataType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataTypeBetween(Integer value1, Integer value2) {
+            addCriterion("data_type between", value1, value2, "dataType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("data_type not between", value1, value2, "dataType");
+            return (Criteria) this;
+        }
+
         public Criteria andDataPathIsNull() {
             addCriterion("data_path is null");
             return (Criteria) this;
@@ -304,133 +495,63 @@ public class DataExample {
             return (Criteria) this;
         }
 
-        public Criteria andDataLevelIsNull() {
-            addCriterion("data_level is null");
+        public Criteria andCreateTimeIsNull() {
+            addCriterion("create_time is null");
             return (Criteria) this;
         }
 
-        public Criteria andDataLevelIsNotNull() {
-            addCriterion("data_level is not null");
+        public Criteria andCreateTimeIsNotNull() {
+            addCriterion("create_time is not null");
             return (Criteria) this;
         }
 
-        public Criteria andDataLevelEqualTo(Integer value) {
-            addCriterion("data_level =", value, "dataLevel");
+        public Criteria andCreateTimeEqualTo(Date value) {
+            addCriterion("create_time =", value, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andDataLevelNotEqualTo(Integer value) {
-            addCriterion("data_level <>", value, "dataLevel");
+        public Criteria andCreateTimeNotEqualTo(Date value) {
+            addCriterion("create_time <>", value, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andDataLevelGreaterThan(Integer value) {
-            addCriterion("data_level >", value, "dataLevel");
+        public Criteria andCreateTimeGreaterThan(Date value) {
+            addCriterion("create_time >", value, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andDataLevelGreaterThanOrEqualTo(Integer value) {
-            addCriterion("data_level >=", value, "dataLevel");
+        public Criteria andCreateTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("create_time >=", value, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andDataLevelLessThan(Integer value) {
-            addCriterion("data_level <", value, "dataLevel");
+        public Criteria andCreateTimeLessThan(Date value) {
+            addCriterion("create_time <", value, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andDataLevelLessThanOrEqualTo(Integer value) {
-            addCriterion("data_level <=", value, "dataLevel");
+        public Criteria andCreateTimeLessThanOrEqualTo(Date value) {
+            addCriterion("create_time <=", value, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andDataLevelIn(List<Integer> values) {
-            addCriterion("data_level in", values, "dataLevel");
+        public Criteria andCreateTimeIn(List<Date> values) {
+            addCriterion("create_time in", values, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andDataLevelNotIn(List<Integer> values) {
-            addCriterion("data_level not in", values, "dataLevel");
+        public Criteria andCreateTimeNotIn(List<Date> values) {
+            addCriterion("create_time not in", values, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andDataLevelBetween(Integer value1, Integer value2) {
-            addCriterion("data_level between", value1, value2, "dataLevel");
+        public Criteria andCreateTimeBetween(Date value1, Date value2) {
+            addCriterion("create_time between", value1, value2, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andDataLevelNotBetween(Integer value1, Integer value2) {
-            addCriterion("data_level not between", value1, value2, "dataLevel");
-            return (Criteria) this;
-        }
-
-        public Criteria andDataIntroIsNull() {
-            addCriterion("data_intro is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andDataIntroIsNotNull() {
-            addCriterion("data_intro is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andDataIntroEqualTo(String value) {
-            addCriterion("data_intro =", value, "dataIntro");
-            return (Criteria) this;
-        }
-
-        public Criteria andDataIntroNotEqualTo(String value) {
-            addCriterion("data_intro <>", value, "dataIntro");
-            return (Criteria) this;
-        }
-
-        public Criteria andDataIntroGreaterThan(String value) {
-            addCriterion("data_intro >", value, "dataIntro");
-            return (Criteria) this;
-        }
-
-        public Criteria andDataIntroGreaterThanOrEqualTo(String value) {
-            addCriterion("data_intro >=", value, "dataIntro");
-            return (Criteria) this;
-        }
-
-        public Criteria andDataIntroLessThan(String value) {
-            addCriterion("data_intro <", value, "dataIntro");
-            return (Criteria) this;
-        }
-
-        public Criteria andDataIntroLessThanOrEqualTo(String value) {
-            addCriterion("data_intro <=", value, "dataIntro");
-            return (Criteria) this;
-        }
-
-        public Criteria andDataIntroLike(String value) {
-            addCriterion("data_intro like", value, "dataIntro");
-            return (Criteria) this;
-        }
-
-        public Criteria andDataIntroNotLike(String value) {
-            addCriterion("data_intro not like", value, "dataIntro");
-            return (Criteria) this;
-        }
-
-        public Criteria andDataIntroIn(List<String> values) {
-            addCriterion("data_intro in", values, "dataIntro");
-            return (Criteria) this;
-        }
-
-        public Criteria andDataIntroNotIn(List<String> values) {
-            addCriterion("data_intro not in", values, "dataIntro");
-            return (Criteria) this;
-        }
-
-        public Criteria andDataIntroBetween(String value1, String value2) {
-            addCriterion("data_intro between", value1, value2, "dataIntro");
-            return (Criteria) this;
-        }
-
-        public Criteria andDataIntroNotBetween(String value1, String value2) {
-            addCriterion("data_intro not between", value1, value2, "dataIntro");
+        public Criteria andCreateTimeNotBetween(Date value1, Date value2) {
+            addCriterion("create_time not between", value1, value2, "createTime");
             return (Criteria) this;
         }
 

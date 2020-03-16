@@ -51,7 +51,7 @@ public class CommentController {
         }
         commentVo.setAvatar("/blog/images/1005-100x100.jpg");
         commentVo.setNickname("admin");//前端传进来了 但是是没用的
-        commentVo.setLike(0);
+        commentVo.setCommentLike(0);
         commentVo.setCommentDate(new Date());
 
         commentService.saveComment(commentVo);

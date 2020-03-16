@@ -163,7 +163,7 @@ public class DataController {
 
 
 
-    @RequestMapping("/showDataById")
+    /*@RequestMapping("/showDataById")
     public String showDataById(Model model, Integer dataId, HttpServletRequest request){
 
         User user = (User) request.getSession().getAttribute("user");
@@ -191,7 +191,7 @@ public class DataController {
         model.addAttribute("comments",comments);
 
         return "showDataById";
-    }
+    }*/
 
     @RequestMapping("/findDataById")
     public String findDataById(Model model, Integer dataId){

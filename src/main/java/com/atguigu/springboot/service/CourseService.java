@@ -40,4 +40,12 @@ public class CourseService {
     public List<Course> selectByQuery(String query) {
         return courseMapper.selectByQuery(query);
     }
+
+    public int updateByPrimaryKeySelective(Course record){
+        return courseMapper.updateByPrimaryKeySelective(record);
+    }
+
+    public void recoverCourseByPrimaryKey(Integer courseId) {
+        courseMapper.recoverCourseByPrimaryKey(courseId);
+    }
 }

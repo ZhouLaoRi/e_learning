@@ -32,4 +32,6 @@ public interface CourseMapper {
     int updateByPrimaryKey(Course record);
 
     List<Course> selectByQuery(@Param("query") String query);
+
+    void recoverCourseByPrimaryKey(Integer courseId);
 }

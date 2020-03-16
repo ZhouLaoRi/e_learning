@@ -23,7 +23,7 @@ public class CommentDTO {
     private String commentText;
 
     //点赞的数量
-    private Integer Like;
+    private Integer commentLike;
 
     //是不是博主
     private boolean adminComment;

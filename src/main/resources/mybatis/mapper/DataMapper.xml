@@ -4,9 +4,11 @@
   <resultMap id="BaseResultMap" type="com.atguigu.springboot.entity.Data" >
     <id column="data_id" property="dataId" jdbcType="INTEGER" />
     <result column="data_name" property="dataName" jdbcType="VARCHAR" />
-    <result column="data_path" property="dataPath" jdbcType="VARCHAR" />
-    <result column="data_level" property="dataLevel" jdbcType="INTEGER" />
     <result column="data_intro" property="dataIntro" jdbcType="VARCHAR" />
+    <result column="data_level" property="dataLevel" jdbcType="INTEGER" />
+    <result column="data_type" property="dataType" jdbcType="INTEGER" />
+    <result column="data_path" property="dataPath" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="course_id" property="courseId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -68,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    data_id, data_name, data_path, data_level, data_intro, course_id
+    data_id, data_name, data_intro, data_level, data_type, data_path, create_time, course_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.atguigu.springboot.entity.DataExample" >
     select
@@ -102,12 +104,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.atguigu.springboot.entity.Data" >
-    insert into data (data_id, data_name, data_path, 
-      data_level, data_intro, course_id
-      )
-    values (#{dataId,jdbcType=INTEGER}, #{dataName,jdbcType=VARCHAR}, #{dataPath,jdbcType=VARCHAR}, 
-      #{dataLevel,jdbcType=INTEGER}, #{dataIntro,jdbcType=VARCHAR}, #{courseId,jdbcType=INTEGER}
-      )
+    insert into data (data_id, data_name, data_intro, 
+      data_level, data_type, data_path, 
+      create_time, course_id)
+    values (#{dataId,jdbcType=INTEGER}, #{dataName,jdbcType=VARCHAR}, #{dataIntro,jdbcType=VARCHAR}, 
+      #{dataLevel,jdbcType=INTEGER}, #{dataType,jdbcType=INTEGER}, #{dataPath,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{courseId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.atguigu.springboot.entity.Data" >
     insert into data
@@ -118,14 +120,20 @@
       <if test="dataName != null" >
         data_name,
       </if>
-      <if test="dataPath != null" >
-        data_path,
+      <if test="dataIntro != null" >
+        data_intro,
       </if>
       <if test="dataLevel != null" >
         data_level,
       </if>
-      <if test="dataIntro != null" >
-        data_intro,
+      <if test="dataType != null" >
+        data_type,
+      </if>
+      <if test="dataPath != null" >
+        data_path,
+      </if>
+      <if test="createTime != null" >
+        create_time,
       </if>
       <if test="courseId != null" >
         course_id,
@@ -138,14 +146,20 @@
       <if test="dataName != null" >
         #{dataName,jdbcType=VARCHAR},
       </if>
-      <if test="dataPath != null" >
-        #{dataPath,jdbcType=VARCHAR},
+      <if test="dataIntro != null" >
+        #{dataIntro,jdbcType=VARCHAR},
       </if>
       <if test="dataLevel != null" >
         #{dataLevel,jdbcType=INTEGER},
       </if>
-      <if test="dataIntro != null" >
-        #{dataIntro,jdbcType=VARCHAR},
+      <if test="dataType != null" >
+        #{dataType,jdbcType=INTEGER},
+      </if>
+      <if test="dataPath != null" >
+        #{dataPath,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="courseId != null" >
         #{courseId,jdbcType=INTEGER},
@@ -167,14 +181,20 @@
       <if test="record.dataName != null" >
         data_name = #{record.dataName,jdbcType=VARCHAR},
       </if>
-      <if test="record.dataPath != null" >
-        data_path = #{record.dataPath,jdbcType=VARCHAR},
+      <if test="record.dataIntro != null" >
+        data_intro = #{record.dataIntro,jdbcType=VARCHAR},
       </if>
       <if test="record.dataLevel != null" >
         data_level = #{record.dataLevel,jdbcType=INTEGER},
       </if>
-      <if test="record.dataIntro != null" >
-        data_intro = #{record.dataIntro,jdbcType=VARCHAR},
+      <if test="record.dataType != null" >
+        data_type = #{record.dataType,jdbcType=INTEGER},
+      </if>
+      <if test="record.dataPath != null" >
+        data_path = #{record.dataPath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.courseId != null" >
         course_id = #{record.courseId,jdbcType=INTEGER},
@@ -188,9 +208,11 @@
     update data
     set data_id = #{record.dataId,jdbcType=INTEGER},
       data_name = #{record.dataName,jdbcType=VARCHAR},
-      data_path = #{record.dataPath,jdbcType=VARCHAR},
-      data_level = #{record.dataLevel,jdbcType=INTEGER},
       data_intro = #{record.dataIntro,jdbcType=VARCHAR},
+      data_level = #{record.dataLevel,jdbcType=INTEGER},
+      data_type = #{record.dataType,jdbcType=INTEGER},
+      data_path = #{record.dataPath,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
       course_id = #{record.courseId,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -202,14 +224,20 @@
       <if test="dataName != null" >
         data_name = #{dataName,jdbcType=VARCHAR},
       </if>
-      <if test="dataPath != null" >
-        data_path = #{dataPath,jdbcType=VARCHAR},
+      <if test="dataIntro != null" >
+        data_intro = #{dataIntro,jdbcType=VARCHAR},
       </if>
       <if test="dataLevel != null" >
         data_level = #{dataLevel,jdbcType=INTEGER},
       </if>
-      <if test="dataIntro != null" >
-        data_intro = #{dataIntro,jdbcType=VARCHAR},
+      <if test="dataType != null" >
+        data_type = #{dataType,jdbcType=INTEGER},
+      </if>
+      <if test="dataPath != null" >
+        data_path = #{dataPath,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="courseId != null" >
         course_id = #{courseId,jdbcType=INTEGER},
@@ -220,13 +248,16 @@
   <update id="updateByPrimaryKey" parameterType="com.atguigu.springboot.entity.Data" >
     update data
     set data_name = #{dataName,jdbcType=VARCHAR},
-      data_path = #{dataPath,jdbcType=VARCHAR},
-      data_level = #{dataLevel,jdbcType=INTEGER},
       data_intro = #{dataIntro,jdbcType=VARCHAR},
+      data_level = #{dataLevel,jdbcType=INTEGER},
+      data_type = #{dataType,jdbcType=INTEGER},
+      data_path = #{dataPath,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
       course_id = #{courseId,jdbcType=INTEGER}
     where data_id = #{dataId,jdbcType=INTEGER}
   </update>
-  <update id="updateDataPath" parameterType="com.atguigu.springboot.entity.Data" >
+
+  <update id="updateDataPath" parameterType="com.atguigu.springboot.entity.Data">
     update data
     set
       data_path = #{dataPath,jdbcType=VARCHAR}

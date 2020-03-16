@@ -7,9 +7,11 @@ public class History {
 
     private Integer userId;
 
-    private Integer dataId;
-
     private Date historyDate;
+
+    private Integer courseId;
+
+    private Integer dataId;
 
     public Integer getHistoryId() {
         return historyId;
@@ -27,19 +29,27 @@ public class History {
         this.userId = userId;
     }
 
-    public Integer getDataId() {
-        return dataId;
-    }
-
-    public void setDataId(Integer dataId) {
-        this.dataId = dataId;
-    }
-
     public Date getHistoryDate() {
         return historyDate;
     }
 
     public void setHistoryDate(Date historyDate) {
         this.historyDate = historyDate;
+    }
+
+    public Integer getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
+    }
+
+    public Integer getDataId() {
+        return dataId;
+    }
+
+    public void setDataId(Integer dataId) {
+        this.dataId = dataId;
     }
 }

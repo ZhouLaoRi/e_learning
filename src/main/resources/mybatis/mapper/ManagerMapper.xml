@@ -5,6 +5,14 @@
     <id column="manager_id" property="managerId" jdbcType="INTEGER" />
     <result column="manager_name" property="managerName" jdbcType="VARCHAR" />
     <result column="manager_password" property="managerPassword" jdbcType="VARCHAR" />
+    <result column="manager_type" property="managerType" jdbcType="INTEGER" />
+    <result column="avatar" property="avatar" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="login_state" property="loginState" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="delete_time" property="deleteTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -65,7 +73,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    manager_id, manager_name, manager_password
+    manager_id, manager_name, manager_password, manager_type, avatar, email, telephone, 
+    login_state, create_time, update_time, delete_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.atguigu.springboot.entity.ManagerExample" >
     select
@@ -99,10 +108,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.atguigu.springboot.entity.Manager" >
-    insert into manager (manager_id, manager_name, manager_password
-      )
-    values (#{managerId,jdbcType=INTEGER}, #{managerName,jdbcType=VARCHAR}, #{managerPassword,jdbcType=VARCHAR}
-      )
+    insert into manager (manager_id, manager_name, manager_password, 
+      manager_type, avatar, email, 
+      telephone, login_state, create_time, 
+      update_time, delete_time)
+    values (#{managerId,jdbcType=INTEGER}, #{managerName,jdbcType=VARCHAR}, #{managerPassword,jdbcType=VARCHAR}, 
+      #{managerType,jdbcType=INTEGER}, #{avatar,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{telephone,jdbcType=VARCHAR}, #{loginState,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{deleteTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.atguigu.springboot.entity.Manager" >
     insert into manager
@@ -116,6 +129,30 @@
       <if test="managerPassword != null" >
         manager_password,
       </if>
+      <if test="managerType != null" >
+        manager_type,
+      </if>
+      <if test="avatar != null" >
+        avatar,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="telephone != null" >
+        telephone,
+      </if>
+      <if test="loginState != null" >
+        login_state,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="deleteTime != null" >
+        delete_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="managerId != null" >
@@ -126,6 +163,30 @@
       </if>
       <if test="managerPassword != null" >
         #{managerPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="managerType != null" >
+        #{managerType,jdbcType=INTEGER},
+      </if>
+      <if test="avatar != null" >
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="loginState != null" >
+        #{loginState,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteTime != null" >
+        #{deleteTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -147,6 +208,30 @@
       <if test="record.managerPassword != null" >
         manager_password = #{record.managerPassword,jdbcType=VARCHAR},
       </if>
+      <if test="record.managerType != null" >
+        manager_type = #{record.managerType,jdbcType=INTEGER},
+      </if>
+      <if test="record.avatar != null" >
+        avatar = #{record.avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.telephone != null" >
+        telephone = #{record.telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginState != null" >
+        login_state = #{record.loginState,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deleteTime != null" >
+        delete_time = #{record.deleteTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -156,7 +241,15 @@
     update manager
     set manager_id = #{record.managerId,jdbcType=INTEGER},
       manager_name = #{record.managerName,jdbcType=VARCHAR},
-      manager_password = #{record.managerPassword,jdbcType=VARCHAR}
+      manager_password = #{record.managerPassword,jdbcType=VARCHAR},
+      manager_type = #{record.managerType,jdbcType=INTEGER},
+      avatar = #{record.avatar,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      telephone = #{record.telephone,jdbcType=VARCHAR},
+      login_state = #{record.loginState,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      delete_time = #{record.deleteTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -170,13 +263,45 @@
       <if test="managerPassword != null" >
         manager_password = #{managerPassword,jdbcType=VARCHAR},
       </if>
+      <if test="managerType != null" >
+        manager_type = #{managerType,jdbcType=INTEGER},
+      </if>
+      <if test="avatar != null" >
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="loginState != null" >
+        login_state = #{loginState,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteTime != null" >
+        delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where manager_id = #{managerId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.atguigu.springboot.entity.Manager" >
     update manager
     set manager_name = #{managerName,jdbcType=VARCHAR},
-      manager_password = #{managerPassword,jdbcType=VARCHAR}
+      manager_password = #{managerPassword,jdbcType=VARCHAR},
+      manager_type = #{managerType,jdbcType=INTEGER},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      login_state = #{loginState,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      delete_time = #{deleteTime,jdbcType=TIMESTAMP}
     where manager_id = #{managerId,jdbcType=INTEGER}
   </update>
 </mapper>

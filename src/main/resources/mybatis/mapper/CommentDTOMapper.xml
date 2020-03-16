@@ -7,14 +7,14 @@
     <result column="avatar" property="avatar" jdbcType="VARCHAR" />
     <result column="time" property="commentDate" jdbcType="DATETIMEOFFSET" />
     <result column="text" property="commentText" jdbcType="VARCHAR" />
-    <result column="like" property="like" jdbcType="INTEGER" />
+    <result column="like" property="commentLike" jdbcType="INTEGER" />
     <association property="parentComment" javaType="com.atguigu.springboot.dto.CommentDTO">
       <id column="fatherCommentId" property="commentId" jdbcType="INTEGER" />
       <result column="fatherName" property="nickname" jdbcType="VARCHAR" />
       <result column="fatherAvatar" property="avatar" jdbcType="VARCHAR" />
       <result column="fathertime" property="commentDate" jdbcType="DATETIMEOFFSET" />
       <result column="fathertext" property="commentText" jdbcType="VARCHAR" />
-      <result column="fatherlike" property="like" jdbcType="INTEGER" />
+      <result column="fatherlike" property="commentLike" jdbcType="INTEGER" />
     </association>
     <collection property="replyComments" ofType="com.atguigu.springboot.dto.CommentDTO">
       <id column="replayId" property="commentId" jdbcType="INTEGER" />
@@ -22,14 +22,14 @@
       <result column="replyAvatar" property="avatar" jdbcType="VARCHAR" />
       <result column="replyTime" property="commentDate" jdbcType="DATETIMEOFFSET" />
       <result column="replytext" property="commentText" jdbcType="VARCHAR" />
-      <result column="replylike" property="like" jdbcType="INTEGER" />
+      <result column="replylike" property="commentLike" jdbcType="INTEGER" />
       <association property="parentComment" javaType="com.atguigu.springboot.dto.CommentDTO">
         <id column="replayFaId" property="commentId" jdbcType="INTEGER" />
         <result column="replyFaNickname" property="nickname" jdbcType="VARCHAR" />
         <result column="replyFaAvatar" property="avatar" jdbcType="VARCHAR" />
         <result column="replyFaTime" property="commentDate" jdbcType="DATETIMEOFFSET" />
         <result column="replyFatext" property="commentText" jdbcType="VARCHAR" />
-        <result column="replyFalike" property="like" jdbcType="INTEGER" />
+        <result column="replyFalike" property="commentLike" jdbcType="INTEGER" />
       </association>
     </collection>
   </resultMap>
@@ -40,28 +40,28 @@
           t0.avatar fatherAvatar,
           t0.comment_date fathertime,
           t0.comment_text fathertext,
-          t0.like fatherlike,
+          t0.comment_like fatherlike,
 
           t1.comment_id id,
           t1.nickname nickname,
           t1.avatar avatar,
           t1.comment_date time,
           t1.comment_text text,
-          t1.like 'like',
+          t1.comment_like 'like',
 
           t2.comment_id replayId,
           t2.nickname replyNickname,
           t2.avatar replyAvatar,
           t2.comment_date replyTime,
           t2.comment_text replytext,
-          t2.like replylike,
+          t2.comment_like replylike,
 
           t3.comment_id replayFaId,
           t3.nickname replyFaNickname,
           t3.avatar replyFaAvatar,
           t3.comment_date replyFaTime,
           t3.comment_text replyFatext,
-          t3.like replyFalike
+          t3.comment_like replyFalike
       FROM
           `comment` AS t0 #father
           RIGHT JOIN `comment` AS t1 ON t0.comment_id = t1.parent_comment_id #me
@@ -73,21 +73,21 @@
           t1.course_id = #{courseId,jdbcType=INTEGER}
           AND t1.parent_comment_id is null
       ORDER BY
-          t1.like DESC
+          t1.comment_like DESC
   </select>
 
   <update id="likeCommentDTO" parameterType="java.lang.Integer">
     UPDATE COMMENT
-	  SET COMMENT.like = COMMENT.like + 1
+	  SET COMMENT.comment_like = COMMENT.comment_like + 1
     WHERE
       comment_id = #{commentId,jdbcType=INTEGER}
   </update>
 
   <insert id="saveComment" parameterType="com.atguigu.springboot.vo.CommentVo">
-      insert into comment(user_id,nickname,avatar,comment_date,comment_text,comment.like,parent_comment_id,course_id)
+      insert into comment(user_id,nickname,avatar,comment_date,comment_text,comment_like,parent_comment_id,course_id)
       values (#{userId,jdbcType=INTEGER},#{nickname,jdbcType=VARCHAR},
       #{avatar,jdbcType=VARCHAR},#{commentDate,jdbcType=DATETIMEOFFSET},#{commentText,jdbcType=VARCHAR},
-      #{like,jdbcType=INTEGER},#{parentCommentId,jdbcType=INTEGER},#{courseId,jdbcType=INTEGER})
+      #{commentLike,jdbcType=INTEGER},#{parentCommentId,jdbcType=INTEGER},#{courseId,jdbcType=INTEGER})
   </insert>
 
 </mapper>

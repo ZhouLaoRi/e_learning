@@ -138,7 +138,7 @@
                         How artistic!
                       </div>
                       <div class="actions">
-                        <a class="reply" data-commentid="1" title="为他点赞~" th:attr="data-commentid=${comment.commentId}" onclick="like(this)">点赞数：[[${comment.like}]]</a>
+                        <a class="reply" data-commentid="1" title="为他点赞~" th:attr="data-commentid=${comment.commentId}" onclick="like(this)">点赞数：[[${comment.commentLike}]]</a>
                         &nbsp;&nbsp;&nbsp;
                         <!--<a class="reply" data-commentid="1" data-commentnickname="Matt" th:attr="data-commentid=${comment.id},data-commentnickname=${comment.nickname}" onclick="reply(this)">回复</a>-->
                         <a class="reply" data-commentid="1" data-commentnickname="Matt" th:attr="data-commentid=${comment.commentId},data-commentnickname=${comment.nickname}" onclick="reply(this)">回复</a>
@@ -162,7 +162,7 @@
                             How artistic!
                           </div>
                           <div class="actions">
-                            <a class="reply" data-commentid="1" title="为他点赞~" th:attr="data-commentid=${reply.commentId}" onclick="like(this)">点赞数：[[${reply.like}]]</a>
+                            <a class="reply" data-commentid="1" title="为他点赞~" th:attr="data-commentid=${reply.commentId}" onclick="like(this)">点赞数：[[${reply.commentLike}]]</a>
                             &nbsp;&nbsp;&nbsp;
                             <a class="reply" data-commentid="1" data-commentnickname="Matt" th:attr="data-commentid=${reply.commentId},data-commentnickname=${reply.nickname}" onclick="reply(this)">回复</a>
                           </div>

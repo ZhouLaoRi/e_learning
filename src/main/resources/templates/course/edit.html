@@ -23,9 +23,27 @@
 					<label>课程名字</label>
 					<input name="courseName" type="text" class="form-control" placeholder="C语言"th:value="${course.courseName}">
 				</div>
-				<div>
+				<div class="form-group">
 					<label>课程简介</label>
 					<input name="courseIntro" type="text" class="form-control" placeholder="C语言是最难学的语言" th:value="${course.courseIntro}">
+				</div>
+				<div class="form-group">
+					<label>上传者</label>
+					<input name="courseAuthor" type="text" class="form-control" placeholder="聪明的作者" th:value="${course.courseAuthor}">
+				</div>
+				<div class="form-group">
+					<label>封面路径</label>
+					<input name="courseAvatar" type="text" class="form-control" placeholder="/text/1.jpg" th:value="${course.courseAvatar}">
+				</div>
+				<div class="form-group">
+					<label>难易度</label>
+					<input name="courseLevel" type="text" class="form-control" placeholder="1" th:value="${course.courseLevel}">
+				</div>
+				<div class="form-group">
+					<label>分类</label><!-- 提交的是分类的id -->
+					<select class="form-control"  name="typeId">
+						<option th:selected="${course.typeId == type.id}" th:value="${type.id}" th:each="type:${types}" th:text="${type.name}">1</option>
+					</select>
 				</div>
 				<button type="submit" class="btn btn-primary" >修改</button>
 			</form>
