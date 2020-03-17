@@ -24,10 +24,22 @@ public class UserService {
     public int updateByPrimaryKey(User user){
         return userMapper.updateByPrimaryKey(user);
     }
+    public int updateByPrimaryKeySelective(User user){
+        return userMapper.updateByPrimaryKeySelective(user);
+    }
+
     public int insert(User user){
         return userMapper.insert(user);
     }
     public int deleteByExample(UserExample userExample){
         return userMapper.deleteByExample(userExample);
+    }
+
+    public void updateUserAvatar(Integer userId, String userAvatar) {
+        userMapper.updateUserAvatar(userId,userAvatar);
+    }
+
+    public void recoverUserByPrimaryKey(Integer userId) {
+        userMapper.recoverUserByPrimaryKey(userId);
     }
 }

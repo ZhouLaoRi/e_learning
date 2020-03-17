@@ -30,4 +30,8 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+    void updateUserAvatar(@Param("userId") Integer userId, @Param("userAvatar")String userAvatar);
+
+    void recoverUserByPrimaryKey(Integer userId);
 }
