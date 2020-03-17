@@ -49,7 +49,7 @@ public class CourseController {
         return "course/list";
     }
 
-    //查询所有课程返回列表页面
+    //条件查询所有课程返回列表页面，要改模糊查询
     @PostMapping("/coursesAllBlog")
     public String listCoursesAllBlog(@Param(value = "pageNum") Integer pageNum, Model model , Course course){
 
@@ -57,13 +57,13 @@ public class CourseController {
 
         CourseExample courseExample = new CourseExample();
         CourseExample.Criteria criteria = courseExample.createCriteria();
-        if(course.getCourseId() != null && "".equals(course.getCourseId())){
+        if(course.getCourseId() != null && !"".equals(course.getCourseId())){
             criteria.andCourseIdEqualTo(course.getCourseId());
         }
-        if(course.getCourseName() != null && "".equals(course.getCourseName())){
+        if(course.getCourseName() != null && !"".equals(course.getCourseName())){
             criteria.andCourseNameEqualTo(course.getCourseName());
         }
-        PageHelper.startPage(pageNum, 5);
+        PageHelper.startPage(pageNum, 10);
         List<Course> courses = courseService.selectByExample(courseExample);
         PageInfo<Course> pageInfo = new PageInfo<Course>(courses);
         model.addAttribute("courses",courses);
@@ -157,8 +157,11 @@ public class CourseController {
             bytes = file.getBytes();
             //classpath找的是target的文件了
             String path = ResourceUtils.getURL("classpath:").getPath();
-            //destination 目的地
-            File dest = new File(path + "/static/image/course" + "/" + fileName);
+            //destination 目的地，他加上path找的是全路径，所以是有static的，而且是target，这样感觉@{} 他是静态资源 不是target的。。。不过好像都是找target位置的喔，怪怪的
+            File dest = new File(path + "/static/image/course");
+            //先创建文件夹，再上传文件
+            if (!dest.exists()) dest.mkdirs();
+            dest = new File(path + "/static/image/course" + "/" + fileName);
             file.transferTo(dest);
 
             String coursePath = "/image/course" + "/" + fileName;

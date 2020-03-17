@@ -25,6 +25,10 @@ public class DataService {
         return dataMapper.updateByPrimaryKey(data);
     }
 
+    public int updateByPrimaryKeySelective(Data data){
+        return dataMapper.updateByPrimaryKeySelective(data);
+    }
+
     public int updateDataPath(Integer dataId ,String dataPath){
         return dataMapper.updateDataPath(dataId, dataPath);
     }

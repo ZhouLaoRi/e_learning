@@ -17,11 +17,9 @@
 				<div th:replace="~{commons/bar::#sidebar(activeUri='courses')}"></div>
 
 				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-
 					<h2><a class="btn btn-sm btn-success" href="course" th:href="@{/course}">课程添加</a></h2>
 
-
-
+					<!-- 加入的搜索栏 -->
 					<div  class="ui secondary segment form">
 						<div class="inline fields">
 							<div class="field">
@@ -31,20 +29,12 @@
 								<input id="courseNameInput" type="text" name="courseName" placeholder="课程名字">
 							</div>
 							<button id="clear-btn" class="ui compact button">clear</button>
-							<!--<button id="clear-btn" class="ui compact button" onclick="function f() {
-							  $('#courseIdInput').empty();
-							  $('#courseNameInput').empty();
-							}">clear</button>-->
 							<div class="field">
-								<button  type="button" id="search-btn" class="ui mini teal basic button"><i class="search icon"></i>搜索</button>
-								<button  type="button" id="search-btn-blog" class="ui mini teal basic button"><i class="search icon"></i>搜索2</button>
+								<!--<button  type="button" id="search-btn" class="ui mini teal basic button"><i class="search icon"></i>搜索</button>-->
+								<button  type="button" id="search-btn-blog" class="ui mini teal basic button"><i class="search icon"></i>搜索</button>
 							</div>
 						</div>
 					</div>
-
-
-
-
 
 					<div class="table-responsive" id="table-container" th:fragment="CourseList">
 						<table th:fragment="CourseList" class="table table-striped table-sm ">
@@ -171,7 +161,7 @@
             });
 
 			function upload(){
-			    if(confirm("确定覆盖之前的封面，重新上传图片吗？")){
+			    if(confirm("确定上传吗？若之前已有课程，之前的将会被覆盖，无法复原！！！")){
 			        return true;
 				}
 				return false;

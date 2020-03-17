@@ -2,6 +2,7 @@ package com.atguigu.springboot.controller.back;
 
 import com.atguigu.springboot.entity.*;
 import com.atguigu.springboot.service.CommentService;
+import com.atguigu.springboot.service.CourseService;
 import com.atguigu.springboot.service.DataService;
 import com.atguigu.springboot.service.HistoryService;
 import com.atguigu.springboot.utils.UploadUtils;
@@ -13,8 +14,10 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;*/
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,6 +35,9 @@ import static javax.xml.transform.OutputKeys.ENCODING;
 
 @Controller
 public class DataController {
+
+    @Resource
+    private CourseService courseService;
     @Resource
     private DataService dataService;
     @Resource
@@ -41,7 +47,7 @@ public class DataController {
 
     @GetMapping("/datas")
     public String showAllData(@RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum, Model model){
-        PageHelper.startPage(pageNum, 5);
+        PageHelper.startPage(pageNum, 10);
         List<Data> datas = dataService.selectByExample(new DataExample());
         PageInfo<Data> pageInfo = new PageInfo<Data>(datas);
         model.addAttribute("datas",datas);
@@ -49,16 +55,43 @@ public class DataController {
         return "data/list";
     }
 
-    //来到数据添加页面
+
+    //条件查询所有资料返回列表页面，要改模糊查询
+    @PostMapping("/datasAll")
+    public String listDatasAll(@Param(value = "pageNum") Integer pageNum, Model model , Data data){
+
+        if(pageNum == null) pageNum = 1;
+
+        DataExample dataExample = new DataExample();
+        DataExample.Criteria criteria = dataExample.createCriteria();
+        if(data.getDataId() != null && !"".equals(data.getDataId())){
+            criteria.andDataIdEqualTo(data.getDataId());
+        }
+        if(data.getDataName() != null && !"".equals(data.getDataName())){
+            criteria.andDataNameEqualTo(data.getDataName());
+        }
+        PageHelper.startPage(pageNum, 10);
+        List<Data> datas = dataService.selectByExample(dataExample);
+        PageInfo<Data> pageInfo = new PageInfo<Data>(datas);
+        model.addAttribute("datas",datas);
+        model.addAttribute("pageInfo",pageInfo);
+        return "data/list :: DataList";
+    }
+
+
+
+    //来到资料添加页面
     @RequestMapping("/data")
-    public String addDataGuide(){
+    public String addDataGuide(Model model){
+        model.addAttribute("courses",courseService.selectByExample(new CourseExample()));
         return "data/add";
     }
 
 
-    //课程添加
+    //资料添加
     @PostMapping("/data")
     public String addCourse(Data data){
+        data.setCreateTime(new Date());
         dataService.insert(data);
         return "redirect:/datas";
     }
@@ -68,17 +101,19 @@ public class DataController {
     public String toEditPage(@PathVariable Integer dataId, Model model){
         Data data = dataService.selectByPrimaryKey(dataId);
         model.addAttribute("data",data);
+
+        model.addAttribute("courses",courseService.selectByExample(new CourseExample()));
         return "data/edit";
     }
 
-    //课程修改:需要提交课程id;
+    //资料修改:需要提交资料id;
     @PutMapping("/data")
     public String updateCourse(Data data){
-        dataService.updateByPrimaryKey(data);
+        dataService.updateByPrimaryKeySelective(data);
         return "redirect:/datas";
     }
 
-    //课程删除
+    //资料删除
     @DeleteMapping("/data/{id}")
     public String deleteCourse(@PathVariable Integer id){
         DataExample dataExample = new DataExample();
@@ -93,16 +128,28 @@ public class DataController {
         if(file == null) {
             return "redirect:/datas";
         }
+        //获得courseName 以方便增加路径
+        Data data = dataService.selectByPrimaryKey(dataId);
+        Integer courseId = data.getCourseId();
+        Course course = courseService.selectByPrimaryKey(courseId);
+        String courseName = course.getCourseName();
+
         String fileName = file.getOriginalFilename();
         byte[] bytes = new byte[0];
         try {
             bytes = file.getBytes();
-            String path = "F:\\JetBrains\\IdeaProjects2\\e_learning\\src\\main\\resources\\uploads";
-            //destination 目的地
-            File dest = new File(path + "/" + fileName);
-            String dataPath = "/uploads/" + fileName;
-            dataService.updateDataPath(dataId, dataPath);
+            String path = ResourceUtils.getURL("classpath:").getPath() + "/static/uploads/course/"+courseName;
+
+            //destination 目的地的文件夹
+            File dest = new File(path);
+            //先创建文件夹，再上传文件
+            if (!dest.exists()) dest.mkdirs();
+            dest = new File(path + "/" + fileName);
             file.transferTo(dest);
+
+            String dataPath = "/uploads/course/" + courseName + "/" + fileName;
+            dataService.updateDataPath(dataId, dataPath);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -275,7 +322,7 @@ public class DataController {
                     FileOutputStream os = new FileOutputStream(new File(dirFile, uuidName));
                     //g.对拷流
                     IOUtils.copy(is, os);
-                    //h.释放资源
+                    //h.释放资料
                     os.close();
                     is.close();
                     //i.删除临时文件
@@ -343,7 +390,7 @@ public class DataController {
                 response.getOutputStream().write(bys);
 
             } else {
-                throw new RuntimeException("资源不存在！");
+                throw new RuntimeException("资料不存在！");
             }
 
         } catch (Exception e) {
