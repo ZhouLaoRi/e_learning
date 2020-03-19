@@ -15,65 +15,72 @@
 		<div class="container-fluid">
 			<div class="row">
 				<!-- 引入侧边栏 -->
-				<div th:replace="~{commons/bar::#sidebar(activeUri='historys')}"></div>
+				<div th:replace="~{commons/bar::#sidebar(activeUri='managers')}"></div>
 
 				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-					<h2><a class="btn btn-sm btn-success" href="history" th:href="@{/history}">历史添加</a></h2>
 
 					<!-- 加入的搜索栏 -->
 					<div  class="ui secondary segment form">
 						<div class="inline fields">
 							<div class="field">
-								<input id="userIdInput" type="text" name="userId" placeholder="用户id">
+								<input id="managerIdInput" type="text" name="managerId" placeholder="编号">
 							</div>
 							<div class="field">
-								<input id="courseIdInput" type="text" name="courseId" placeholder="课程id">
-							</div>
-							<div class="field">
-								<input id="historyDateBeginInput" type="date" name="historyDateBegin" placeholder="开始时间">
-							</div>
-							<div class="field">
-								<input id="historyDateEndInput" type="date" name="historyDateEnd" placeholder="结束时间">
+								<input id="managerNameInput" type="text" name="managerName" placeholder="管理员名">
 							</div>
 							<button id="clear-btn" class="ui compact button">clear</button>
 							<div class="field">
 								<!--<button  type="button" id="search-btn" class="ui mini teal basic button"><i class="search icon"></i>搜索</button>-->
-								<button type="button" id="search-btn-blog" class="ui mini teal basic button"><i class="search icon"></i>搜索</button>
+								<button  type="button" id="search-btn-blog" class="ui mini teal basic button"><i class="search icon"></i>搜索</button>
 							</div>
 						</div>
 					</div>
 
-					<div class="table-responsive" id="table-container" th:fragment="HistoryList">
+					<div class="table-responsive" id="table-container" th:fragment="ManagerList">
 						<table class="table table-striped table-sm">
 							<thead>
 								<tr>
-									<th>编号</th>
-									<th>用户id</th>
-									<th>观看时间</th>
-									<th>课程id</th>
-									<th>资料id</th>
+									<th>管理员编号</th>
+									<th>登录管理员名</th>
+									<th>登录密码</th>
+									<th>管理员类型</th>
+									<th>头像路径</th>
+									<th>邮箱</th>
+									<th>电话</th>
+									<th>登陆状态</th>
+									<th>创建时间</th>
+									<th>更新时间</th>
 									<th>操作</th>
+									<th>上传头像</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="history:${pageInfo.list}">
-									<td th:text="${history.historyId}"></td>
-									<td th:text="${history.userId}"></td>
-									<td th:text="${#dates.format(history.historyDate,'yyyy-MM-dd HH:mm')}"></td>
-									<td th:text="${history.courseId}"></td>
-									<td th:text="${history.dataId}"></td>
+								<tr th:each="manager:${pageInfo.list}">
+									<td th:text="${manager.managerId}"></td>
+									<td th:text="${manager.managerName}"></td>
+									<td th:text="${manager.managerPassword}"></td>
+									<td th:text="${manager.managerType}"></td>
+									<td th:text="${manager.avatar}"></td>
+									<td th:text="${manager.email}"></td>
+									<td th:text="${manager.telephone}"></td>
+									<td th:text="${manager.loginState}"></td>
+									<td th:text="${#dates.format(manager.createTime,'yyyy-MM-dd HH:mm')}"></td>
+									<td th:text="${#dates.format(manager.updateTime,'yyyy-MM-dd HH:mm')}"></td>
 									<td>
-										<a class="btn btn-sm btn-primary" th:href="@{/history/}+${history.historyId}">编辑</a>
-										<button th:attr="del_uri=@{/history/}+${history.historyId}" type="submit" class="btn btn-sm btn-danger deleteBtn">删除</button>
+										<a class="btn btn-sm btn-primary" th:href="@{/manager/}+${manager.managerId}">编辑</a>
+										<button th:attr="del_uri=@{/manager/}+${manager.managerId}" type="submit" class="btn btn-sm btn-danger deleteBtn">删除</button>
+									</td>
+									<td>
+										<form th:action="@{/managerUpload/}+${manager.managerId}" method="POST" class="file" enctype="multipart/form-data">
+											<input type="file" name="file"/>
+											<input type="submit" value="上传" onclick="upload()"/>
+										</form>
 									</td>
 								</tr>
 							</tbody>
 						</table>
-
 						<p>
 							<span>第[[${pageInfo.pageNum}]]页/共[[${pageInfo.pages}]]页</span><br/>
-							<!--当前页是第1页时，那首页和上一页变成不可点击链接，当前页是最后一页时，那下一页、尾页不可点击链接-->
-
 
 							<!--        上一页-->
 							<!--        如果为第一页，则没有a标签-->
@@ -82,14 +89,14 @@
 							</th:block>
 
 							<th:block th:if="${pageInfo.pageNum>1}">
-								<a class="btn btn-sm btn-primary" th:href="@{/historys(pageNum=${pageInfo.pageNum-1})}">
+								<a class="btn btn-sm btn-primary" th:href="@{/managers(pageNum=${pageInfo.pageNum-1})}">
 									<span>上一页</span>
 								</a>
 							</th:block>
 
 							<!--        页码遍历-->
 							<th:block th:each="i :${#numbers.sequence(1, pageInfo.pages)}">
-								<a class="btn btn-sm btn-primary " th:href="@{/historys(pageNum=${i})}">
+								<a class="btn btn-sm btn-primary " th:href="@{/managers(pageNum=${i})}">
 									<!--                当前页样式为on-->
 									<span th:style="${pageInfo.pageNum == i}? 'background: #6610f2':''"
 										  th:class="${pageInfo.pageNum == i}? 'btn-sm':''">
@@ -105,7 +112,7 @@
 							</th:block>
 
 							<th:block th:if="${pageInfo.pageNum<pageInfo.pages}">
-								<a class="btn btn-sm btn-primary" th:href="@{/historys(pageNum=${pageInfo.pageNum+1})}">
+								<a class="btn btn-sm btn-primary" th:href="@{/managers(pageNum=${pageInfo.pageNum+1})}">
 									<span>下一页</span>
 								</a>
 							</th:block>
@@ -113,8 +120,7 @@
 						</p>
 					</div>
 				</main>
-				<!--<form th:action="@{/emp/}+${emp.id}" method="post">-->
-				<form id="deleteHistoryForm" method="post">
+				<form id="deleteManagerForm" method="post">
 					<input type="hidden" name="_method" value="delete"/>
 				</form>
 			</div>
@@ -137,37 +143,38 @@
 		<!-- Graphs -->
 		<script type="text/javascript" src="asserts/js/Chart.min.js"></script>
 
-
 		<script>
 			$(".deleteBtn").click(function () {
                 if(confirm("确定删除吗")){
                     alert("删除成功");
-                    //删除当前历史的
-                    $("#deleteHistoryForm").attr("action",$(this).attr("del_uri")).submit();
+                    //删除当前管理员的，假删除
+                    $("#deleteManagerForm").attr("action",$(this).attr("del_uri")).submit();
                     return true;
                 }
 				return false;
             });
 
+            function upload(){
+                if(confirm("确定上传吗？原有的头像将会被覆盖，无法复原！！！")){
+                    return true;
+                }
+                return false;
+            }
+
             //清空搜索条件的东西
             $('#clear-btn')
                 .on('click', function() {
-                    document.getElementById("userIdInput").value="";
-                    document.getElementById("courseIdInput").value="";
-                    document.getElementById("historyDateBeginInput").value="";
-                    document.getElementById("historyDateEndInput").value="";
+                    document.getElementById("managerIdInput").value="";
+                    document.getElementById("managerNameInput").value="";
                 })
             ;
 
             $("#search-btn-blog").click(function () {
-                $("#table-container").load("/crud/historysAll",{
-                    userId : $("#userIdInput").val(),
-                    courseId : $("#courseIdInput").val(),
-                    historyDateBegin : $("#historyDateBeginInput").val(),
-                    historyDateEnd : $("#historyDateEndInput").val()
+                $("#table-container").load("/crud/managersAll",{
+                    managerId : $("#managerIdInput").val(),
+                    managerName : $("#managerNameInput").val()
                 });
             });
-
 		</script>
 	</body>
 

@@ -15,19 +15,19 @@
 		<div class="container-fluid">
 			<div class="row">
 				<!-- 引入侧边栏 -->
-				<div th:replace="~{commons/bar::#sidebar(activeUri='datas')}"></div>
+				<div th:replace="~{commons/bar::#sidebar(activeUri='comments')}"></div>
 
 				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-					<h2><a class="btn btn-sm btn-success" href="data" th:href="@{/data}">资料添加</a></h2>
+					<h2><a class="btn btn-sm btn-success" href="comment" th:href="@{/comment}">评论添加</a></h2>
 
 					<!-- 加入的搜索栏 -->
 					<div  class="ui secondary segment form">
 						<div class="inline fields">
 							<div class="field">
-								<input id="dataIdInput" type="text" name="dataId" placeholder="资料编号">
+								<input id="commentIdInput" type="text" name="commentId" placeholder="评论编号">
 							</div>
 							<div class="field">
-								<input id="dataNameInput" type="text" name="dataName" placeholder="资料名字">
+								<input id="commentNameInput" type="text" name="commentName" placeholder="评论名字">
 							</div>
 							<button id="clear-btn" class="ui compact button">clear</button>
 							<div class="field">
@@ -37,57 +37,40 @@
 						</div>
 					</div>
 
-					<div class="table-responsive" id="table-container" th:fragment="DataList">
+					<div class="table-responsive" id="table-container" th:fragment="CommentList">
 						<table class="table table-striped table-sm">
 							<thead>
 								<tr>
-									<th>资料编号</th>
-									<th>名字</th>
-									<th>简介</th>
-									<th>存储路径</th>
-									<th>难易度等级</th>
-									<th>资料类型</th>
-									<th>资料所属课程</th>
-									<th>上传时间</th>
+									<th>评论编号</th>
+									<th>用户id</th>
+									<th>用户名</th>
+									<th>用户头像路径</th>
+									<th>评论时间</th>
+									<th>内容</th>
+									<th>点赞</th>
+									<th>父评论（回复的人）</th>
+									<th>评论所属课程</th>
 									<th>操作</th>
-									<th>上传资源</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="data:${datas}">
-									<td th:text="${data.dataId}"></td>
-									<td th:text="${data.dataName}"></td>
-									<td th:text="${data.dataIntro}"></td>
-									<td th:text="${data.dataPath}"></td>
-									<td th:text="${data.dataLevel}"></td>
-									<td th:text="${data.dataType}"></td>
-
-									<th:block th:if="${data.dataType==1}">
-										<td th:text="视频"></td>
-									</th:block>
-									<th:block th:if="${data.dataType==2}">
-										<td th:text="音频"></td>
-									</th:block>
-									<th:block th:if="${data.dataType==3}">
-										<td th:text="文本"></td>
-									</th:block>
-									<td th:text="${data.courseId}"></td>
-									<td th:text="${#dates.format(data.createTime,'yyyy-MM-dd HH:mm')}"></td>
+								<tr th:each="comment:${pageInfo.list}">
+									<td th:text="${comment.commentId}"></td>
+									<td th:text="${comment.userId}"></td>
+									<td th:text="${comment.nickname}"></td>
+									<td th:text="${comment.avatar}"></td>
+									<td th:text="${#dates.format(comment.commentDate,'yyyy-MM-dd HH:mm')}"></td>
+									<td th:text="${comment.commentText}"></td>
+									<td th:text="${comment.commentLike}"></td>
+									<td th:text="${comment.parentCommentId}"></td>
+									<td th:text="${comment.courseId}"></td>
 									<td>
-										<a class="btn btn-sm btn-primary" th:href="@{/data/}+${data.dataId}">编辑</a>
-										<button th:attr="del_uri=@{/data/}+${data.dataId}" type="submit" class="btn btn-sm btn-danger deleteBtn">删除</button>
-									</td>
-									<td>
-										<form th:action="@{/dataUpload/}+${data.dataId}" method="POST" class="file" enctype="multipart/form-data">
-											<input type="file" name="file"/>
-											<input type="submit" value="上传" onclick="upload()"/>
-										</form>
+										<a class="btn btn-sm btn-primary" th:href="@{/comment/}+${comment.commentId}">编辑</a>
+										<button th:attr="del_uri=@{/comment/}+${comment.commentId}" type="submit" class="btn btn-sm btn-danger deleteBtn">删除</button>
 									</td>
 								</tr>
 							</tbody>
 						</table>
-
-						<a th:href="@{/dataDownload/}+'19'">下载1</a>
 
 						<p>
 							<span>第[[${pageInfo.pageNum}]]页/共[[${pageInfo.pages}]]页</span><br/>
@@ -101,14 +84,14 @@
 							</th:block>
 
 							<th:block th:if="${pageInfo.pageNum>1}">
-								<a class="btn btn-sm btn-primary" th:href="@{/datas(pageNum=${pageInfo.pageNum-1})}">
+								<a class="btn btn-sm btn-primary" th:href="@{/comments(pageNum=${pageInfo.pageNum-1})}">
 									<span>上一页</span>
 								</a>
 							</th:block>
 
 							<!--        页码遍历-->
 							<th:block th:each="i :${#numbers.sequence(1, pageInfo.pages)}">
-								<a class="btn btn-sm btn-primary " th:href="@{/datas(pageNum=${i})}">
+								<a class="btn btn-sm btn-primary " th:href="@{/comments(pageNum=${i})}">
 									<!--                当前页样式为on-->
 									<span th:style="${pageInfo.pageNum == i}? 'background: #6610f2':''"
 										  th:class="${pageInfo.pageNum == i}? 'btn-sm':''">
@@ -124,7 +107,7 @@
 							</th:block>
 
 							<th:block th:if="${pageInfo.pageNum<pageInfo.pages}">
-								<a class="btn btn-sm btn-primary" th:href="@{/datas(pageNum=${pageInfo.pageNum+1})}">
+								<a class="btn btn-sm btn-primary" th:href="@{/comments(pageNum=${pageInfo.pageNum+1})}">
 									<span>下一页</span>
 								</a>
 							</th:block>
@@ -133,7 +116,7 @@
 					</div>
 				</main>
 				<!--<form th:action="@{/emp/}+${emp.id}" method="post">-->
-				<form id="deleteDataForm" method="post">
+				<form id="deleteCommentForm" method="post">
 					<input type="hidden" name="_method" value="delete"/>
 				</form>
 			</div>
@@ -162,7 +145,7 @@
                 if(confirm("确定删除吗")){
                     alert("删除成功");
                     //删除当前资源的
-                    $("#deleteDataForm").attr("action",$(this).attr("del_uri")).submit();
+                    $("#deleteCommentForm").attr("action",$(this).attr("del_uri")).submit();
                     return true;
                 }
 				return false;
@@ -178,24 +161,24 @@
             //清空搜索条件的东西
             $('#clear-btn')
                 .on('click', function() {
-                    document.getElementById("dataIdInput").value="";
-                    document.getElementById("dataNameInput").value="";
+                    document.getElementById("commentIdInput").value="";
+                    document.getElementById("commentNameInput").value="";
                 })
             ;
 
             $("#search-btn-blog").click(function () {
-                $("#table-container").load("/crud/datasAll",{
-                    dataId : $("#dataIdInput").val(),
-                    dataName : $("#dataNameInput").val()
+                $("#table-container").load("/crud/commentsAll",{
+                    commentId : $("#commentIdInput").val(),
+                    commentName : $("#commentNameInput").val()
                 });
             });
 
             //想写get请求但好像不会 哈哈哈哈
             /*$("#search-btn-blog").click(function () {
-              	var dataId = $("#dataIdInput").val();
-              	var dataName = $("#dataNameInput").val();
-                var urlData = [[@{/datas(pageNum=${pageInfo.pageNum+1})}]];
-                $().load(urlData);
+              	var commentId = $("#commentIdInput").val();
+              	var commentName = $("#commentNameInput").val();
+                var urlComment = [[@{/comments(pageNum=${pageInfo.pageNum+1})}]];
+                $().load(urlComment);
             });*/
 		</script>
 	</body>

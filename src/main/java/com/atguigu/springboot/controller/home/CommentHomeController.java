@@ -1,6 +1,7 @@
 package com.atguigu.springboot.controller.home;
 
 import com.atguigu.springboot.dto.CommentDTO;
+import com.atguigu.springboot.entity.Comment;
 import com.atguigu.springboot.entity.User;
 import com.atguigu.springboot.service.CommentService;
 import com.atguigu.springboot.vo.CommentVo;
@@ -20,7 +21,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/home")
-public class CommentController {
+public class CommentHomeController {
 
 
     @Resource
@@ -42,20 +43,20 @@ public class CommentController {
 
 
     @PostMapping("/comments")
-    public String post(CommentVo commentVo, HttpSession session) {
+    public String post(Comment comment, HttpSession session) {
 
         User user = (User) session.getAttribute("user");
         if (user != null) {
             /*commentVo.setAvatar(user.getAvatar());
             comment.setAvatar(avatar);*/
         }
-        commentVo.setAvatar("/blog/images/1005-100x100.jpg");
-        commentVo.setNickname("admin");//前端传进来了 但是是没用的
-        commentVo.setCommentLike(0);
-        commentVo.setCommentDate(new Date());
+        comment.setAvatar("/blog/images/1005-100x100.jpg");
+        comment.setNickname("admin");//前端传进来了 但是是没用的
+        comment.setCommentLike(0);
+        comment.setCommentDate(new Date());
 
-        commentService.saveComment(commentVo);
-        return "redirect:/home/comments/" + commentVo.getCourseId();
+        commentService.saveComment(comment);
+        return "redirect:/home/comments/" + comment.getCourseId();
     }
 
 

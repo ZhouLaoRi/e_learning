@@ -304,4 +304,15 @@
       delete_time = #{deleteTime,jdbcType=TIMESTAMP}
     where manager_id = #{managerId,jdbcType=INTEGER}
   </update>
+
+  <update id="updateManagerAvatar">
+    update manager
+    set
+      avatar = #{managerAvatar,jdbcType=VARCHAR}
+    where manager_id = #{managerId,jdbcType=INTEGER}
+  </update>
+
+  <update id="recoverManagerByPrimaryKey" parameterType="java.lang.Integer">
+    update manager set delete_time=NULL where manager_id = #{managerId,jdbcType=INTEGER}
+  </update>
 </mapper>

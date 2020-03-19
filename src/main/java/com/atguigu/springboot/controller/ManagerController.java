@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.annotation.Resource;
 import java.util.List;
 
-@Controller
+
 public class ManagerController {
     @Resource
     private ManagerService managerService;

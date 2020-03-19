@@ -30,4 +30,8 @@ public interface ManagerMapper {
     int updateByPrimaryKeySelective(Manager record);
 
     int updateByPrimaryKey(Manager record);
+
+    int updateManagerAvatar(@Param("managerId")Integer managerId, @Param("managerAvatar")String managerAvatar);
+
+    int recoverManagerByPrimaryKey(Integer managerId);
 }

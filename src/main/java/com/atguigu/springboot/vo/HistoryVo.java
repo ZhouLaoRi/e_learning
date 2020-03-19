@@ -4,17 +4,14 @@ import lombok.Data;
 
 import java.util.Date;
 
-
 @Data
-public class CommentVo {
+public class HistoryVo {
 
     private Integer userId;
 
-    private String nickname;
-
     private Integer courseId;
 
-    private Date commentDateBegin;
+    private Date historyDateBegin;
 
-    private Date commentDateEnd;
+    private Date historyDateEnd;
 }

@@ -13,28 +13,35 @@
 <div class="container-fluid">
 	<div class="row">
 		<!-- 引入侧边栏 -->
-		<div th:replace="~{commons/bar::#sidebar(activeUri='historys')}"></div>
+		<div th:replace="~{commons/bar::#sidebar(activeUri='managers')}"></div>
 
 		<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-			<form th:action="@{/history}" method="post">
+			<form th:action="@{/manager}" method="post">
 				<input type="hidden" name="_method" value="put"/>
-				<input type="hidden" name="historyId" th:value="${history.historyId}">
-
+				<input type="hidden" name="managerId" th:value="${manager.managerId}">
 				<div class="form-group">
-					<label>用户id</label>
-					<input name="historyIntro" type="text" class="form-control" placeholder="1" th:value="${history.userId}">
+					<label>登录管理员名</label>
+					<input name="managerName" type="text" class="form-control" th:value="${manager.managerName}">
 				</div>
 				<div class="form-group">
-					<label>观看时间</label>
-					<input name="historyPath" type="text" class="form-control" placeholder="2019-07-19 00:00:00" th:value="${history.historyDate}">
+					<label>登录密码</label>
+					<input name="managerPassword" type="text" class="form-control" th:value="${manager.managerPassword}">
 				</div>
 				<div class="form-group">
-					<label>课程id</label>
-					<input name="historyLevel" type="text" class="form-control" placeholder="1" th:value="${history.courseId}">
+					<label>管理员类型</label>
+					<input name="managerType" type="text" class="form-control" th:value="${manager.managerType}">
 				</div>
 				<div class="form-group">
-					<label>资料id</label>
-					<input name="historyName" type="text" class="form-control" placeholder="1" th:value="${history.dataId}">
+					<label>头像路径</label>
+					<input name="avatar" type="text" class="form-control" th:value="${manager.avatar}">
+				</div>
+				<div class="form-group">
+					<label>邮箱</label>
+					<input name="email" type="text" class="form-control" th:value="${manager.email}">
+				</div>
+				<div class="form-group">
+					<label>电话</label>
+					<input name="telephone" type="text" class="form-control" th:value="${manager.telephone}">
 				</div>
 				<button type="submit" class="btn btn-primary" >修改</button>
 			</form>
@@ -62,10 +69,10 @@
     var ctx = document.getElementById("myChart");
     var myChart = new Chart(ctx, {
         type: 'line',
-        history: {
+        data: {
             labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-            historysets: [{
-                history: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
+            datasets: [{
+                data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
                 lineTension: 0,
                 backgroundColor: 'transparent',
                 borderColor: '#007bff',

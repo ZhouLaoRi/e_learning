@@ -19,6 +19,10 @@ public class TypeService {
         return typeMapper.insert(type);
     }
 
+    public int insertSelective(Type type){
+        return typeMapper.insertSelective(type);
+    }
+
     public List<Type> selectByExample(TypeExample example){
         return typeMapper.selectByExample(example);
     }
@@ -37,5 +41,17 @@ public class TypeService {
 
     public Type selectByPrimaryKey(Integer id){
         return typeMapper.selectByPrimaryKey(id);
+    }
+
+    public void updateByPrimaryKeySelective(Type type) {
+        typeMapper.updateByPrimaryKeySelective(type);
+    }
+
+    public void recoverTypeByPrimaryKey(Integer typeId) {
+        typeMapper.recoverTypeByPrimaryKey(typeId);
+    }
+
+    public void addTotalOne(Integer typeId) {
+        typeMapper.addTotalOne(typeId);
     }
 }

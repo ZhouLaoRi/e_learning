@@ -33,7 +33,11 @@ public class UserController {
     public String login(@RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum, Model model){
 
         PageHelper.startPage(pageNum, 10);
-        List<User> users = userService.selectByExample(new UserExample());
+        UserExample userExample = new UserExample();
+        UserExample.Criteria criteria = userExample.createCriteria();
+        criteria.andDeleteTimeIsNull();
+        List<User> users = userService.selectByExample(userExample);
+
         PageInfo<User> pageInfo = new PageInfo<User>(users);
         model.addAttribute("pageInfo",pageInfo);
         return "user/list";

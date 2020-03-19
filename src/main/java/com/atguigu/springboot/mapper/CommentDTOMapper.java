@@ -1,6 +1,7 @@
 package com.atguigu.springboot.mapper;
 
 import com.atguigu.springboot.dto.CommentDTO;
+import com.atguigu.springboot.entity.Comment;
 import com.atguigu.springboot.vo.CommentVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -14,5 +15,5 @@ public interface CommentDTOMapper {
 
     void likeCommentDTO(Integer commentId);
 
-    void saveComment(CommentVo commentVo);
+    void saveComment(Comment comment);
 }

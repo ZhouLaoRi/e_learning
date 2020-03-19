@@ -70,6 +70,7 @@ public class DataController {
         if(data.getDataName() != null && !"".equals(data.getDataName())){
             criteria.andDataNameEqualTo(data.getDataName());
         }
+
         PageHelper.startPage(pageNum, 10);
         List<Data> datas = dataService.selectByExample(dataExample);
         PageInfo<Data> pageInfo = new PageInfo<Data>(datas);

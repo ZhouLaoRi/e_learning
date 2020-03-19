@@ -34,7 +34,19 @@ public class CommentService {
         commentDTOMapper.likeCommentDTO(commentId);
     }
 
-    public void saveComment(CommentVo commentVo) {
-        commentDTOMapper.saveComment(commentVo);
+    public void saveComment(Comment comment) {
+        commentDTOMapper.saveComment(comment);
+    }
+
+    public Comment selectByPrimaryKey(Integer id) {
+        return commentMapper.selectByPrimaryKey(id);
+    }
+
+    public void updateByPrimaryKeySelective(Comment comment) {
+        commentMapper.updateByPrimaryKeySelective(comment);
+    }
+
+    public void deleteByPrimaryKey(Integer commentId) {
+        commentMapper.deleteByPrimaryKey(commentId);
     }
 }

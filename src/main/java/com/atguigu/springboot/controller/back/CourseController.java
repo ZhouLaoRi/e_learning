@@ -35,8 +35,11 @@ public class CourseController {
 
         CourseExample courseExample = new CourseExample();
         CourseExample.Criteria criteria = courseExample.createCriteria();
-        if(course.getCourseId() != null || course.getCourseName() != null){
+
+        if(course.getCourseId() != null && !"".equals(course.getCourseId())){
             criteria.andCourseIdEqualTo(course.getCourseId());
+        }
+        if(course.getCourseName() != null && !"".equals(course.getCourseName())){
             criteria.andCourseNameEqualTo(course.getCourseName());
         }
         criteria.andDeleteTimeIsNull();
@@ -106,6 +109,9 @@ public class CourseController {
         course.setCourseView(0);
         course.setCourseLike(0);
         courseService.insert(course);
+        //同时分类里面的总数也要加1
+        typeService.addTotalOne(course.getTypeId());
+
         return "redirect:/courses";
     }
 

@@ -34,4 +34,7 @@ public interface TypeMapper {
 
     List<Type> selectAllType();
 
+    void recoverTypeByPrimaryKey(@Param("typeId") Integer typeId);
+
+    void addTotalOne(Integer typeId);
 }

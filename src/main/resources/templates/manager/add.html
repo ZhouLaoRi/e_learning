@@ -13,43 +13,34 @@
 		<div class="container-fluid">
 			<div class="row">
 				<!-- 引入侧边栏 -->
-				<div th:replace="~{commons/bar::#sidebar(activeUri='datas')}"></div>
+				<div th:replace="~{commons/bar::#sidebar(activeUri='courses')}"></div>
 
 				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-					<form th:action="@{/data}" method="post">
-						<input type="hidden" name="commentId" th:value="${comment.commentId}">
-
+					<form th:action="@{/manager}" method="post">
+						<!--<input type="hidden" name="courseId" th:value="${course.courseId}">-->
 						<div class="form-group">
-							<label>用户id</label>
-							<input name="userId" type="text" class="form-control" placeholder="1" th:value="${comment.userId}">
+							<label>登录管理员名</label>
+							<input name="managerName" type="text" class="form-control" th:value="${manager.managerName}">
 						</div>
 						<div class="form-group">
-							<label>用户名</label>
-							<input name="nickname" type="text" class="form-control" placeholder="1" th:value="${comment.nickname}">
+							<label>登录密码</label>
+							<input name="managerPassword" type="text" class="form-control" th:value="${manager.managerPassword}">
 						</div>
 						<div class="form-group">
-							<label>用户头像路径</label>
-							<input name="avatar" type="text" class="form-control" placeholder="stone" th:value="${comment.avatar}">
+							<label>管理员类型</label>
+							<input name="managerType" type="text" class="form-control" th:value="${manager.managerType}">
 						</div>
 						<div class="form-group">
-							<label>评论时间</label>
-							<input name="commentDate" type="text" class="form-control" placeholder="2020-03-14 18:39:08" th:value="${comment.commentDate}">
+							<label>头像路径</label>
+							<input name="avatar" type="text" class="form-control" th:value="${manager.avatar}">
 						</div>
 						<div class="form-group">
-							<label>内容</label>
-							<input name="commentText" type="text" class="form-control" placeholder="老师讲课很清晰，内容也很好" th:value="${comment.commentText}">
+							<label>邮箱</label>
+							<input name="email" type="text" class="form-control" th:value="${manager.email}">
 						</div>
 						<div class="form-group">
-							<label>点赞</label>
-							<input name="commentLike" type="text" class="form-control" placeholder="1" th:value="${comment.commentLike}">
-						</div>
-						<div class="form-group">
-							<label>父评论（回复的人）</label>
-							<input name="parentCommentId" type="text" class="form-control" placeholder="1" th:value="${comment.parentCommentId}">
-						</div>
-						<div class="form-group">
-							<label>评论所属课程</label>
-							<input name="courseId" type="text" class="form-control" placeholder="1" th:value="${comment.courseId}">
+							<label>电话</label>
+							<input name="telephone" type="text" class="form-control" th:value="${manager.telephone}">
 						</div>
 						<button type="submit" class="btn btn-primary" >添加</button>
 					</form>
