@@ -34,6 +34,7 @@ import java.util.Map;
 import static javax.xml.transform.OutputKeys.ENCODING;
 
 @Controller
+@RequestMapping("/back/data")
 public class DataController {
 
     @Resource

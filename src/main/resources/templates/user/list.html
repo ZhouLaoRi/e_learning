@@ -75,11 +75,11 @@
 									<td th:text="${user.money}"></td>
 									<td th:text="${user.jifen}"></td>
 									<td>
-										<a class="btn btn-sm btn-primary" th:href="@{/user/}+${user.userId}">编辑</a>
-										<button th:attr="del_uri=@{/user/}+${user.userId}" type="submit" class="btn btn-sm btn-danger deleteBtn">删除</button>
+										<a class="btn btn-sm btn-primary" th:href="@{/back/user/user/}+${user.userId}">编辑</a>
+										<button th:attr="del_uri=@{/back/user/user/}+${user.userId}" type="submit" class="btn btn-sm btn-danger deleteBtn">删除</button>
 									</td>
 									<td>
-										<form th:action="@{/userUpload/}+${user.userId}" method="POST" class="file" enctype="multipart/form-data">
+										<form th:action="@{/back/user/userUpload/}+${user.userId}" method="POST" class="file" enctype="multipart/form-data">
 											<input type="file" name="file"/>
 											<input type="submit" value="上传" onclick="upload()"/>
 										</form>
@@ -97,14 +97,14 @@
 							</th:block>
 
 							<th:block th:if="${pageInfo.pageNum>1}">
-								<a class="btn btn-sm btn-primary" th:href="@{/users(pageNum=${pageInfo.pageNum-1})}">
+								<a class="btn btn-sm btn-primary" th:href="@{/back/user/users(pageNum=${pageInfo.pageNum-1})}">
 									<span>上一页</span>
 								</a>
 							</th:block>
 
 							<!--        页码遍历-->
 							<th:block th:each="i :${#numbers.sequence(1, pageInfo.pages)}">
-								<a class="btn btn-sm btn-primary " th:href="@{/users(pageNum=${i})}">
+								<a class="btn btn-sm btn-primary " th:href="@{/back/user/users(pageNum=${i})}">
 									<!--                当前页样式为on-->
 									<span th:style="${pageInfo.pageNum == i}? 'background: #6610f2':''"
 										  th:class="${pageInfo.pageNum == i}? 'btn-sm':''">
@@ -120,7 +120,7 @@
 							</th:block>
 
 							<th:block th:if="${pageInfo.pageNum<pageInfo.pages}">
-								<a class="btn btn-sm btn-primary" th:href="@{/users(pageNum=${pageInfo.pageNum+1})}">
+								<a class="btn btn-sm btn-primary" th:href="@{/back/user/users(pageNum=${pageInfo.pageNum+1})}">
 									<span>下一页</span>
 								</a>
 							</th:block>
@@ -179,7 +179,7 @@
             ;
 
             $("#search-btn-blog").click(function () {
-                $("#table-container").load("/crud/usersAll",{
+                $("#table-container").load("/crud/back/user/usersAll",{
                     userId : $("#userIdInput").val(),
                     userName : $("#userNameInput").val()
                 });

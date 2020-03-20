@@ -67,11 +67,11 @@
 									<td th:text="${#dates.format(manager.createTime,'yyyy-MM-dd HH:mm')}"></td>
 									<td th:text="${#dates.format(manager.updateTime,'yyyy-MM-dd HH:mm')}"></td>
 									<td>
-										<a class="btn btn-sm btn-primary" th:href="@{/manager/}+${manager.managerId}">编辑</a>
-										<button th:attr="del_uri=@{/manager/}+${manager.managerId}" type="submit" class="btn btn-sm btn-danger deleteBtn">删除</button>
+										<a class="btn btn-sm btn-primary" th:href="@{/back/manager/manager/}+${manager.managerId}">编辑</a>
+										<button th:attr="del_uri=@{/back/manager/manager/}+${manager.managerId}" type="submit" class="btn btn-sm btn-danger deleteBtn">删除</button>
 									</td>
 									<td>
-										<form th:action="@{/managerUpload/}+${manager.managerId}" method="POST" class="file" enctype="multipart/form-data">
+										<form th:action="@{/back/manager/managerUpload/}+${manager.managerId}" method="POST" class="file" enctype="multipart/form-data">
 											<input type="file" name="file"/>
 											<input type="submit" value="上传" onclick="upload()"/>
 										</form>
@@ -89,14 +89,14 @@
 							</th:block>
 
 							<th:block th:if="${pageInfo.pageNum>1}">
-								<a class="btn btn-sm btn-primary" th:href="@{/managers(pageNum=${pageInfo.pageNum-1})}">
+								<a class="btn btn-sm btn-primary" th:href="@{/back/manager/managers(pageNum=${pageInfo.pageNum-1})}">
 									<span>上一页</span>
 								</a>
 							</th:block>
 
 							<!--        页码遍历-->
 							<th:block th:each="i :${#numbers.sequence(1, pageInfo.pages)}">
-								<a class="btn btn-sm btn-primary " th:href="@{/managers(pageNum=${i})}">
+								<a class="btn btn-sm btn-primary " th:href="@{/back/manager/managers(pageNum=${i})}">
 									<!--                当前页样式为on-->
 									<span th:style="${pageInfo.pageNum == i}? 'background: #6610f2':''"
 										  th:class="${pageInfo.pageNum == i}? 'btn-sm':''">
@@ -112,7 +112,7 @@
 							</th:block>
 
 							<th:block th:if="${pageInfo.pageNum<pageInfo.pages}">
-								<a class="btn btn-sm btn-primary" th:href="@{/managers(pageNum=${pageInfo.pageNum+1})}">
+								<a class="btn btn-sm btn-primary" th:href="@{/back/manager/managers(pageNum=${pageInfo.pageNum+1})}">
 									<span>下一页</span>
 								</a>
 							</th:block>
@@ -170,7 +170,7 @@
             ;
 
             $("#search-btn-blog").click(function () {
-                $("#table-container").load("/crud/managersAll",{
+                $("#table-container").load("/crud/back/manager/managersAll",{
                     managerId : $("#managerIdInput").val(),
                     managerName : $("#managerNameInput").val()
                 });

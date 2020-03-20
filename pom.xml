@@ -9,9 +9,11 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.atguigu</groupId>
-    <artifactId>spring-boot-04-web-restfulcrud</artifactId>
+    <!--<artifactId>spring-boot-04-web-restfulcrud</artifactId>-->
+    <artifactId>e-learning</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>spring-boot-04-web-restfulcrud</name>
+    <name>e-learning</name>
+    <!--<name>spring-boot-04-web-restfulcrud</name>-->
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -30,6 +32,23 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
+        <!-- 引入web模块 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!-- 引入thymeleaf模板引擎 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <!-- 引入security模块 -->
+        <!--<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>-->
+
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -127,25 +146,12 @@
         </dependency>
 
 
-        <!-- 引入web模块 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-
         <!-- 引入jquery-webjar -->
         <!--<dependency>
             <groupId>org.webjars</groupId>
             <artifactId>jquery</artifactId>
             <version>3.4.1</version>
         </dependency>-->
-
-        <!-- 引入thymeleaf模板引擎 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
 
         <!-- 引入bootstrap -->
         <dependency>

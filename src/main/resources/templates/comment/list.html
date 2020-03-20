@@ -18,7 +18,7 @@
 				<div th:replace="~{commons/bar::#sidebar(activeUri='comments')}"></div>
 
 				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-					<h2><a class="btn btn-sm btn-success" href="comment" th:href="@{/comment}">评论添加</a></h2>
+					<h2><a class="btn btn-sm btn-success" href="comment" th:href="@{/back/comment/comment}">评论添加</a></h2>
 
 					<!-- 加入的搜索栏 -->
 					<div  class="ui secondary segment form">
@@ -65,8 +65,8 @@
 									<td th:text="${comment.parentCommentId}"></td>
 									<td th:text="${comment.courseId}"></td>
 									<td>
-										<a class="btn btn-sm btn-primary" th:href="@{/comment/}+${comment.commentId}">编辑</a>
-										<button th:attr="del_uri=@{/comment/}+${comment.commentId}" type="submit" class="btn btn-sm btn-danger deleteBtn">删除</button>
+										<a class="btn btn-sm btn-primary" th:href="@{/back/comment/comment/}+${comment.commentId}">编辑</a>
+										<button th:attr="del_uri=@{/back/comment/comment/}+${comment.commentId}" type="submit" class="btn btn-sm btn-danger deleteBtn">删除</button>
 									</td>
 								</tr>
 							</tbody>
@@ -84,14 +84,14 @@
 							</th:block>
 
 							<th:block th:if="${pageInfo.pageNum>1}">
-								<a class="btn btn-sm btn-primary" th:href="@{/comments(pageNum=${pageInfo.pageNum-1})}">
+								<a class="btn btn-sm btn-primary" th:href="@{/back/comment/comments(pageNum=${pageInfo.pageNum-1})}">
 									<span>上一页</span>
 								</a>
 							</th:block>
 
 							<!--        页码遍历-->
 							<th:block th:each="i :${#numbers.sequence(1, pageInfo.pages)}">
-								<a class="btn btn-sm btn-primary " th:href="@{/comments(pageNum=${i})}">
+								<a class="btn btn-sm btn-primary " th:href="@{/back/comment/comments(pageNum=${i})}">
 									<!--                当前页样式为on-->
 									<span th:style="${pageInfo.pageNum == i}? 'background: #6610f2':''"
 										  th:class="${pageInfo.pageNum == i}? 'btn-sm':''">
@@ -107,7 +107,7 @@
 							</th:block>
 
 							<th:block th:if="${pageInfo.pageNum<pageInfo.pages}">
-								<a class="btn btn-sm btn-primary" th:href="@{/comments(pageNum=${pageInfo.pageNum+1})}">
+								<a class="btn btn-sm btn-primary" th:href="@{/back/comment/comments(pageNum=${pageInfo.pageNum+1})}">
 									<span>下一页</span>
 								</a>
 							</th:block>
@@ -167,7 +167,7 @@
             ;
 
             $("#search-btn-blog").click(function () {
-                $("#table-container").load("/crud/commentsAll",{
+                $("#table-container").load("/crud/back/comment/commentsAll",{
                     commentId : $("#commentIdInput").val(),
                     commentName : $("#commentNameInput").val()
                 });
@@ -177,7 +177,7 @@
             /*$("#search-btn-blog").click(function () {
               	var commentId = $("#commentIdInput").val();
               	var commentName = $("#commentNameInput").val();
-                var urlComment = [[@{/comments(pageNum=${pageInfo.pageNum+1})}]];
+                var urlComment = [[@{/back/comment/comments(pageNum=${pageInfo.pageNum+1})}]];
                 $().load(urlComment);
             });*/
 		</script>

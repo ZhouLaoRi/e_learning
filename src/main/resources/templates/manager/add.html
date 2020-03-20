@@ -16,7 +16,7 @@
 				<div th:replace="~{commons/bar::#sidebar(activeUri='courses')}"></div>
 
 				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-					<form th:action="@{/manager}" method="post">
+					<form th:action="@{/back/manager/manager}" method="post">
 						<!--<input type="hidden" name="courseId" th:value="${course.courseId}">-->
 						<div class="form-group">
 							<label>登录管理员名</label>

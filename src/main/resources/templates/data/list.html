@@ -18,7 +18,7 @@
 				<div th:replace="~{commons/bar::#sidebar(activeUri='datas')}"></div>
 
 				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-					<h2><a class="btn btn-sm btn-success" href="data" th:href="@{/data}">资料添加</a></h2>
+					<h2><a class="btn btn-sm btn-success" href="data" th:href="@{/back/data/data}">资料添加</a></h2>
 
 					<!-- 加入的搜索栏 -->
 					<div  class="ui secondary segment form">
@@ -74,11 +74,11 @@
 									<td th:text="${data.courseId}"></td>
 									<td th:text="${#dates.format(data.createTime,'yyyy-MM-dd HH:mm')}"></td>
 									<td>
-										<a class="btn btn-sm btn-primary" th:href="@{/data/}+${data.dataId}">编辑</a>
-										<button th:attr="del_uri=@{/data/}+${data.dataId}" type="submit" class="btn btn-sm btn-danger deleteBtn">删除</button>
+										<a class="btn btn-sm btn-primary" th:href="@{/back/data/data/}+${data.dataId}">编辑</a>
+										<button th:attr="del_uri=@{/back/data/data/}+${data.dataId}" type="submit" class="btn btn-sm btn-danger deleteBtn">删除</button>
 									</td>
 									<td>
-										<form th:action="@{/dataUpload/}+${data.dataId}" method="POST" class="file" enctype="multipart/form-data">
+										<form th:action="@{/back/data/dataUpload/}+${data.dataId}" method="POST" class="file" enctype="multipart/form-data">
 											<input type="file" name="file"/>
 											<input type="submit" value="上传" onclick="upload()"/>
 										</form>
@@ -87,7 +87,7 @@
 							</tbody>
 						</table>
 
-						<a th:href="@{/dataDownload/}+'19'">下载1</a>
+						<a th:href="@{/back/data/dataDownload/}+'19'">下载1</a>
 
 						<p>
 							<span>第[[${pageInfo.pageNum}]]页/共[[${pageInfo.pages}]]页</span><br/>
@@ -101,14 +101,14 @@
 							</th:block>
 
 							<th:block th:if="${pageInfo.pageNum>1}">
-								<a class="btn btn-sm btn-primary" th:href="@{/datas(pageNum=${pageInfo.pageNum-1})}">
+								<a class="btn btn-sm btn-primary" th:href="@{/back/data/datas(pageNum=${pageInfo.pageNum-1})}">
 									<span>上一页</span>
 								</a>
 							</th:block>
 
 							<!--        页码遍历-->
 							<th:block th:each="i :${#numbers.sequence(1, pageInfo.pages)}">
-								<a class="btn btn-sm btn-primary " th:href="@{/datas(pageNum=${i})}">
+								<a class="btn btn-sm btn-primary " th:href="@{/back/data/datas(pageNum=${i})}">
 									<!--                当前页样式为on-->
 									<span th:style="${pageInfo.pageNum == i}? 'background: #6610f2':''"
 										  th:class="${pageInfo.pageNum == i}? 'btn-sm':''">
@@ -124,7 +124,7 @@
 							</th:block>
 
 							<th:block th:if="${pageInfo.pageNum<pageInfo.pages}">
-								<a class="btn btn-sm btn-primary" th:href="@{/datas(pageNum=${pageInfo.pageNum+1})}">
+								<a class="btn btn-sm btn-primary" th:href="@{/back/data/datas(pageNum=${pageInfo.pageNum+1})}">
 									<span>下一页</span>
 								</a>
 							</th:block>
@@ -184,7 +184,7 @@
             ;
 
             $("#search-btn-blog").click(function () {
-                $("#table-container").load("/crud/datasAll",{
+                $("#table-container").load("/crud/back/data/datasAll",{
                     dataId : $("#dataIdInput").val(),
                     dataName : $("#dataNameInput").val()
                 });
@@ -194,7 +194,7 @@
             /*$("#search-btn-blog").click(function () {
               	var dataId = $("#dataIdInput").val();
               	var dataName = $("#dataNameInput").val();
-                var urlData = [[@{/datas(pageNum=${pageInfo.pageNum+1})}]];
+                var urlData = [[@{/back/data/datas(pageNum=${pageInfo.pageNum+1})}]];
                 $().load(urlData);
             });*/
 		</script>

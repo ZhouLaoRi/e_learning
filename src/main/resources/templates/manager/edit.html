@@ -16,7 +16,7 @@
 		<div th:replace="~{commons/bar::#sidebar(activeUri='managers')}"></div>
 
 		<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-			<form th:action="@{/manager}" method="post">
+			<form th:action="@{/back/manager/manager}" method="post">
 				<input type="hidden" name="_method" value="put"/>
 				<input type="hidden" name="managerId" th:value="${manager.managerId}">
 				<div class="form-group">

@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
+@RequestMapping("/back/comment")
 public class CommentController {
 
 

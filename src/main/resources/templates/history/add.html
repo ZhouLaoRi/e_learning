@@ -16,7 +16,7 @@
 				<div th:replace="~{commons/bar::#sidebar(activeUri='historys')}"></div>
 
 				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-					<form th:action="@{/history}" method="post">
+					<form th:action="@{/back/history/history}" method="post">
 						<input type="hidden" name="historyId">
 
 						<div class="form-group">

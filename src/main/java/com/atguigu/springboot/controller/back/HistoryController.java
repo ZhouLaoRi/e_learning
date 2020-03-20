@@ -14,6 +14,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Controller
+@RequestMapping("/back/history")
 public class HistoryController {
 
 
@@ -22,10 +23,9 @@ public class HistoryController {
 
     //查询所有历史记录返回列表页面
     @GetMapping("/historys")
-    public String listHistory(@RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum, Model model , History history){
+    public String listHistory(@RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum, Model model ){
 
         HistoryExample historyExample = new HistoryExample();
-        HistoryExample.Criteria criteria = historyExample.createCriteria();
         //xml里面是${}  直接替换变量的
         historyExample.setOrderByClause("history_date DESC");
 

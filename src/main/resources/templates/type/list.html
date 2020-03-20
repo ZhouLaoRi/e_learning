@@ -55,8 +55,8 @@
 									<td th:text="${type.total}"></td>
 									<td th:text="${#dates.format(type.createTime,'yyyy-MM-dd HH:mm')}"></td>
 									<td>
-										<a class="btn btn-sm btn-primary" th:href="@{/type/}+${type.id}">编辑</a>
-										<button th:attr="del_uri=@{/type/}+${type.id}" type="submit" class="btn btn-sm btn-danger deleteBtn">删除</button>
+										<a class="btn btn-sm btn-primary" th:href="@{/back/type/type/}+${type.id}">编辑</a>
+										<button th:attr="del_uri=@{/back/type/type/}+${type.id}" type="submit" class="btn btn-sm btn-danger deleteBtn">删除</button>
 									</td>
 								</tr>
 							</tbody>
@@ -74,14 +74,14 @@
 							</th:block>
 
 							<th:block th:if="${pageInfo.pageNum>1}">
-								<a class="btn btn-sm btn-primary" th:href="@{/types(pageNum=${pageInfo.pageNum-1})}">
+								<a class="btn btn-sm btn-primary" th:href="@{/back/type/types(pageNum=${pageInfo.pageNum-1})}">
 									<span>上一页</span>
 								</a>
 							</th:block>
 
 							<!--        页码遍历-->
 							<th:block th:each="i :${#numbers.sequence(1, pageInfo.pages)}">
-								<a class="btn btn-sm btn-primary " th:href="@{/types(pageNum=${i})}">
+								<a class="btn btn-sm btn-primary " th:href="@{/back/type/types(pageNum=${i})}">
 									<!--                当前页样式为on-->
 									<span th:style="${pageInfo.pageNum == i}? 'background: #6610f2':''"
 										  th:class="${pageInfo.pageNum == i}? 'btn-sm':''">
@@ -97,7 +97,7 @@
 							</th:block>
 
 							<th:block th:if="${pageInfo.pageNum<pageInfo.pages}">
-								<a class="btn btn-sm btn-primary" th:href="@{/types(pageNum=${pageInfo.pageNum+1})}">
+								<a class="btn btn-sm btn-primary" th:href="@{/back/type/types(pageNum=${pageInfo.pageNum+1})}">
 									<span>下一页</span>
 								</a>
 							</th:block>
@@ -151,7 +151,7 @@
             ;
 
             $("#search-btn-blog").click(function () {
-                $("#table-container").load("/crud/typesAll",{
+                $("#table-container").load("/crud/back/type/typesAll",{
                     typeId : $("#typeIdInput").val(),
                     typeName : $("#typeNameInput").val()
                 });
@@ -161,7 +161,7 @@
             /*$("#search-btn-blog").click(function () {
               	var typeId = $("#typeIdInput").val();
               	var typeName = $("#typeNameInput").val();
-                var urlType = [[@{/types(pageNum=${pageInfo.pageNum+1})}]];
+                var urlType = [[@{/back/type/types(pageNum=${pageInfo.pageNum+1})}]];
                 $().load(urlType);
             });*/
 		</script>

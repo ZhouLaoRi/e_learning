@@ -17,7 +17,7 @@
 				<div th:replace="~{commons/bar::#sidebar(activeUri='courses')}"></div>
 
 				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-					<h2><a class="btn btn-sm btn-success" href="course" th:href="@{/course}">课程添加</a></h2>
+					<h2><a class="btn btn-sm btn-success" href="course" th:href="@{/back/course/course}">课程添加</a></h2>
 
 					<!-- 加入的搜索栏 -->
 					<div  class="ui secondary segment form">
@@ -69,11 +69,11 @@
 									<td th:text="${#dates.format(course.createTime,'yyyy-MM-dd HH:mm')}"></td>
 									<td th:text="${#dates.format(course.updateTime,'yyyy-MM-dd HH:mm')}"></td>
 									<td>
-										<a class="btn btn-sm btn-primary" th:href="@{/course/}+${course.courseId}">编辑</a>
-										<button th:attr="del_uri=@{/course/}+${course.courseId}" type="submit" class="btn btn-sm btn-danger deleteBtn">删除</button>
+										<a class="btn btn-sm btn-primary" th:href="@{/back/course/course/}+${course.courseId}">编辑</a>
+										<button th:attr="del_uri=@{/back/course/course/}+${course.courseId}" type="submit" class="btn btn-sm btn-danger deleteBtn">删除</button>
 									</td>
 									<td>
-										<form th:action="@{/courseUpload/}+${course.courseId}" method="POST" class="file" enctype="multipart/form-data">
+										<form th:action="@{/back/course/courseUpload/}+${course.courseId}" method="POST" class="file" enctype="multipart/form-data">
 											<input type="file" name="file"/>
 											<input type="submit" value="上传" onclick="upload()"/>
 										</form>
@@ -82,7 +82,7 @@
 							</tbody>
 						</table>
 
-						<a th:href="@{/courseUpload/}+'19'">下载</a>
+						<a th:href="@{/back/course/courseUpload/}+'19'">下载</a>
 
 						<p>
 							<span>第[[${pageInfo.pageNum}]]页/共[[${pageInfo.pages}]]页</span><br/>
@@ -96,14 +96,14 @@
 							</th:block>
 
 							<th:block th:if="${pageInfo.pageNum>1}">
-								<a class="btn btn-sm btn-primary" th:href="@{/courses(pageNum=${pageInfo.pageNum-1})}">
+								<a class="btn btn-sm btn-primary" th:href="@{/back/course/courses(pageNum=${pageInfo.pageNum-1})}">
 									<span>上一页</span>
 								</a>
 							</th:block>
 
 							<!--        页码遍历-->
 							<th:block th:each="i :${#numbers.sequence(1, pageInfo.pages)}">
-								<a class="btn btn-sm btn-primary " th:href="@{/courses(pageNum=${i})}">
+								<a class="btn btn-sm btn-primary " th:href="@{/back/course/courses(pageNum=${i})}">
 									<!--                当前页样式为on-->
 									<span th:style="${pageInfo.pageNum == i}? 'background: #6610f2':''"
 										  th:class="${pageInfo.pageNum == i}? 'btn-sm':''">
@@ -119,7 +119,7 @@
 							</th:block>
 
 							<th:block th:if="${pageInfo.pageNum<pageInfo.pages}">
-								<a class="btn btn-sm btn-primary" th:href="@{/courses(pageNum=${pageInfo.pageNum+1})}">
+								<a class="btn btn-sm btn-primary" th:href="@{/back/course/courses(pageNum=${pageInfo.pageNum+1})}">
 									<span>下一页</span>
 								</a>
 							</th:block>
@@ -184,14 +184,14 @@
 
 			/*搜索按钮*/
             $("#search-btn").click(function () {
-                // $.get("/crud/courses",{
+                // $.get("/crud/back/course/courses",{
                 //     courseId : $("#courseIdInput").val(),
                 //     courseName : $("#courseNameInput").val()
                 // });
 
 				$.ajax({
 					type:"GET",
-					url:"/crud/coursesAll",
+					url:"/crud/back/course/coursesAll",
 					data: {
                         courseId : $("#courseIdInput").val(),
 						courseName : $("#courseNameInput").val()
@@ -240,8 +240,8 @@
                             "\t\t\t\t\t\t\t\t\t<td>"+course.courseName+"</td>\n" +
                             "\t\t\t\t\t\t\t\t\t<td>"+course.courseIntro+"</td>\n" +
                             "\t\t\t\t\t\t\t\t\t<td>\n" +
-                            "\t\t\t\t\t\t\t\t\t\t<a class='btn btn-sm btn-primary' th:href='@{/course/}'+"+course.courseId+">编辑</a>\n" +
-                            "\t\t\t\t\t\t\t\t\t\t<button th:attr='del_uri=@{/course/}+"+course.courseId+"' type='submit' class='btn btn-sm btn-danger deleteBtn'>删除</button>\n" +
+                            "\t\t\t\t\t\t\t\t\t\t<a class='btn btn-sm btn-primary' th:href='@{/back/course/course/}'+"+course.courseId+">编辑</a>\n" +
+                            "\t\t\t\t\t\t\t\t\t\t<button th:attr='del_uri=@{/back/course/course/}+"+course.courseId+"' type='submit' class='btn btn-sm btn-danger deleteBtn'>删除</button>\n" +
                             "\n" +
                             "\t\t\t\t\t\t\t\t\t</td>\n" +
                             "\t\t\t\t\t\t\t\t</tr>\n";
@@ -256,7 +256,7 @@
 
 
             $("#search-btn-blog").click(function () {
-                $("#table-container").load("/crud/coursesAllBlog",{
+                $("#table-container").load("/crud/back/course/coursesAllBlog",{
                     courseId : $("#courseIdInput").val(),
                     courseName : $("#courseNameInput").val()
                 });

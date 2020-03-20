@@ -41,7 +41,7 @@ public class LoginController {
     }
 
 
-    @RequestMapping("/login")
+    /*@RequestMapping("/login")
     public String login(Model model, String username, String password, HttpSession session){
         UserExample userExample = new UserExample();
         UserExample.Criteria cri = userExample.createCriteria();
@@ -58,8 +58,8 @@ public class LoginController {
         if(users!=null && users.size()>0){
             //这是与用户匹配
             //登陆成功
-            /*return "redirect:findHistory";*/
-            /*return "index";*/
+            *//*return "redirect:findHistory";*//*
+            *//*return "index";*//*
             session.setAttribute("user",users.get(0));
             return "redirect:/";
         }else if (managers!=null && managers.size()>0){
@@ -70,5 +70,5 @@ public class LoginController {
             //登陆失败
             return "index";
         }
-    }
+    }*/
 }

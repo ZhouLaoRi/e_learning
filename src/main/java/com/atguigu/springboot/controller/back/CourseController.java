@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
+@RequestMapping("/back/course")
 public class CourseController {
 
     @Resource

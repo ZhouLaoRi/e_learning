@@ -18,7 +18,7 @@
 				<div th:replace="~{commons/bar::#sidebar(activeUri='historys')}"></div>
 
 				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-					<h2><a class="btn btn-sm btn-success" href="history" th:href="@{/history}">历史添加</a></h2>
+					<h2><a class="btn btn-sm btn-success" href="history" th:href="@{/back/history/history}">历史添加</a></h2>
 
 					<!-- 加入的搜索栏 -->
 					<div  class="ui secondary segment form">
@@ -63,8 +63,8 @@
 									<td th:text="${history.courseId}"></td>
 									<td th:text="${history.dataId}"></td>
 									<td>
-										<a class="btn btn-sm btn-primary" th:href="@{/history/}+${history.historyId}">编辑</a>
-										<button th:attr="del_uri=@{/history/}+${history.historyId}" type="submit" class="btn btn-sm btn-danger deleteBtn">删除</button>
+										<a class="btn btn-sm btn-primary" th:href="@{/back/history/history/}+${history.historyId}">编辑</a>
+										<button th:attr="del_uri=@{/back/history/history/}+${history.historyId}" type="submit" class="btn btn-sm btn-danger deleteBtn">删除</button>
 									</td>
 								</tr>
 							</tbody>
@@ -82,14 +82,14 @@
 							</th:block>
 
 							<th:block th:if="${pageInfo.pageNum>1}">
-								<a class="btn btn-sm btn-primary" th:href="@{/historys(pageNum=${pageInfo.pageNum-1})}">
+								<a class="btn btn-sm btn-primary" th:href="@{/back/history/historys(pageNum=${pageInfo.pageNum-1})}">
 									<span>上一页</span>
 								</a>
 							</th:block>
 
 							<!--        页码遍历-->
 							<th:block th:each="i :${#numbers.sequence(1, pageInfo.pages)}">
-								<a class="btn btn-sm btn-primary " th:href="@{/historys(pageNum=${i})}">
+								<a class="btn btn-sm btn-primary " th:href="@{/back/history/historys(pageNum=${i})}">
 									<!--                当前页样式为on-->
 									<span th:style="${pageInfo.pageNum == i}? 'background: #6610f2':''"
 										  th:class="${pageInfo.pageNum == i}? 'btn-sm':''">
@@ -105,7 +105,7 @@
 							</th:block>
 
 							<th:block th:if="${pageInfo.pageNum<pageInfo.pages}">
-								<a class="btn btn-sm btn-primary" th:href="@{/historys(pageNum=${pageInfo.pageNum+1})}">
+								<a class="btn btn-sm btn-primary" th:href="@{/back/history/historys(pageNum=${pageInfo.pageNum+1})}">
 									<span>下一页</span>
 								</a>
 							</th:block>
@@ -160,7 +160,7 @@
             ;
 
             $("#search-btn-blog").click(function () {
-                $("#table-container").load("/crud/historysAll",{
+                $("#table-container").load("/crud/back/history/historysAll",{
                     userId : $("#userIdInput").val(),
                     courseId : $("#courseIdInput").val(),
                     historyDateBegin : $("#historyDateBeginInput").val(),

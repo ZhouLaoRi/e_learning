@@ -16,7 +16,7 @@
 		<div th:replace="~{commons/bar::#sidebar(activeUri='datas')}"></div>
 
 		<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-			<form th:action="@{/data}" method="post">
+			<form th:action="@{/back/data/data}" method="post">
 				<input type="hidden" name="_method" value="put"/>
 				<input type="hidden" name="dataId" th:value="${data.dataId}">
 
