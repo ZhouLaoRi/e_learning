@@ -1,9 +1,8 @@
 package com.atguigu.springboot.config;
 
-import com.atguigu.springboot.component.LoginHandlerInterceptor;
+import com.atguigu.springboot.component.ManagerLoginHandlerInterceptor;
 import com.atguigu.springboot.component.MyLocaleResolver;
-import org.springframework.boot.web.server.ConfigurableWebServerFactory;
-import org.springframework.boot.web.server.WebServerFactoryCustomizer;
+import com.atguigu.springboot.component.UserLoginHandlerInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.LocaleResolver;
@@ -45,8 +44,16 @@ public class MyMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         //静态资源： *.css   ,   *.js
         //SpringBoot已经做好了静态资源映射     并没有。。。
-        /*registry.addInterceptor(new LoginHandlerInterceptor()).addPathPatterns("/**").excludePathPatterns("/index.html","/","/user/login",
-                "/asserts/**","/webjars/**");*/
+        //后台拦截器
+        registry.addInterceptor(new ManagerLoginHandlerInterceptor()).addPathPatterns("/back/**").excludePathPatterns("/index.html","/","/manager/login",
+                "/asserts/**","/webjars/**","/home/verifyCode/getVerifyCode");
+
+
+        //前台拦截器，只要拦截评论功能吧
+        registry.addInterceptor(new UserLoginHandlerInterceptor()).addPathPatterns("/home/comment/**");
+        /*excludePathPatterns("/home/login","/","/user/login",
+                "/asserts/**","/webjars/**","/blog/**","/image/**","/media/**","/music/**","/pdfjs/**",
+                "/home/verifyCode/getVerifyCode");*/
     }
 
     @Bean

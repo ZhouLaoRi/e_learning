@@ -2,13 +2,10 @@ package com.atguigu.springboot.controller;
 
 import com.atguigu.springboot.entity.Manager;
 import com.atguigu.springboot.entity.ManagerExample;
-import com.atguigu.springboot.entity.User;
-import com.atguigu.springboot.entity.UserExample;
 import com.atguigu.springboot.service.ManagerService;
-import com.atguigu.springboot.service.UserService;
+import com.atguigu.springboot.service.ManagerService;
 import com.atguigu.springboot.utils.MD5Utils;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,15 +17,13 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class UserLoginController {
+public class ManagerLoginController {
 
-    @Resource
-    private UserService userService;
     @Resource
     private ManagerService managerService;
 
-    @PostMapping(value="/user/login")
-    public String login(@RequestParam("username") String username,
+    @PostMapping(value="/manager/login")
+    public String login(@RequestParam("managerName") String managerName,
                         @RequestParam("password") String password,
                         Map<String,Object> map, HttpSession session,
                         @RequestParam String verifyCode){
@@ -43,36 +38,36 @@ public class UserLoginController {
             map.put("msg","验证码不正确");
             return "login";
         }
-        /*if (!StringUtils.isEmpty(username) && "123".equals(password)) {
+        /*if (!StringUtils.isEmpty(managername) && "123".equals(password)) {
             //登陆成功
-            session.setAttribute("loginUser",username);
+            session.setAttribute("loginManager",managername);
             return "redirect:/main.html";
         }*/
         //空在前台校验吧
-        if (!StringUtils.isEmpty(username) && !StringUtils.isEmpty(password)) {
+        if (!StringUtils.isEmpty(managerName) && !StringUtils.isEmpty(password)) {
             //登陆成功
-            UserExample userExample = new UserExample();
-            UserExample.Criteria criteria = userExample.createCriteria();
-            criteria.andUserNameEqualTo(username);
+            ManagerExample managerExample = new ManagerExample();
+            ManagerExample.Criteria criteria = managerExample.createCriteria();
+            criteria.andManagerNameEqualTo(managerName);
             //未删除的
             criteria.andDeleteTimeIsNull();
-            List<User> users = userService.selectByExample(userExample);
-            if(users.size() == 0){
+            List<Manager> managers = managerService.selectByExample(managerExample);
+            if(managers.size() == 0){
                 map.put("msg","用户不存在");
                 return "login";
             }
 
             //用户名和密码分开判断
             String encodePwd = MD5Utils.MD5(password);
-            criteria.andUserPasswordEqualTo(encodePwd);
-            users = userService.selectByExample(userExample);
+            criteria.andManagerPasswordEqualTo(encodePwd);
+            managers = managerService.selectByExample(managerExample);
 
-            if(users.size() == 0){
+            if(managers.size() == 0){
                 map.put("msg","密码错误");
                 return "login";
             }
             //虽然用户名不能重复
-            session.setAttribute("loginUser",users.get(0));
+            session.setAttribute("loginManager",managers.get(0));
             return "redirect:/main.html";
         }
         //登陆失败
@@ -90,16 +85,16 @@ public class UserLoginController {
      * @author lmx
      * @date 2019/3/30 15:07
      */
-    @RequestMapping("/user/logout")
+    @RequestMapping("/manager/logout")
     public String logOut(HttpSession session) {
-        session.removeAttribute("loginUser");
+        session.removeAttribute("loginManager");
         return "redirect:/";
     }
 
 
-    @PostMapping("/user/signin")
-    public String signin(User user) {
-        userService.insert(user);
+    @PostMapping("/manager/signin")
+    public String signin(Manager manager) {
+        managerService.insert(manager);
         return "redirect:/";
     }
 }

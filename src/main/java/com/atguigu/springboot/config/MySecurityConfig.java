@@ -1,3 +1,4 @@
+/*
 package com.atguigu.springboot.config;
 
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -52,3 +53,4 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 }
+*/
