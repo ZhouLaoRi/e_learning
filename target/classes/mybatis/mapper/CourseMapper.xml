@@ -334,4 +334,12 @@
   <update id="recoverCourseByPrimaryKey" parameterType="java.lang.String">
     update course set delete_time=NULL where course_id = #{courseId,jdbcType=INTEGER}
   </update>
+
+  <update id="viewCourse" parameterType="java.lang.String">
+    update course set course_view = course_view + 1 where course_id = #{courseId,jdbcType=INTEGER}
+  </update>
+
+  <update id="likeCourse" parameterType="java.lang.String">
+    update course set course_like = course_like + 1 where course_id = #{courseId,jdbcType=INTEGER}
+  </update>
 </mapper>

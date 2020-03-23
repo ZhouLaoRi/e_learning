@@ -110,6 +110,7 @@
                 <div class="field  m-margin-bottom-small m-mobile-wide">
                   <button id="commentpost-btn" type="button" class="ui teal button m-mobile-wide"><i class="edit icon"></i>发布</button>
                 </div>
+                <p style="color:red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
               </div>
             </div>
 
@@ -380,8 +381,9 @@
 
     function clearContent() {
       $("[name='content']").val('');
-      $("[name='parentComment.id']").val(-1);
+      //$("[name='parentComment.id']").val(-1);
       $("[name='content']").attr("placeholder", "请输入评论信息...");
+      $("[name='nickname']").val('');
     }
 
     //点击回复的按钮

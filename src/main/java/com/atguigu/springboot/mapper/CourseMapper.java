@@ -34,4 +34,8 @@ public interface CourseMapper {
     List<Course> selectByQuery(@Param("query") String query);
 
     void recoverCourseByPrimaryKey(Integer courseId);
+
+    void viewCourse(Integer courseId);
+
+    void likeCourse(Integer courseId);
 }

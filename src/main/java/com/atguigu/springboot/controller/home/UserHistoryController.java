@@ -1,4 +1,4 @@
-package com.atguigu.springboot.controller;
+package com.atguigu.springboot.controller.home;
 
 import com.atguigu.springboot.entity.History;
 import com.atguigu.springboot.entity.HistoryExample;
@@ -12,9 +12,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-
-public class HistoryController {
-
+@Controller
+@RequestMapping("/home")
+public class UserHistoryController {
 
     @Resource
     private HistoryService historyService;
@@ -22,15 +22,14 @@ public class HistoryController {
     @RequestMapping("/showHistory")
     public String findHistory(Model model, HttpSession session){
         User user = (User) session.getAttribute("user");
-        if (user == null) {
-            return "showHistory";
-        }
+
         Integer userId = user.getUserId();
         HistoryExample historyExample = new HistoryExample();
         HistoryExample.Criteria cri = historyExample.createCriteria();
         cri.andUserIdEqualTo(userId);
-        List<History> histories = historyService.selectByExample(historyExample);
-        model.addAttribute("histories",histories);
-        return "showHistory";
+        historyExample.setOrderByClause("history_date DESC");
+        List<History> historys = historyService.selectByExample(historyExample);
+        model.addAttribute("historys",historys);
+        return "home/showHistory";
     }
 }

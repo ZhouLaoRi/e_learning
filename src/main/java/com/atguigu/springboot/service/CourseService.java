@@ -48,4 +48,12 @@ public class CourseService {
     public void recoverCourseByPrimaryKey(Integer courseId) {
         courseMapper.recoverCourseByPrimaryKey(courseId);
     }
+
+    public void viewCourse(Integer courseId) {
+        courseMapper.viewCourse(courseId);
+    }
+
+    public void likeCourse(Integer courseId) {
+        courseMapper.likeCourse(courseId);
+    }
 }

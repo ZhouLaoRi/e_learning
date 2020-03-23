@@ -8,6 +8,7 @@ import com.atguigu.springboot.service.CourseService;
 import com.atguigu.springboot.service.HistoryService;
 import com.atguigu.springboot.service.ManagerService;
 import com.atguigu.springboot.service.UserService;
+import com.atguigu.springboot.utils.MD5Utils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.annotations.Param;

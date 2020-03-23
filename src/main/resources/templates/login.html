@@ -25,12 +25,18 @@
 			<input type="password" name="password" class="form-control" placeholder="Password" th:placeholder="#{login.password}" required="">
 
 			<label class="sr-only" th:text="#{login.verificationCode}">验证码</label>
-			<input type="text" name="verifyCode" class="form-control" id="verifyCode"th:placeholder="#{login.verificationCode}" maxlength="4">
+			<input type="text" name="verifyCode" class="form-control" id="verifyCode" th:placeholder="#{login.verificationCode}" maxlength="4">
 
-			<div class="form-group">
+			<!--<div class="form-group">
 				<img id="verify" onclick="refreshVerify()" th:src="@{/home/verifyCode/getVerifyCode}">
 				<button onclick="refreshVerify()" type="button" class="btn btn-lg btn-primary btn-block">刷新</button>
-			</div>
+			</div>-->
+			<a onclick="refreshVerify()"><img id="verify" onclick="refreshVerify()" th:src="@{/home/verifyCode/getVerifyCode}"></a>
+
+			<!-- 先生成静态模板，在去后台，所以他先用默认的session了，与之后后台新增的不一样了-->
+			<!--<input id="trueVerifyCode"  type="text" th:value="${session.verifyCode}" name="trueVerifyCode">
+			<div  name="trueVerifyCode" th:text="${session.verifyCode}"></div>-->
+
 
 			<div class="checkbox mb-3">
 				<label>

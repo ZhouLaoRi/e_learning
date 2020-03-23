@@ -8,6 +8,10 @@
   <!--导航-->
   <nav th:replace="home/_fragments :: menu(1)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small" ></nav>
 
+
+  <!--登录注册-->
+  <div th:replace="home/_fragments :: header2" ></div>
+
   <!--中间内容-->
   <div  class="m-container m-padded-tb-big animated fadeIn">
     <div class="ui container">
@@ -156,7 +160,6 @@
   <br>
   <!--底部footer-->
   <footer th:replace="home/_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive"></footer>
-
 
 
   <!--/*/<th:block th:replace="home/_fragments :: script">/*/-->

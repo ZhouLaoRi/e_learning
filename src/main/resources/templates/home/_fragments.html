@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head th:fragment="head(title)">
-  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!--<title th:replace="${title}">博客详情</title>-->
   <title>企业在线学习平台</title>
@@ -12,6 +12,8 @@
   <link rel="stylesheet" href="../static/lib/prism/prism.css" th:href="@{/blog/lib/prism/prism.css}">
   <link rel="stylesheet" href="../static/lib/tocbot/tocbot.css" th:href="@{/blog/lib/tocbot/tocbot.css}">
   <link rel="stylesheet" href="../static/css/me.css" th:href="@{/blog/css/me.css}">
+  <!-- 新加的登陆注册的css -->
+  <link rel="stylesheet" href="../css/new.css" th:href="@{/sign/css/new.css}">
 </head>
 <body>
 
@@ -33,12 +35,26 @@
             <i onclick="document.forms['search'].submit()" class="search link icon"></i>
           </div>
         </form>
+        <a href="#" class="ui icon inverted transparent input m-margin-tb-tiny" >
+          <img th:src="@{/sign/images/user.png}" src="/images/user.png" width="30px" height="30px" onclick="start()"/>
+        </a>
+
+        <div class="ui icon inverted transparent input m-margin-tb-tiny">
+<!--
+          <input type="text" placeholder="这里应该显示用户名。。。" value="" th:value="${session.loginUser.userName}" th:if="${not #strings.isEmpty(session.loginUser.userName)}">
+-->
+        </div>
+
+        <div class="m-item item m-mobile-hide">
+          <p style="color:red" text="没有就显示这个" th:text="${msg}有东西？" th:if="${not #strings.isEmpty(msg)}"></p>
+        </div>
       </div>
     </div>
   </div>
-  <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+  <!-- 这个不知道是啥，注释了页面也没有少东西 -->
+  <!--<a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
     <i class="sidebar icon"></i>
-  </a>
+  </a>-->
 </nav>
 
 
@@ -86,6 +102,90 @@
   </div>
 
 </footer>
+
+<div th:fragment="header2">
+  <!-- 登录页面 -->
+  <div class="signform" id="signform" style="display: none">
+
+    <div class="signclose">
+      <img th:src="@{/sign/images/signclose.png}" src="images/signclose.png" width="35px" height="35px" onclick="signclose()">
+    </div>
+    <!--<p style="color:red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>-->
+    <form th:action="@{/user/login}" name="loginForm" action="/login" method="post" onsubmit="return loginrun()" >
+
+
+      <div class="userdiv">
+        <input id="user" class="signinput" type="text" placeholder="用户名" th:placeholder="#{login.username}" name="userName" >
+      </div>
+      <div class="pwddiv">
+        <input id="pwd" class="signinput" type="password" placeholder="密码" th:placeholder="#{login.password}" name="userPassword">
+      </div>
+      <div class="pwddiv">
+        <input id="verifyCode" class="signinput" type="text" th:placeholder="#{login.verificationCode}" maxlength="4" name="verifyCode">
+      </div>
+
+      <div class="pwddiv">
+        <a onclick="refreshVerify()"><img id="verify" onclick="refreshVerify()" th:src="@{/home/verifyCode/getVerifyCode}"></a>
+      </div>
+      <div class="postdiv">
+        <button>登录</button>
+      </div>
+    </form>
+    <br>
+    <div class="change" style="color: #4d4d4d">
+      <!--<p>还没有账号?赶快<a href="# " style="text-decoration: none;color: #43A047">注册</a>一个吧</p>-->
+      <p>还没有账号?赶快<a href="# "onclick="register()" style="text-decoration: none;color: #43A047">注册</a>一个吧</p>
+    </div>
+  </div>
+
+  <!-- 注册页面 -->
+  <div class="signform" id="registerform" style="display: none">
+    <div class="signclose">
+      <img th:src="@{/sign/images/signclose.png}" src="images/signclose.png" width="35px" height="35px" onclick="signclose()">
+    </div>
+    <form name="form1" th:action="@{/user/signup}" action="/addUser" method="post" onsubmit="return run()" >
+    <!--<form name="registerForm">-->
+    <!--<div name="registerForm">-->
+      <div class="userdiv">
+        <input id="registeruser" class="signinput" onblur="loading()" type="text" placeholder="用户名" th:placeholder="#{login.username}"  name="userName">
+      </div>
+      <img th:src="@{/sign/images/signloading3.gif}" src="image/signloading.gif" style="display: none" id="registerloading">
+      <div class="pwddiv">
+        <input id="registerpwd" class="signinput" type="password" placeholder="密码" th:placeholder="#{login.password}" name="userPassword">
+      </div>
+      <div class="pwddiv">
+        <input id="registerrepwd" class="signinput" type="password" placeholder="再次输入密码" th:placeholder="#{login.rePassword}" name="userRePassword">
+      </div>
+      <div class="pwddiv">
+        <input id="email" class="signinput" type="text" placeholder="邮箱" th:placeholder="#{login.email}" name="email">
+      </div>
+      <div class="pwddiv">
+        <input id="telephone" class="signinput" type="text" placeholder="手机号码" th:placeholder="#{login.telephone}" name="telephone">
+      </div>
+      <div class="pwddiv">
+        <input id="registerlevel" class="signinput" type="text" placeholder="学习难易度等级" name="userLevel">
+      </div>
+      <div class="pwddiv">
+        <input id="registerdirection" class="signinput" type="text" placeholder="学习方向" name="userDirection">
+      </div>
+      <div class="postdiv">
+        <!--<button onclick="signUp2()">注册</button>-->
+        <button>注册</button>
+      </div>
+    </form>
+    <br>
+    <div class="change" style="color: #4d4d4d">
+      <!--<p>已有账号?立刻去<a href="#" style="text-decoration: none;color: #43A047">登录</a>吧</p>-->
+      <p>已有账号?立刻去<a href="#" onclick="start()" style="text-decoration: none;color: #43A047">登录</a>吧</p>
+    </div>
+
+    <script th:src="@{/webjars/jquery/3.4.0/jquery.js}"></script>
+    <!--<script th:src="@{/sign/js/jquery-2.1.1.js}" src="/js/jquery-2.1.1.js"></script>-->
+    <script th:src="@{/sign/js/signformchange.js}" src="/js/signformchange.js"></script>
+
+  </div>
+
+</div>
 
 <th:block th:fragment="script">
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>

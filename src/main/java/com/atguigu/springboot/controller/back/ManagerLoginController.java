@@ -1,4 +1,4 @@
-package com.atguigu.springboot.controller;
+package com.atguigu.springboot.controller.back;
 
 import com.atguigu.springboot.entity.Manager;
 import com.atguigu.springboot.entity.ManagerExample;

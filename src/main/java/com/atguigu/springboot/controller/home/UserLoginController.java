@@ -1,4 +1,4 @@
-package com.atguigu.springboot.controller;
+package com.atguigu.springboot.controller.home;
 
 import com.atguigu.springboot.entity.Manager;
 import com.atguigu.springboot.entity.ManagerExample;
@@ -13,9 +13,11 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -27,56 +29,80 @@ public class UserLoginController {
     @Resource
     private ManagerService managerService;
 
+    //用户注册
+    @PostMapping("/user/signup")
+    public String userSignUp(User user){
+        String saltPwd = MD5Utils.MD5(user.getUserPassword());
+        user.setUserPassword(saltPwd);
+        user.setCreateTime(new Date());
+        user.setUpdateTime(new Date());
+        user.setIsvip(0);
+        //因为钱有小数
+        user.setMoney("0.00");
+        user.setJifen(0);
+        //userService.insert(user);
+        return "redirect:/home/index";
+    }
+
+    //用户名唯一
+    @PostMapping("/user/userNameOnly")
+    @ResponseBody
+    public boolean userNameOnly(String userName){
+        UserExample userExample = new UserExample();
+        UserExample.Criteria criteria = userExample.createCriteria();
+        criteria.andUserNameEqualTo(userName);
+        List<User> users = userService.selectByExample(userExample);
+        if(users.size()==0){
+            return true;
+        }
+        return false;
+    }
+
     @PostMapping(value="/user/login")
-    public String login(@RequestParam("username") String username,
-                        @RequestParam("password") String password,
+    public String login(@RequestParam("userName") String userName,
+                        @RequestParam("userPassword") String userPassword,
                         Map<String,Object> map, HttpSession session,
                         @RequestParam String verifyCode){
         //首先验证验证码是否存在
         String trueVerifyCode = (String) session.getAttribute("verifyCode");
         if (trueVerifyCode == null) {
             map.put("msg","需要刷新验证码");
-            return "login";
+            return "redirect:/home/index";
         }
         //判断验证码是否输入正确（验证码忽略大小写）
         if (!trueVerifyCode.equalsIgnoreCase(verifyCode)) {
             map.put("msg","验证码不正确");
-            return "login";
+            return "redirect:/home/index";
         }
-        /*if (!StringUtils.isEmpty(username) && "123".equals(password)) {
-            //登陆成功
-            session.setAttribute("loginUser",username);
-            return "redirect:/main.html";
-        }*/
-        //空在前台校验吧
-        if (!StringUtils.isEmpty(username) && !StringUtils.isEmpty(password)) {
+
+        if (!StringUtils.isEmpty(userName) && !StringUtils.isEmpty(userPassword)) {
             //登陆成功
             UserExample userExample = new UserExample();
             UserExample.Criteria criteria = userExample.createCriteria();
-            criteria.andUserNameEqualTo(username);
+            criteria.andUserNameEqualTo(userName);
             //未删除的
             criteria.andDeleteTimeIsNull();
             List<User> users = userService.selectByExample(userExample);
             if(users.size() == 0){
                 map.put("msg","用户不存在");
-                return "login";
+                return "redirect:/home/index";
             }
 
             //用户名和密码分开判断
-            String encodePwd = MD5Utils.MD5(password);
+            String encodePwd = MD5Utils.MD5(userPassword);
             criteria.andUserPasswordEqualTo(encodePwd);
             users = userService.selectByExample(userExample);
 
             if(users.size() == 0){
                 map.put("msg","密码错误");
-                return "login";
+                return "redirect:/home/index";
             }
             //虽然用户名不能重复
             session.setAttribute("loginUser",users.get(0));
-            return "redirect:/main.html";
+            return "redirect:/home/index";
         }
         //登陆失败
-        map.put("msg","用户名密码错误");
+        map.put("loginMsg","用户名密码错误");
         return "login";
     }
 

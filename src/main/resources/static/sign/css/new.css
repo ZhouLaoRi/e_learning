@@ -1,0 +1,175 @@
+@font-face{
+		font-family: "the-icon";
+		src: url("../images/icomoon.eot"); /* IE9 兼容模式 */
+		src: url("../images/icomoon.eot?#iefix") format("embedded-opentype")
+			 ,url("../fonts/icomoon.woff") format("woff")
+			 ,url("../fonts/icomoon.ttf") format("truetype")
+			 ,url("../fonts/icomoon.svg") format("svg");
+		font-weight: normal;
+		font-style: normal;
+	}
+.icon
+{
+	font-family: "the-icon";
+	font-style: normal;
+	font-weight: normal;
+	font-style: 64px;
+}
+/*用户登录注册css*/
+		.signform {
+            font-family: 微软雅黑;
+            position: fixed;
+            //background-color: yellowgreen;
+            background-color: cornsilk;
+			//background: #444 url("../images/banner.png");
+            top: 20%;
+            left: 30%;
+            width: 500px;
+            height: 450px;
+            border-radius: 1em;
+            text-align: center;
+            z-index: 999;
+
+        }
+        #registerform {
+            height: 650px;
+        }
+        .signclose {
+            cursor: pointer;
+            float: right;
+            overflow: hidden;
+            text-align: center;
+            position: relative;
+            height: 35px;
+            width: 35px;
+            margin-top: 10px;
+            margin-right: 10px;
+        }
+        #registerloading{
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            left: 410px;
+            top: 90px;
+        }
+        .signinput {
+            text-align: center;
+            border-radius: 0.2em;
+            width: 280px;
+            height: 45px;
+            border: none;
+            background-color:#f2f2f2;
+            font-size: 28px;
+        }
+        .signinput::-webkit-input-placeholder {
+            font-size: 26px;
+        }
+        .userdiv {
+            position: relative;
+            margin-top: 80px;
+        }
+        .pwddiv {
+            position: relative;
+            margin-top: 20px;
+        }
+        .postdiv {
+            position: relative;
+            margin-top: 20px;
+        }
+        .postdiv button {
+            cursor: pointer;
+            color: white;
+            font-size: 26px;
+            border: none;
+            border-radius: 0.4em;
+            width: 280px;
+            height: 45px;
+            background-color:#4CAF50;
+        }
+ /*-----------------------------------------*/
+/*管理员登录页面*/
+
+
+
+/*--------------------------------------------*/
+.main-wrapper
+{
+	background: #444 url("../images/banner.png");
+
+	background-size: cover;
+	background-attachment: fixed;
+	background-repeat:no-repeat; 
+	background-size: cover;
+	background-position: center center;
+	overflow: hidden;
+
+}
+#container{
+
+}
+footer
+{
+	background-color: #333;
+	color: #fff;
+	min-height: 40px;
+	text-align: center;
+	padding: 10px;
+}
+footer ul li a
+{
+	text-decoration: none;
+	color: black;
+}
+ul .share-group
+{
+	display: block;
+	width: 1080px;
+	margin: 0 auto;
+	padding: 50px;
+}
+.share-group li 
+{
+	display: inline-block;
+	color: white;
+	padding: 5px;
+	font-size: 13px;
+}
+
+
+
+			#logo{
+				/*border: 1px solid black;*/
+				width: 1800px;
+				height:100px;
+				background-color: #2D323C; color: #fff;
+			}
+			.top1 {
+				/*border: 1px solid blue;*/
+				width: 1300px;
+				height: 100px;
+				float: left;
+			}
+			.top2 {
+				/*border: 1px solid blue;*/
+				width: 496px;
+				height: 100px;
+				float: left;
+			}
+			#top{
+				padding-top: 33px;
+				height: 67px;
+			}
+			#menu{
+				border: 1px solid white;
+				width: 1800px;
+				height: 100px;
+				background: #38393c;
+			}
+			ul li{
+				display: inline;
+				color: red;
+			}
+			a{
+				text-decoration:none;
+				color: #0573bd;
+			}

@@ -2,10 +2,7 @@ package com.atguigu.springboot.controller.home;
 
 import com.atguigu.springboot.dto.CommentDTO;
 import com.atguigu.springboot.entity.*;
-import com.atguigu.springboot.service.CommentService;
-import com.atguigu.springboot.service.CourseService;
-import com.atguigu.springboot.service.DataService;
-import com.atguigu.springboot.service.TypeService;
+import com.atguigu.springboot.service.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -26,12 +25,11 @@ public class IndexController {
     @Resource
     private TypeService typeService;
 
-
     @Resource
     private DataService dataService;
 
-    /*@Autowired
-    private TagService tagService;*/
+    @Resource
+    private HistoryService historyService;
 
     @GetMapping("/index")
     public String index(@RequestParam(value = "pageNum",required = false,defaultValue = "1") Integer pageNum,Model model) {
@@ -57,9 +55,15 @@ public class IndexController {
     }
 
     @GetMapping(value = {"/course/{courseId}/{dataNum}","/course/{courseId}"})
-    public String blog(@PathVariable(value = "courseId") Integer courseId, @PathVariable(value = "dataNum",required = false) Integer dataNum, Model model) {
+    public String blog(@PathVariable(value = "courseId") Integer courseId,
+                       @PathVariable(value = "dataNum",required = false) Integer dataNum,
+                       Model model, HttpSession session) {
         //找到那个courseId
         model.addAttribute("course", courseService.selectByPrimaryKey(courseId));
+
+        //课程播放数量+1
+        courseService.viewCourse(courseId);
+
         //还要找到所有的dataId
         DataExample dataExample = new DataExample();
         DataExample.Criteria criteria = dataExample.createCriteria();
@@ -74,6 +78,17 @@ public class IndexController {
             dataNum -= 1;
         }
         model.addAttribute("dataNum",dataNum);
+
+        //添加历史记录
+        User user = (User) session.getAttribute("loginUser");
+        if(user != null){
+            History history = new History();
+            history.setUserId(user.getUserId());
+            history.setCourseId(courseId);
+            history.setDataId(dataNum);
+            history.setHistoryDate(new Date());
+            historyService.insert(history);
+        }
 
         //获取评论区,页面上有ajax 这样初始化请求了
         /*CommentExample commentExample = new CommentExample();

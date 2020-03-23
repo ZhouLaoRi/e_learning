@@ -40,18 +40,18 @@ public class CommentHomeController {
         return "home/data :: commentList";
     }
 
-
-
     @PostMapping("/comments")
     public String post(Comment comment, HttpSession session) {
 
-        User user = (User) session.getAttribute("user");
-        if (user != null) {
-            /*commentVo.setAvatar(user.getAvatar());
-            comment.setAvatar(avatar);*/
+        User user = (User) session.getAttribute("loginUser");
+        if (user == null) {
+            //不能评论
         }
-        comment.setAvatar("/blog/images/1005-100x100.jpg");
-        comment.setNickname("admin");//前端传进来了 但是是没用的
+
+        //comment.setAvatar("/blog/images/1005-100x100.jpg");
+        //comment.setNickname("admin");//前端传进来了 但是是没用的
+        comment.setAvatar(user.getAvatar());
+        comment.setNickname(user.getUserName());
         comment.setCommentLike(0);
         comment.setCommentDate(new Date());
 

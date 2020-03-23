@@ -37,6 +37,7 @@ public class MyMvcConfig implements WebMvcConfigurer {
         registry.addViewController("/index.html").setViewName("login");
         registry.addViewController("/main.html").setViewName("dashboard");
         registry.addViewController("/pdfview.html").setViewName("pdfview");
+        //registry.addViewController("/home/login.html").setViewName("home/login");
     }
 
 
@@ -50,7 +51,7 @@ public class MyMvcConfig implements WebMvcConfigurer {
 
 
         //前台拦截器，只要拦截评论功能吧
-        registry.addInterceptor(new UserLoginHandlerInterceptor()).addPathPatterns("/home/comment/**");
+        registry.addInterceptor(new UserLoginHandlerInterceptor()).addPathPatterns("/home/comments/like/{commentId}","/home/comments");
         /*excludePathPatterns("/home/login","/","/user/login",
                 "/asserts/**","/webjars/**","/blog/**","/image/**","/media/**","/music/**","/pdfjs/**",
                 "/home/verifyCode/getVerifyCode");*/
