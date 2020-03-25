@@ -56,4 +56,8 @@ public class CourseService {
     public void likeCourse(Integer courseId) {
         courseMapper.likeCourse(courseId);
     }
+
+    public List<Integer> showPersonalRecommended(Integer userId) {
+        return courseMapper.showPersonalRecommended(userId);
+    }
 }

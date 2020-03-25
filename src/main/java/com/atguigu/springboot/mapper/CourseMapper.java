@@ -38,4 +38,6 @@ public interface CourseMapper {
     void viewCourse(Integer courseId);
 
     void likeCourse(Integer courseId);
+
+    List<Integer> showPersonalRecommended(Integer userId);
 }

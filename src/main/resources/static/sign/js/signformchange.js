@@ -1,20 +1,27 @@
-$(function ()
+/*$(function ()
 {
     $('.change').click(function ()
     {
-        //这里.signform 找的是class="signform"
-        $('.registerform').animate({height: 'toggle', opacity: 'toggle'}, 'slow');
+        //这里.signform 找的是class="signform"  很奇怪，按道理他是找change的div 有这个动作，也就是两个都这样
+        //但是他 会复原。。。。
+        $(".signform").animate({height: 'toggle', opacity: 'toggle'}, 'slow');
     });
-})
+})*/
 
 function start() {
-    document.getElementById('signform').style.display=""
-    document.getElementById('registerform').style.display="none"
+    /*$("#signform").toggle(1000);
+    $("#registerform").toggle(1000);*/
+    /*document.getElementById('signform').style.display="";
+    document.getElementById('registerform').style.display="none";*/
+    //$("#signform").toggle(1000);
+    $("#signform").animate({height: 'toggle', opacity: 'toggle'}, 'slow');
 }
 
 function register() {
-    document.getElementById('signform').style.display="none"
-    document.getElementById('registerform').style.display=""
+    /*document.getElementById('signform').style.display="none"
+    document.getElementById('registerform').style.display=""*/
+    $("#signform").animate({height: 'toggle', opacity: 'toggle'}, 'slow');
+    $("#registerform").animate({height: 'toggle', opacity: 'toggle'}, 'slow');
 }
 
 function signclose() {

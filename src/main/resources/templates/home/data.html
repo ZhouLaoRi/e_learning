@@ -35,13 +35,13 @@
             <label th:text="${datas[0].dataPath}" ></label>
             <label th:text="${datas[dataNum].dataPath}" ></label>
 
-            <video name="videoName" align="center" controls="controls" class="ui fluid rounded image">
+            <video name="videoName" align="center" controls="controls" class="ui fluid rounded image" style="width: 650px; height: 420px;">
               <source th:src="@{/media/data1.mp4}" type="video/mp4">
             </video>
           </div>
-          <div class="ui  attached padded segment">
 
-            <!--赞赏，点开会有2个二维码 太叼了-->
+          <!--赞赏，点开会有2个二维码 太叼了-->
+          <!--<div class="ui  attached padded segment">
             <div>
               <div class="ui center aligned basic segment">
                 <button id="payButton" class="ui orange basic circular button">赞赏</button>
@@ -61,8 +61,8 @@
                 </div>
               </div>
             </div>
+          </div>-->
 
-          </div>
           <!--<div class="ui attached positive message" th:if="${blog.shareStatement}">-->
           <div class="ui attached positive message">
 
@@ -97,14 +97,15 @@
               <input type="hidden" name="course.id" th:value="${course.courseId}">
               <input type="hidden" name="parentComment.id">
               <div class="field">
-                <textarea name="content" placeholder="请输入评论信息..."></textarea>
+                <!-- 这里的样式height=112px是最小了，写1也是显示112px -->
+                <textarea style="width: 650px; height: 112px;" name="content" placeholder="请输入评论信息..."></textarea>
               </div>
               <div class="fields">
                 <div class="field m-mobile-wide m-margin-bottom-small">
                   <div class="ui left icon input">
                     <i class="user icon"></i>
                     <!-- 这里要改成一个图片 -->
-                    <input type="text" name="nickname" placeholder="姓名" th:value="${session.user}!=null ? ${session.user.nickname}">
+                    <input type="text" name="nickname" readonly placeholder="未登录，无法评论" th:value="${session.loginUser}!=null ? ${session.loginUser.userName}">
                   </div>
                 </div>
                 <div class="field  m-margin-bottom-small m-mobile-wide">
@@ -208,12 +209,17 @@
 
           <!--相关推荐-->
           <!-- 就是orderby createTime 和 like 和 view 就行了 -->
-          <div class="ui segments m-margin-top-large">
-            <div class="ui secondary segment ">
-              <i class="bookmark icon"></i>相关推荐
-            </div>
-            <div class="ui segment">
-              <a href="#" target="_blank" class="m-black m-text-thin" th:text="我先随便写点东西">用户故事（User Story）</a>
+          <div id="recommended-container" class="ui segments m-margin-top-large">
+            <div th:fragment="recommendedCoursesList">
+              <div class="ui secondary segment ">
+                <i class="bookmark icon"></i>相关推荐
+              </div>
+              <div th:each="recommendedCourse : ${recommendedCourses}">
+                <div class="ui segment">
+                  <a href="#" th:href="@{/home/course/{id}(id=${recommendedCourse.courseId})}"
+                     target="_blank" class="m-black m-text-thin" th:text="${recommendedCourse.courseName}">用户故事（User Story）</a>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -403,7 +409,14 @@
         $(window).scrollTo($('#comment-form'),500);
     }
 
-    
+    //相关推荐
+    $(function () {
+        var urlRecommended = "/crud/home/showRecommendedCourse";
+        $("#recommended-container").load(urlRecommended,{
+            "courseId" : [[${course.courseId}]]
+        });
+    });
+
   </script>
 </body>
 </html>

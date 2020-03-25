@@ -331,15 +331,32 @@
     order by course_id
   </select>
 
-  <update id="recoverCourseByPrimaryKey" parameterType="java.lang.String">
+  <update id="recoverCourseByPrimaryKey" parameterType="java.lang.Integer">
     update course set delete_time=NULL where course_id = #{courseId,jdbcType=INTEGER}
   </update>
 
-  <update id="viewCourse" parameterType="java.lang.String">
+  <update id="viewCourse" parameterType="java.lang.Integer">
     update course set course_view = course_view + 1 where course_id = #{courseId,jdbcType=INTEGER}
   </update>
 
-  <update id="likeCourse" parameterType="java.lang.String">
+  <update id="likeCourse" parameterType="java.lang.Integer">
     update course set course_like = course_like + 1 where course_id = #{courseId,jdbcType=INTEGER}
   </update>
+
+  <select id="showPersonalRecommended" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    SELECT
+        type_id
+    FROM
+        `history` as t1
+        LEFT JOIN course as t2
+        on t1.course_id	= t2.course_id
+        LEFT JOIN type as t3
+        on t2.type_id = t3.id
+    WHERE
+        t1.user_id = #{userId,jdbcType=INTEGER}
+    GROUP BY
+        t3.id
+    ORDER BY count(*) DESC
+  </select>
+
 </mapper>

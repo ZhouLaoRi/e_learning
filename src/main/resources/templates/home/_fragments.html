@@ -26,6 +26,8 @@
       <a href="#" th:href="@{/}" class="m-item item m-mobile-hide " th:classappend="${n==1} ? 'active'"><i class="mini home icon"></i>首页</a>
       <a href="#" th:href="@{/types/-1}" class="m-item item m-mobile-hide" th:classappend="${n==2} ? 'active'"><i class="mini idea icon"></i>分类</a>
       <a href="#" th:href="@{/tags/-1}" class="m-item item m-mobile-hide" th:classappend="${n==3} ? 'active'"><i class="mini tags icon"></i>标签</a>
+      <a href="#" th:href="@{/home/showHistory}" class="m-item item m-mobile-hide" th:classappend="${n==3} ? 'active'"><i class="mini tags icon"></i>个人历史</a>
+      <a href="#" th:href="@{/home/showPersonalRecommended}" class="m-item item m-mobile-hide" th:classappend="${n==3} ? 'active'"><i class="mini tags icon"></i>个人推荐</a>
       <!--<a href="#" th:href="@{/archives}" class="m-item item m-mobile-hide" th:classappend="${n==4} ? 'active'"><i class="mini clone icon"></i>归档</a>
       <a href="#" th:href="@{/about}" class="m-item item m-mobile-hide" th:classappend="${n==5} ? 'active'"><i class="mini info icon"></i>关于我</a>-->
       <div class="right m-item item m-mobile-hide">
@@ -40,9 +42,8 @@
         </a>
 
         <div class="ui icon inverted transparent input m-margin-tb-tiny">
-<!--
-          <input type="text" placeholder="这里应该显示用户名。。。" value="" th:value="${session.loginUser.userName}" th:if="${not #strings.isEmpty(session.loginUser.userName)}">
--->
+          <!-- 因为压根loginUser都没有了，所以我不能直接去检测userName是否存在 -->
+          <input type="text" name="nickname" placeholder="未登录" th:value="${session.loginUser}!=null ? ${session.loginUser.userName}">
         </div>
 
         <div class="m-item item m-mobile-hide">
@@ -57,51 +58,6 @@
   </a>-->
 </nav>
 
-
-
-<!--底部footer-->
-<footer th:fragment="footer" class="ui inverted vertical segment m-padded-tb-massive">
-  <div class="ui center aligned container">
-    <div class="ui inverted divided stackable grid">
-      <div class="three wide column">
-        <div class="ui inverted link list">
-          <div class="item">
-            <img src="../static/images/wechat.jpg" th:src="@{/blog/images/wechat.jpg}"  class="ui rounded image" alt="" style="width: 110px">
-          </div>
-        </div>
-      </div>
-      <!--<div class="three wide column" >
-        <h4 class="ui inverted header m-text-thin m-text-spaced " >最新博客</h4>
-        <div id="newblog-container">
-          <div class="ui inverted link list" th:fragment="newblogList">
-            <a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" class="item m-text-thin" th:each="blog : ${newblogs}" th:text="${blog.title}">用户故事（User Story）</a>
-
-          </div>
-        </div>
-      </div>-->
-      <div class="three wide column">
-        <h4 class="ui inverted header m-text-thin m-text-spaced ">联系我</h4>
-        <div class="ui inverted link list">
-          <a href="#" class="item m-text-thin">Email：lirenmi@163.com</a>
-          <!--<a href="#" class="item m-text-thin" th:text="#{index.email}">Email：lirenmi@163.com</a>
-          <a href="#" class="item m-text-thin" th:text="#{index.qq}">QQ：865729312</a>-->
-          <a href="#" class="item m-text-thin">QQ：865729312</a>
-        </div>
-      </div>
-      <div class="seven wide column">
-        <h4 class="ui inverted header m-text-thin m-text-spaced ">Blog</h4>
-        <!--<p class="m-text-thin m-text-spaced m-opacity-mini" th:text="#{index.blogDescription}">这是我的个人博客、会分享关于编程、写作、思考相关的任何内容，希望可以给来到这儿的人有所帮助...</p>
-        --><p class="m-text-thin m-text-spaced m-opacity-mini">这是我的个人博客、会分享关于编程、写作、思考相关的任何内容，希望可以给来到这儿的人有所帮助...</p>
-      </div>
-    </div>
-    <div class="ui inverted section divider"></div>
-    <p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright © 2016 -
-      <!--<span th:text="${#dates.year(#dates.createNow())}">2017</span>-->
-      <span>2017</span>
-      Lirenmi Designed by Lirenmi</p>
-  </div>
-
-</footer>
 
 <div th:fragment="header2">
   <!-- 登录页面 -->
@@ -132,7 +88,7 @@
       </div>
     </form>
     <br>
-    <div class="change" style="color: #4d4d4d">
+    <div style="color: #4d4d4d">
       <!--<p>还没有账号?赶快<a href="# " style="text-decoration: none;color: #43A047">注册</a>一个吧</p>-->
       <p>还没有账号?赶快<a href="# "onclick="register()" style="text-decoration: none;color: #43A047">注册</a>一个吧</p>
     </div>
@@ -174,9 +130,9 @@
       </div>
     </form>
     <br>
-    <div class="change" style="color: #4d4d4d">
+    <div style="color: #4d4d4d">
       <!--<p>已有账号?立刻去<a href="#" style="text-decoration: none;color: #43A047">登录</a>吧</p>-->
-      <p>已有账号?立刻去<a href="#" onclick="start()" style="text-decoration: none;color: #43A047">登录</a>吧</p>
+      <p>已有账号?立刻去<a href="#" onclick="register()" style="text-decoration: none;color: #43A047">登录</a>吧</p>
     </div>
 
     <script th:src="@{/webjars/jquery/3.4.0/jquery.js}"></script>
@@ -186,6 +142,50 @@
   </div>
 
 </div>
+
+<!--底部footer-->
+<footer th:fragment="footer" class="ui inverted vertical segment m-padded-tb-massive">
+  <div class="ui center aligned container">
+    <div class="ui inverted divided stackable grid">
+      <div class="three wide column">
+        <div class="ui inverted link list">
+          <div class="item">
+            <img src="../static/images/wechat.jpg" th:src="@{/blog/images/wechat.jpg}"  class="ui rounded image" alt="" style="width: 110px">
+          </div>
+        </div>
+      </div>
+      <!--<div class="three wide column" >
+        <h4 class="ui inverted header m-text-thin m-text-spaced " >最新博客</h4>
+        <div id="newblog-container">
+          <div class="ui inverted link list" th:fragment="newblogList">
+            <a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" class="item m-text-thin" th:each="blog : ${newblogs}" th:text="${blog.title}">用户故事（User Story）</a>
+
+          </div>
+        </div>
+      </div>-->
+      <div class="three wide column">
+        <h4 class="ui inverted header m-text-thin m-text-spaced ">联系我</h4>
+        <div class="ui inverted link list">
+          <a href="#" class="item m-text-thin">Email：18024778826@163.com</a>
+          <!--<a href="#" class="item m-text-thin" th:text="#{index.email}">Email：lirenmi@163.com</a>
+          <a href="#" class="item m-text-thin" th:text="#{index.qq}">QQ：865729312</a>-->
+          <a href="#" class="item m-text-thin">QQ：635141571</a>
+        </div>
+      </div>
+      <div class="seven wide column">
+        <h4 class="ui inverted header m-text-thin m-text-spaced ">E_learning</h4>
+        <!--<p class="m-text-thin m-text-spaced m-opacity-mini" th:text="#{index.blogDescription}">这是我的个人博客、会分享关于编程、写作、思考相关的任何内容，希望可以给来到这儿的人有所帮助...</p>
+        --><p class="m-text-thin m-text-spaced m-opacity-mini">企业在线学习平台，希望可以给来到这儿的人有所帮助...</p>
+      </div>
+    </div>
+    <div class="ui inverted section divider"></div>
+    <p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright © 2019 -
+      <!--<span th:text="${#dates.year(#dates.createNow())}">2017</span>-->
+      <span>2020</span>
+      E_learning Designed by ZhouRihao</p>
+  </div>
+
+</footer>
 
 <th:block th:fragment="script">
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
