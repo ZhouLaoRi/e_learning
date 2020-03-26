@@ -54,6 +54,14 @@ public class IndexController {
         return "search";
     }
 
+    /**
+     *
+     * @param courseId
+     * @param dataNum       表示播放第几个视频
+     * @param model
+     * @param session
+     * @return
+     */
     @GetMapping(value = {"/course/{courseId}/{dataNum}","/course/{courseId}"})
     public String blog(@PathVariable(value = "courseId") Integer courseId,
                        @PathVariable(value = "dataNum",required = false) Integer dataNum,

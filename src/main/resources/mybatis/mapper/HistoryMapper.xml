@@ -209,4 +209,44 @@
       data_id = #{dataId,jdbcType=INTEGER}
     where history_id = #{historyId,jdbcType=INTEGER}
   </update>
+
+  <resultMap id="UserHistoryResultMap" type="com.atguigu.springboot.dto.HistoryDTO" >
+    <id column="history_id" property="historyId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="history_date" property="historyDate" jdbcType="TIMESTAMP" />
+    <result column="courseId" property="courseId" jdbcType="INTEGER" />
+    <result column="data_id" property="dataId" jdbcType="INTEGER" />
+    <association property="course" javaType="com.atguigu.springboot.entity.Course">
+      <id column="courseId" property="courseId" jdbcType="INTEGER" />
+      <result column="course_name" property="courseName" jdbcType="VARCHAR" />
+      <result column="course_intro" property="courseIntro" jdbcType="VARCHAR" />
+      <result column="course_author" property="courseAuthor" jdbcType="VARCHAR" />
+      <result column="course_avatar" property="courseAvatar" jdbcType="VARCHAR" />
+      <result column="course_view" property="courseView" jdbcType="INTEGER" />
+      <result column="course_like" property="courseLike" jdbcType="INTEGER" />
+      <result column="course_level" property="courseLevel" jdbcType="INTEGER" />
+      <result column="type_id" property="typeId" jdbcType="INTEGER" />
+      <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+      <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+      <result column="delete_time" property="deleteTime" jdbcType="TIMESTAMP" />
+
+    </association>
+  </resultMap>
+
+  <select id="showUserHistory" resultMap="UserHistoryResultMap" parameterType="java.lang.Integer" >
+    SELECT
+    history_id, user_id, history_date, history.course_id AS courseId,
+    data_id,
+    course.course_id, course_name, course_intro, course_author, course_avatar, course_view,
+    course_like, course_level, type_id, create_time, update_time, delete_time
+    FROM
+    history,
+    course
+    WHERE
+    history.course_id = course.course_id AND
+    user_id = #{userId,jdbcType=INTEGER}
+    order by
+    history_date DESC
+  </select>
+
 </mapper>

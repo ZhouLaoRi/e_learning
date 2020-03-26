@@ -1,5 +1,6 @@
 package com.atguigu.springboot.service;
 
+import com.atguigu.springboot.dto.HistoryDTO;
 import com.atguigu.springboot.entity.History;
 import com.atguigu.springboot.entity.HistoryExample;
 import com.atguigu.springboot.mapper.HistoryMapper;
@@ -37,4 +38,9 @@ public class HistoryService {
     public int deleteByPrimaryKey(Integer historyId){
         return historyMapper.deleteByPrimaryKey(historyId);
     }
+
+    public List<HistoryDTO> showUserHistory(Integer userId){
+        return historyMapper.showUserHistory(userId);
+    }
+
 }

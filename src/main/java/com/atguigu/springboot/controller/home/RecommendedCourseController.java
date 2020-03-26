@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -70,7 +71,8 @@ public class RecommendedCourseController {
 
     //个人推荐
     @GetMapping("/showPersonalRecommended")
-    public String showPersonalRecommended(Model model,HttpSession session){
+    public String showPersonalRecommended(Model model ,HttpSession session ,
+                                            @RequestParam(value = "pageNum",required = false,defaultValue = "1") Integer pageNum){
 
         //想法1：根据用户的观看历史，获得所有course,再根据分类去划分区域，计算各个分类有的course，需要group by courseId?
         // 然后选择分类最大的，去推荐
@@ -104,7 +106,7 @@ public class RecommendedCourseController {
         //最多人看，点赞最多
         courseExample.setOrderByClause("course_view DESC,course_like DESC");
         //单纯用来当作limit 0,5 的作用。。。
-        PageHelper.startPage(0, 10);
+        PageHelper.startPage(pageNum, 10);
         List<Course> courses = courseService.selectByExample(courseExample);
         PageInfo<Course> pageInfoRecommended = new PageInfo<Course>(courses);
         model.addAttribute("pageInfoRecommended",pageInfoRecommended);

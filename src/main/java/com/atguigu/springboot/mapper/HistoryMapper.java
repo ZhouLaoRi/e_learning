@@ -1,5 +1,6 @@
 package com.atguigu.springboot.mapper;
 
+import com.atguigu.springboot.dto.HistoryDTO;
 import com.atguigu.springboot.entity.History;
 import com.atguigu.springboot.entity.HistoryExample;
 import org.apache.ibatis.annotations.Mapper;
@@ -30,4 +31,6 @@ public interface HistoryMapper {
     int updateByPrimaryKeySelective(History record);
 
     int updateByPrimaryKey(History record);
+
+    List<HistoryDTO> showUserHistory(Integer userId);
 }
