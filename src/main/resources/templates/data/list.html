@@ -29,6 +29,9 @@
 							<div class="field">
 								<input id="dataNameInput" type="text" name="dataName" placeholder="资料名字">
 							</div>
+							<div class="field">
+								<input id="courseIdInput" type="text" name="courseId" placeholder="资料所属课程">
+							</div>
 							<button id="clear-btn" class="ui compact button">clear</button>
 							<div class="field">
 								<!--<button  type="button" id="search-btn" class="ui mini teal basic button"><i class="search icon"></i>搜索</button>-->
@@ -60,7 +63,6 @@
 									<td th:text="${data.dataIntro}"></td>
 									<td th:text="${data.dataPath}"></td>
 									<td th:text="${data.dataLevel}"></td>
-									<td th:text="${data.dataType}"></td>
 
 									<th:block th:if="${data.dataType==1}">
 										<td th:text="视频"></td>
@@ -186,7 +188,8 @@
             $("#search-btn-blog").click(function () {
                 $("#table-container").load("/crud/back/data/datasAll",{
                     dataId : $("#dataIdInput").val(),
-                    dataName : $("#dataNameInput").val()
+                    dataName : $("#dataNameInput").val(),
+                    courseId : $("#courseIdInput").val()
                 });
             });
 

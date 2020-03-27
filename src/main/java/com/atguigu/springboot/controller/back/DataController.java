@@ -71,6 +71,9 @@ public class DataController {
         if(data.getDataName() != null && !"".equals(data.getDataName())){
             criteria.andDataNameEqualTo(data.getDataName());
         }
+        if(data.getCourseId() != null && !"".equals(data.getCourseId())){
+            criteria.andCourseIdEqualTo(data.getCourseId());
+        }
 
         PageHelper.startPage(pageNum, 10);
         List<Data> datas = dataService.selectByExample(dataExample);
@@ -95,7 +98,7 @@ public class DataController {
     public String addCourse(Data data){
         data.setCreateTime(new Date());
         dataService.insert(data);
-        return "redirect:/datas";
+        return "redirect:/back/data/datas";
     }
 
     //来到修改页面，查出当前，在页面回显
@@ -112,7 +115,7 @@ public class DataController {
     @PutMapping("/data")
     public String updateCourse(Data data){
         dataService.updateByPrimaryKeySelective(data);
-        return "redirect:/datas";
+        return "redirect:/back/data/datas";
     }
 
     //资料删除
@@ -122,13 +125,13 @@ public class DataController {
         DataExample.Criteria cri = dataExample.createCriteria();
         cri.andCourseIdEqualTo(id);
         dataService.deleteByExample(dataExample);
-        return "redirect:/datas";
+        return "redirect:/back/data/datas";
     }
 
     @RequestMapping("/dataUpload/{dataId}")
     public String dataUpload(@PathVariable Integer dataId,MultipartFile file) {
         if(file == null) {
-            return "redirect:/datas";
+            return "redirect:/back/data/datas";
         }
         //获得courseName 以方便增加路径
         Data data = dataService.selectByPrimaryKey(dataId);
@@ -141,7 +144,7 @@ public class DataController {
         try {
             bytes = file.getBytes();
             String path = ResourceUtils.getURL("classpath:").getPath() + "/static/uploads/course/"+courseName;
-
+            System.out.println(path + "/" + fileName);
             //destination 目的地的文件夹
             File dest = new File(path);
             //先创建文件夹，再上传文件
@@ -155,7 +158,7 @@ public class DataController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "redirect:/datas";
+        return "redirect:/back/data/datas";
     }
 
 

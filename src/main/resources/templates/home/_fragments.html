@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- 同时出现2个会报错 Attribute "xmlns:th" appears more than once in element 我这里是抽取的公共部分才没事 -->
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head th:fragment="head(title)">
@@ -14,6 +15,15 @@
   <link rel="stylesheet" href="../static/css/me.css" th:href="@{/blog/css/me.css}">
   <!-- 新加的登陆注册的css -->
   <link rel="stylesheet" href="../css/new.css" th:href="@{/sign/css/new.css}">
+  <script>
+      function checkUser(user) {
+          if(user == null){
+              alert('您未登录，无法查看个人推荐');
+          }else {
+              window.open("/crud/home/showPersonalRecommended");
+          }
+      }
+  </script>
 </head>
 <body>
 
@@ -26,30 +36,45 @@
       <a href="#" th:href="@{/home/index}" class="m-item item m-mobile-hide " th:classappend="${n==1} ? 'active'"><i class="mini home icon"></i>首页</a>
       <a href="#" th:href="@{/types/-1}" class="m-item item m-mobile-hide" th:classappend="${n==2} ? 'active'"><i class="mini idea icon"></i>分类</a>
       <a href="#" th:href="@{/tags/-1}" class="m-item item m-mobile-hide" th:classappend="${n==3} ? 'active'"><i class="mini tags icon"></i>标签</a>
-      <a href="#" th:href="@{/home/showHistory}" class="m-item item m-mobile-hide" th:classappend="${n==3} ? 'active'"><i class="mini tags icon"></i>个人历史</a>
-      <a href="#" th:href="@{/home/showPersonalRecommended}" class="m-item item m-mobile-hide" th:classappend="${n==3} ? 'active'"><i class="mini tags icon"></i>个人推荐</a>
-      <!--<a href="#" th:href="@{/archives}" class="m-item item m-mobile-hide" th:classappend="${n==4} ? 'active'"><i class="mini clone icon"></i>归档</a>
-      <a href="#" th:href="@{/about}" class="m-item item m-mobile-hide" th:classappend="${n==5} ? 'active'"><i class="mini info icon"></i>关于我</a>-->
+      <a href="#" th:href="@{/home/showHistory}" target="_blank" class="m-item item m-mobile-hide" th:classappend="${n==4} ? 'active'"><i class="mini tags icon"></i>个人历史</a>
+      <a href="#" th:href="@{/home/showPersonalRecommended}" target="_blank" class="m-item item m-mobile-hide" th:classappend="${n==5} ? 'active'"><i class="mini tags icon"></i>个人推荐</a>
+      <a th:onclick="checkUser([[${session.loginUser}]]);" class="m-item item m-mobile-hide" th:classappend="${n==5} ? 'active'"><i class="mini tags icon"></i>个人推荐2</a>
+
       <div class="right m-item item m-mobile-hide">
-        <form name="search" action="#" th:action="@{/home/search}" method="post" target="_blank">
+        <form name="search" action="#" th:action="@{/home/search}" method="get" target="_blank">
           <div class="ui icon inverted transparent input m-margin-tb-tiny">
             <input type="text" name="query" placeholder="Search...." th:value="${query}">
             <i onclick="document.forms['search'].submit()" class="search link icon"></i>
           </div>
         </form>
-        <a href="#" class="ui icon inverted transparent input m-margin-tb-tiny" >
+        <!--<a href="#" class="ui icon inverted transparent input m-margin-tb-tiny" >
           <img th:src="@{/sign/images/user.png}" src="/images/user.png" width="30px" height="30px" onclick="start()"/>
-        </a>
+        </a>-->
 
-        <div class="ui icon inverted transparent input m-margin-tb-tiny">
-          <!-- 因为压根loginUser都没有了，所以我不能直接去检测userName是否存在 -->
+        <!-- 因为压根loginUser都没有了，所以我不能直接去检测userName是否存在 -->
+        <!--<div class="ui icon inverted transparent input m-margin-tb-tiny">
           <input type="text" name="nickname" placeholder="未登录" th:value="${session.loginUser}!=null ? ${session.loginUser.userName}">
-        </div>
+        </div>-->
 
         <div class="m-item item m-mobile-hide">
+          <!-- th:if 是直接不显示整个标签 -->
           <p style="color:red" text="没有就显示这个" th:text="${msg}有东西？" th:if="${not #strings.isEmpty(msg)}"></p>
         </div>
+
       </div>
+
+      <div class="m-item item m-mobile-hide">
+        <a href="#" class="ui icon inverted transparent input m-margin-tb-tiny" title="点击此处登录" >
+          <img th:src="@{/sign/images/user.png}" src="/images/user.png" alt="点击此处登录" width="30px" height="30px" onclick="start()"/>
+        </a>
+      </div>
+
+      <div class="m-item item m-mobile-hide">
+        <label text="未登录" th:text="${session.loginUser}!=null ? ${session.loginUser.userName}:'未登录'"></label>
+      </div>
+
+      <a href="https://www.baidu.com/" th:href="@{/user/logout}" class="m-item item m-mobile-hide"><i class="sign out icon" ></i>退出</a>
+
     </div>
   </div>
   <!-- 这个不知道是啥，注释了页面也没有少东西 -->

@@ -11,6 +11,7 @@ public class Data {
 
     private Integer dataLevel;
 
+    //1为视频，2为音频，3为文件
     private Integer dataType;
 
     private String dataPath;

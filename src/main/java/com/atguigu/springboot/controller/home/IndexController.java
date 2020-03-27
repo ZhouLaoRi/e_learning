@@ -47,11 +47,16 @@ public class IndexController {
     /**
      * 相当于是找课程，还是模糊查询
      */
-    @PostMapping("/search")
-    public String search(@RequestParam String query, Model model) {
-        model.addAttribute("page", courseService.selectByQuery(query));
+    @GetMapping("/search")
+    public String search(@RequestParam(value = "pageNum",required = false,defaultValue = "1") Integer pageNum,
+                         @RequestParam(value = "query") String query, Model model) {
+        PageHelper.startPage(pageNum, 5);
+        List<Course> courses = courseService.selectByQuery(query);
+        PageInfo<Course> pageSearch = new PageInfo<Course>(courses);
+
+        model.addAttribute("pageSearch", pageSearch);
         model.addAttribute("query", query); //显示在页面，看看搜索的是啥。。。。
-        return "search";
+        return "home/search";
     }
 
     /**
@@ -80,10 +85,16 @@ public class IndexController {
         List<Data> dataList = dataService.selectByExample(dataExample);
         model.addAttribute("datas",dataList);
 
-        if(dataNum == null || dataNum >= dataList.size()){
+        //0 - size-1 是下标，dataNum=0  不用减。。。。。
+        /*if(dataNum == null || dataNum >= dataList.size()){
             dataNum = 0;
         }else{
             dataNum -= 1;
+        }*/
+        if(dataNum != null && dataNum > 0 && dataNum < dataList.size()){
+            dataNum -= 1;
+        }else {
+            dataNum = 0;
         }
         model.addAttribute("dataNum",dataNum);
 

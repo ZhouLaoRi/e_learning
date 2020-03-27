@@ -73,7 +73,7 @@ public class ManagerController {
     public String updateManager(Manager manager){
         manager.setUpdateTime(new Date());
         managerService.updateByPrimaryKeySelective(manager);
-        return "redirect:/managers";
+        return "redirect:/back/manager/managers";
     }
 
     //管理员删除
@@ -88,7 +88,7 @@ public class ManagerController {
         manager.setManagerId(id);
         manager.setDeleteTime(new Date());
         managerService.updateByPrimaryKeySelective(manager);
-        return "redirect:/managers";
+        return "redirect:/back/manager/managers";
     }
 
     //管理员恢复
@@ -101,7 +101,7 @@ public class ManagerController {
     @RequestMapping("/managerUpload/{managerId}")
     public String dataUpload(@PathVariable Integer managerId, MultipartFile file) {
         if(file == null) {
-            return "redirect:/managers";
+            return "redirect:/back/manager/managers";
         }
         //managerId 做路径文件夹吧，重名得防止
 
@@ -124,6 +124,6 @@ public class ManagerController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "redirect:/managers";
+        return "redirect:/back/manager/managers";
     }
 }

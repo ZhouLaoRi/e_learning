@@ -53,7 +53,11 @@ public class MyMvcConfig implements WebMvcConfigurer {
 
 
         //前台拦截器，只要拦截评论功能吧
-        registry.addInterceptor(new UserLoginHandlerInterceptor()).addPathPatterns("/home/comments/like/{commentId}","/home/comments");
+        registry.addInterceptor(new UserLoginHandlerInterceptor()).addPathPatterns(
+                "/home/comments/like/{commentId}",
+                "/home/comments",
+                "/home/showHistory",
+                "/home/showPersonalRecommended");
         /*excludePathPatterns("/home/login","/","/user/login",
                 "/asserts/**","/webjars/**","/blog/**","/image/**","/media/**","/music/**","/pdfjs/**",
                 "/home/verifyCode/getVerifyCode");*/

@@ -79,7 +79,7 @@ public class TypeController {
     public String addType(Type type){
         type.setCreateTime(new Date());
         typeService.insertSelective(type);
-        return "redirect:/types";
+        return "redirect:/back/type/types";
     }
 
     //来到修改页面，查出当前，在页面回显
@@ -95,7 +95,7 @@ public class TypeController {
     @PutMapping("/type")
     public String updateType(Type type){
         typeService.updateByPrimaryKeySelective(type);
-        return "redirect:/types";
+        return "redirect:/back/type/types";
     }
 
     //分类删除
@@ -107,14 +107,14 @@ public class TypeController {
         type.setId(id);
         type.setDeleteTime(new Date());
         typeService.updateByPrimaryKeySelective(type);
-        return "redirect:/types";
+        return "redirect:/back/type/types";
     }
 
     //分类恢复
     @PutMapping("/type/recover/{id}")
     public String recoverType(@PathVariable Integer typeId){
         typeService.recoverTypeByPrimaryKey(typeId);
-        return "redirect:/types";
+        return "redirect:/back/type/types";
     }
 
 

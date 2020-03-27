@@ -79,7 +79,7 @@ public class UserController {
     public String updateUser(User user){
         user.setUpdateTime(new Date());
         userService.updateByPrimaryKeySelective(user);
-        return "redirect:/users";
+        return "redirect:/back/user/users";
     }
 
     //用户删除
@@ -94,7 +94,7 @@ public class UserController {
         user.setUserId(id);
         user.setDeleteTime(new Date());
         userService.updateByPrimaryKeySelective(user);
-        return "redirect:/users";
+        return "redirect:/back/user/users";
     }
 
     //用户恢复
@@ -107,7 +107,7 @@ public class UserController {
     @RequestMapping("/userUpload/{userId}")
     public String dataUpload(@PathVariable Integer userId, MultipartFile file) {
         if(file == null) {
-            return "redirect:/users";
+            return "redirect:/back/user/users";
         }
         //userId 做路径文件夹吧，重名得防止
 
@@ -130,7 +130,7 @@ public class UserController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "redirect:/users";
+        return "redirect:/back/user/users";
     }
 
 

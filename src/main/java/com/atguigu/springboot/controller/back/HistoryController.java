@@ -76,7 +76,7 @@ public class HistoryController {
     public String addHistory(History history){
         history.setCreateTime(new Date());
         historyService.insertSelective(history);
-        return "redirect:/historys";
+        return "redirect:/back/history/historys";
     }*/
 
     //来到修改页面，查出当前，在页面回显
@@ -92,21 +92,21 @@ public class HistoryController {
     @PutMapping("/history")
     public String updateHistory(History history){
         historyService.updateByPrimaryKeySelective(history);
-        return "redirect:/historys";
+        return "redirect:/back/history/historys";
     }
 
     //历史记录删除
     @DeleteMapping("/history/{id}")
     public String deleteHistory(@PathVariable Integer id){
         historyService.deleteByPrimaryKey(id);
-        return "redirect:/historys";
+        return "redirect:/back/history/historys";
     }
 
     //历史记录恢复
     /*@PutMapping("/history/recover/{id}")
     public String recoverHistory(@PathVariable Integer historyId){
         historyService.recoverHistoryByPrimaryKey(historyId);
-        return "redirect:/historys";
+        return "redirect:/back/history/historys";
     }*/
 
 

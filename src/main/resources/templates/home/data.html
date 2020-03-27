@@ -34,10 +34,13 @@
 
             <label th:text="${datas[0].dataPath}" ></label>
             <label th:text="${datas[dataNum].dataPath}" ></label>
-
-            <video name="videoName" align="center" controls="controls" class="ui fluid rounded image" style="width: 650px; height: 420px;">
-              <source th:src="@{/media/data1.mp4}" type="video/mp4">
-            </video>
+            <br>
+              <audio id="audioData" th:src="@{${datas[dataNum].dataPath}}" controls="controls" style="display: none"></audio>
+              <video id="videoData" name="videoName" align="center" controls="controls"
+                     class="ui fluid rounded image" style="width: 650px; height: 420px;">
+                <!--<source th:src="@{/media/data1.mp4}" type="video/mp4">-->
+                <source th:src="@{${datas[dataNum].dataPath}}" type="video/mp4">
+              </video>
           </div>
 
           <!--赞赏，点开会有2个二维码 太叼了-->
@@ -198,10 +201,10 @@
             </div>
             <div class="ui teal segment">
               <div class="ui fluid vertical menu" >
-                <a href="#" th:href="@{/home/course/{courseId}/{dataNum}(courseId=${course.courseId},dataNum=${dataStat.index})}" target="_blank" class="item"  th:each="data,dataStat : ${datas}">
-                <!--<a href="#" th:href="@{/home/data/{id}(id=${data.dataId})}" target="_blank" class="item"  th:each="data : ${datas}">-->
-                  <span th:text="${data.dataName}">分类A</span>
-                  <div class="ui teal basic left pointing label" th:text="下载">共有13</div>
+                <!--<a href="#" th:href="@{/home/course/{courseId}/{dataNum}(courseId=${course.courseId},dataNum=${dataStat.index})}" target="_blank" class="item"  th:each="data,dataStat : ${datas}">-->
+                <a th:onclick="dataCheck([[${data.dataType}]],[[${course.courseId}]],[[${data.dataPath}]])" class="item"  th:each="data,dataStat : ${datas}">
+                  <span th:text="'P'+${dataStat.index + 1}+'&nbsp;&nbsp;'+${data.dataName}">视频1</span>
+                  <div class="ui teal basic left pointing label" th:text="下载">下载</div>
                 </a>
               </div>
             </div>
@@ -417,6 +420,47 @@
         });
     });
 
+    //根据资料类型 分三种不同的状态 1为视频，2为音频，3为文件
+    //@{/home/course/{courseId}/{dataNum}(courseId=${course.courseId},dataNum=${dataStat.index})}
+    function dataCheck(dataType,courseId,dataPath) {
+        if(dataType == null){
+            alert("资源出错，请联系管理员");
+        }else if(dataType == 1){
+            //var url = "/crud/home/course/{"+courseId+"}/{"+dataNum+"}";
+            /*var url = "/crud/home/course/"+courseId+"/"+dataNum;
+            alert(url);
+            window.open(url);*/
+            var target = "/crud" + dataPath;
+            alert(target);
+            /*document.getElementsById('videoData').setAttribute("src", target);*/
+
+            document.getElementById('videoData').style.display="";
+            document.getElementById('audioData').style.display="none"
+            $("#videoData").attr("src",target);
+            $("#videoData").attr("autoplay","false");
+
+
+        }else if(dataType == 2){
+
+            //音频
+            //window.open("/crud/preview");
+            document.getElementById('videoData').style.display="none";
+            document.getElementById('audioData').style.display="";
+            var target = "/crud" + dataPath;
+            alert(target);
+            $("#audioData").attr("src",target);
+            $("#audioData").attr("autoplay","false");
+
+
+        }else if(dataType == 3){
+            //文本
+            var target = "/crud/preview?dataPath=" + dataPath;
+            alert(target);
+            window.open(target);
+        }else {
+            alert("资源出错，请联系管理员");
+        }
+    }
   </script>
 </body>
 </html>

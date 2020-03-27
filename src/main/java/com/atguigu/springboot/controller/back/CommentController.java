@@ -77,7 +77,7 @@ public class CommentController {
     public String addComment(Comment comment){
         comment.setCreateTime(new Date());
         commentService.insertSelective(comment);
-        return "redirect:/comments";
+        return "redirect:/back/comment/comments";
     }*/
 
     //来到修改页面，查出当前，在页面回显
@@ -93,21 +93,21 @@ public class CommentController {
     @PutMapping("/comment")
     public String updateComment(Comment comment){
         commentService.updateByPrimaryKeySelective(comment);
-        return "redirect:/comments";
+        return "redirect:/back/comment/comments";
     }
 
     //评论删除
     @DeleteMapping("/comment/{id}")
     public String deleteComment(@PathVariable Integer id){
         commentService.deleteByPrimaryKey(id);
-        return "redirect:/comments";
+        return "redirect:/back/comment/comments";
     }
 
     //评论恢复
     /*@PutMapping("/comment/recover/{id}")
     public String recoverComment(@PathVariable Integer commentId){
         commentService.recoverCommentByPrimaryKey(commentId);
-        return "redirect:/comments";
+        return "redirect:/back/comment/comments";
     }*/
 
 

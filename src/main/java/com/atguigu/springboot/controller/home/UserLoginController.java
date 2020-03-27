@@ -111,21 +111,17 @@ public class UserLoginController {
     /**
      * 登出
      *
-     * @param session 会话session
-     * @return com.sfwiki.utils.resulthandler.ResponseBean<com.sfwiki.utils.resulthandler.CommonErrorEnum>
-     * @author lmx
-     * @date 2019/3/30 15:07
      */
     @RequestMapping("/user/logout")
     public String logOut(HttpSession session) {
         session.removeAttribute("loginUser");
-        return "redirect:/";
+        return "redirect:/home/index";
     }
 
 
-    @PostMapping("/user/signin")
+    /*@PostMapping("/user/signin")
     public String signin(User user) {
         userService.insert(user);
         return "redirect:/";
-    }
+    }*/
 }

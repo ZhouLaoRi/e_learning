@@ -323,12 +323,11 @@
   </update>
 
   <select id="selectByQuery" parameterType="java.lang.String" resultMap="BaseResultMap">
-
     select
     <include refid="Base_Column_List" />
     from course
     where course_name like concat(concat('%',#{query,jdbcType=VARCHAR}) ,'%')
-    order by course_id
+    order by course_view DESC,course_like DESC,course_id
   </select>
 
   <update id="recoverCourseByPrimaryKey" parameterType="java.lang.Integer">

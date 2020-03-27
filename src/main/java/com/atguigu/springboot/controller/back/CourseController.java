@@ -113,7 +113,7 @@ public class CourseController {
         //同时分类里面的总数也要加1
         typeService.addTotalOne(course.getTypeId());
 
-        return "redirect:/courses";
+        return "redirect:/back/course/courses";
     }
 
     //来到修改页面，查出当前，在页面回显
@@ -130,7 +130,7 @@ public class CourseController {
     public String updateCourse(Course course){
         course.setUpdateTime(new Date());
         courseService.updateByPrimaryKeySelective(course);
-        return "redirect:/courses";
+        return "redirect:/back/course/courses";
     }
 
     //课程删除
@@ -149,14 +149,14 @@ public class CourseController {
     @PutMapping("/course/recover/{id}")
     public String recoverCourse(@PathVariable Integer courseId){
         courseService.recoverCourseByPrimaryKey(courseId);
-        return "redirect:/courses";
+        return "redirect:/back/course/courses";
     }
 
 
     @RequestMapping("/courseUpload/{courseId}")
-    public String dataUpload(@PathVariable Integer courseId, MultipartFile file) {
+    public String courseUpload(@PathVariable Integer courseId, MultipartFile file) {
         if(file == null) {
-            return "redirect:/courses";
+            return "redirect:/back/course/courses";
         }
         String fileName = file.getOriginalFilename();
         byte[] bytes = new byte[0];
@@ -180,7 +180,7 @@ public class CourseController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "redirect:/courses";
+        return "redirect:/back/course/courses";
     }
 
 
