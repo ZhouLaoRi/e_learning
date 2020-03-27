@@ -8,6 +8,9 @@
   <!--导航-->
   <nav th:replace="home/_fragments :: menu(1)"  class="ui inverted attached segment m-padded-tb-mini m-shadow-small" ></nav>
 
+  <!--登录注册-->
+  <div th:replace="home/_fragments :: header2" ></div>
+
   <!--中间内容-->
   <div  class="m-container m-padded-tb-big animated fadeIn">
     <div class="ui container">
@@ -32,8 +35,8 @@
           <div class="ui attached segment">
             <!--图片区域-->
 
-            <label th:text="${datas[0].dataPath}" ></label>
-            <label th:text="${datas[dataNum].dataPath}" ></label>
+            <!--<label th:text="${datas[0].dataPath}" ></label>
+            <label th:text="${datas[dataNum].dataPath}" ></label>-->
             <br>
               <audio id="audioData" th:src="@{${datas[dataNum].dataPath}}" controls="controls" style="display: none"></audio>
               <video id="videoData" name="videoName" align="center" controls="controls"
@@ -143,7 +146,7 @@
                         How artistic!
                       </div>
                       <div class="actions">
-                        <a class="reply" data-commentid="1" title="为他点赞~" th:attr="data-commentid=${comment.commentId}" onclick="like(this)">点赞数：[[${comment.commentLike}]]</a>
+                        <a class="reply" data-commentid="1" title="为他点赞~" th:attr="data-commentid=${comment.commentId}" onclick="like(this)"><i class="thumbs up icon"></i>点赞数：[[${comment.commentLike}]]</a>
                         &nbsp;&nbsp;&nbsp;
                         <!--<a class="reply" data-commentid="1" data-commentnickname="Matt" th:attr="data-commentid=${comment.id},data-commentnickname=${comment.nickname}" onclick="reply(this)">回复</a>-->
                         <a class="reply" data-commentid="1" data-commentnickname="Matt" th:attr="data-commentid=${comment.commentId},data-commentnickname=${comment.nickname}" onclick="reply(this)">回复</a>
@@ -167,7 +170,7 @@
                             How artistic!
                           </div>
                           <div class="actions">
-                            <a class="reply" data-commentid="1" title="为他点赞~" th:attr="data-commentid=${reply.commentId}" onclick="like(this)">点赞数：[[${reply.commentLike}]]</a>
+                            <a class="reply" data-commentid="1" title="为他点赞~" th:attr="data-commentid=${reply.commentId}" onclick="like(this)"><i class="thumbs up icon"></i>点赞数：[[${reply.commentLike}]]</a>
                             &nbsp;&nbsp;&nbsp;
                             <a class="reply" data-commentid="1" data-commentnickname="Matt" th:attr="data-commentid=${reply.commentId},data-commentnickname=${reply.nickname}" onclick="reply(this)">回复</a>
                           </div>
@@ -194,9 +197,9 @@
                 <div class="column">
                   <i class="idea icon"></i>视频选集
                 </div>
-                <div class="right aligned column">
+                <!--<div class="right aligned column">
                   <a href="#" th:href="@{types/-1}" target="_blank">more <i class="angle double right icon"></i></a>
-                </div>
+                </div>-->
               </div>
             </div>
             <div class="ui teal segment">
@@ -215,12 +218,27 @@
           <div id="recommended-container" class="ui segments m-margin-top-large">
             <div th:fragment="recommendedCoursesList">
               <div class="ui secondary segment ">
-                <i class="bookmark icon"></i>相关推荐
+                <div class="ui two column grid">
+                  <div class="column">
+                    <i class="bookmark icon"></i>相关推荐
+                  </div>
+                  <div class="right aligned column">
+                    <a href="#" th:href="@{types/-1}" target="_blank">more <i class="angle double right icon"></i></a>
+                  </div>
+                </div>
               </div>
-              <div th:each="recommendedCourse : ${recommendedCourses}">
-                <div class="ui segment">
-                  <a href="#" th:href="@{/home/course/{id}(id=${recommendedCourse.courseId})}"
-                     target="_blank" class="m-black m-text-thin" th:text="${recommendedCourse.courseName}">用户故事（User Story）</a>
+
+              <div class="ui teal segment">
+                <div class="ui fluid vertical menu" >
+                  <a href="#" th:href="@{/home/course/{id}(id=${recommendedCourse.courseId})}" target="_blank" class="item" th:each="recommendedCourse : ${recommendedCourses}">
+                    <span th:text="${recommendedCourse.courseName}">用户故事（User Story）</span>
+                    <!--<div class="ui teal basic left pointing label" th:text="下载">下载</div>-->
+                    <div class="ui teal basic left pointing label">
+                      <i class="eye icon"></i><span th:text="${recommendedCourse.courseView}">2342</span>
+                      &nbsp;&nbsp;
+                      <i class="thumbs up icon"></i><span th:text="${recommendedCourse.courseLike}">2342</span>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -372,6 +390,7 @@
         console.log('校验失败');
       }
       */
+      checkUser([[${session.loginUser}]]);
       postData();
     });
     
@@ -392,7 +411,7 @@
       $("[name='content']").val('');
       //$("[name='parentComment.id']").val(-1);
       $("[name='content']").attr("placeholder", "请输入评论信息...");
-      $("[name='nickname']").val('');
+      //$("[name='nickname']").val('');   有登录名了 不用清除了
     }
 
     //点击回复的按钮
@@ -431,13 +450,15 @@
             alert(url);
             window.open(url);*/
             var target = "/crud" + dataPath;
-            alert(target);
+            //alert(target);
             /*document.getElementsById('videoData').setAttribute("src", target);*/
+
 
             document.getElementById('videoData').style.display="";
             document.getElementById('audioData').style.display="none"
             $("#videoData").attr("src",target);
-            $("#videoData").attr("autoplay","false");
+            $("#audioData").attr("src","");
+            $("#videoData").attr("autoplay","true");
 
 
         }else if(dataType == 2){
@@ -447,15 +468,16 @@
             document.getElementById('videoData').style.display="none";
             document.getElementById('audioData').style.display="";
             var target = "/crud" + dataPath;
-            alert(target);
+            //alert(target);
+            $("#audioData").attr("autoplay","true");
             $("#audioData").attr("src",target);
-            $("#audioData").attr("autoplay","false");
+            $("#videoData").attr("src","");
 
 
         }else if(dataType == 3){
             //文本
             var target = "/crud/preview?dataPath=" + dataPath;
-            alert(target);
+            //alert(target);
             window.open(target);
         }else {
             alert("资源出错，请联系管理员");

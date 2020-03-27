@@ -115,7 +115,8 @@
             </div>
             <div class="ui teal segment">
               <div class="ui fluid vertical menu" >
-                <a href="#" th:href="@{/types/{id}(id=${type.id})}" target="_blank" class="item"  th:each="type : ${types}">
+                <a href="#" th:href="@{/home/showType/{typeId}/{pageNum}(typeId=${type.id},pageNum=1)}" target="_blank" class="item"  th:each="type : ${types}">
+                  <!--<a th:onclick="getTypeCourses([[${type.id}]]);" target="_blank" class="item"  th:each="type : ${types}">-->
                   <span th:text="${type.name}">分类A</span>
                   <div class="ui teal basic left pointing label" th:text="${type.total}">共有13</div>
                 </a>
@@ -137,13 +138,21 @@
                   </div>
                 </div>
               </div>
-              <div th:each="newRecommendedCourse : ${newRecommendedCourses}">
-                <div class="ui segment">
-                  <a href="#" th:href="@{/home/course/{id}(id=${newRecommendedCourse.courseId})}" target="_blank" class="m-black m-text-thin" th:text="${newRecommendedCourse.courseName}">用户故事（User Story）</a>
+
+              <div class="ui teal segment">
+                <div class="ui fluid vertical menu" >
+                  <a href="#" th:href="@{/home/course/{id}(id=${newRecommendedCourse.courseId})}"
+                     th:each="newRecommendedCourse : ${newRecommendedCourses}"
+                     target="_blank" class="item" >
+                    <span th:text="${newRecommendedCourse.courseName}">用户故事（User Story）</span>
+                    <div class="ui teal basic left pointing label">
+                      <i class="eye icon"></i><span th:text="${newRecommendedCourse.courseView}">2342</span>
+                      &nbsp;&nbsp;
+                      <i class="thumbs up icon"></i><span th:text="${newRecommendedCourse.courseLike}">2342</span>
+                    </div>
+                  </a>
                 </div>
               </div>
-              <!--<div class="ui segment">
-                <a href="#" target="_blank" class="m-black m-text-thin" th:text="我先随便写点东西">用户故事（User Story）</a>-->
 
             </div>
           </div>
@@ -180,6 +189,25 @@
         var urlNewRecommended = "/crud/home/showNewRecommended";
         $("#newRecommended-container").load(urlNewRecommended);
     });
+
+    //老老实实get请求吧
+    /*function getTypeCourses(typeId) {
+        if(typeId == null){
+            alert('未知错误');
+        }else {
+            $.ajax({
+                type:"post",
+                url:"/crud/home/showType",
+                data: {
+                    typeId : typeId ,
+                    pageNum : 1
+                },
+                success:function(rel){
+                    document.write(rel);//一句搞定
+                }
+            });
+        }
+    }*/
 
   </script>
 </body>
