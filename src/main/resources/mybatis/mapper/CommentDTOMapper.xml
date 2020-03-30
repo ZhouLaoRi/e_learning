@@ -33,6 +33,59 @@
       </association>
     </collection>
   </resultMap>
+
+
+    <resultMap id="BaseResultMap2" type="com.atguigu.springboot.dto.CommentDTO" >
+        <id column="id" property="commentId" jdbcType="INTEGER" />
+        <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+        <result column="avatar" property="avatar" jdbcType="VARCHAR" />
+        <result column="time" property="commentDate" jdbcType="DATETIMEOFFSET" />
+        <result column="text" property="commentText" jdbcType="VARCHAR" />
+        <result column="like" property="commentLike" jdbcType="INTEGER" />
+        <collection property="replyComments" ofType="com.atguigu.springboot.dto.CommentDTO">
+            <id column="replayId" property="commentId" jdbcType="INTEGER" />
+            <result column="replyNickname" property="nickname" jdbcType="VARCHAR" />
+            <result column="replyReplyname" property="replyname" jdbcType="VARCHAR" />
+            <result column="replyAvatar" property="avatar" jdbcType="VARCHAR" />
+            <result column="replyTime" property="commentDate" jdbcType="DATETIMEOFFSET" />
+            <result column="replytext" property="commentText" jdbcType="VARCHAR" />
+            <result column="replylike" property="commentLike" jdbcType="INTEGER" />
+        </collection>
+    </resultMap>
+
+    <select id="getAllCommentDTO2" resultMap="BaseResultMap2" parameterType="java.lang.Integer">
+      SELECT
+
+          t1.comment_id id,
+          t0.user_name nickname,
+          t1.avatar avatar,
+          t1.comment_date time,
+          t1.comment_text text,
+          t1.comment_like 'like',
+
+          t2.comment_id replayId,
+          t3.user_name replyNickname,
+          t2.nickname replyReplyname,
+          t2.avatar replyAvatar,
+          t2.comment_date replyTime,
+          t2.comment_text replytext,
+          t2.comment_like replylike
+
+      FROM
+          `user` AS t0 #userId
+          RIGHT JOIN `comment` AS t1 ON t0.user_id = t1.user_id #me
+          LEFT JOIN COMMENT AS t2 #son
+          ON t1.comment_id = t2.parent_comment_id
+          LEFT JOIN user AS t3 #son_user
+          ON t2.user_id = t3.user_id
+      WHERE
+          t1.course_id = #{courseId,jdbcType=INTEGER}
+          AND t1.parent_comment_id is null
+      ORDER BY
+          t1.comment_like DESC
+  </select>
+
+
   <select id="getAllCommentDTO" resultMap="BaseResultMap" parameterType="java.lang.Integer">
       SELECT
           t0.comment_id fatherCommentId,

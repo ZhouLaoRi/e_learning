@@ -16,6 +16,9 @@ public class CommentDTO {
 
     private String nickname;
 
+    //20200330晚上修改 把原有的nickname属性当作replyname，nick通过userId去获得（没办法懒得数据库加一个字段了）
+    private String replyname;
+
     private String avatar;
 
     private Date commentDate;
@@ -32,7 +35,8 @@ public class CommentDTO {
     private List<CommentDTO> replyComments = new ArrayList<>();
 
     //父节点，用来保存@某人  这个符号 ,不需要parentId  直接就是父节点
-    private CommentDTO parentComment;
+    // 20200330晚上修改，去掉了这个parent了，不需要这个父节点的信息。单纯当作位置去判断就好了
+    //private CommentDTO parentComment;
 
 
 

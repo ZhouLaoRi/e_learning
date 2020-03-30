@@ -13,6 +13,8 @@ public interface CommentDTOMapper {
 
     public List<CommentDTO> getAllCommentDTO(@Param("courseId") Integer courseId);
 
+    public List<CommentDTO> getAllCommentDTO2(@Param("courseId") Integer courseId);
+
     void likeCommentDTO(Integer commentId);
 
     void saveComment(Comment comment);

@@ -30,7 +30,7 @@ public class CommentHomeController {
 
     @GetMapping("/comments/{courseId}")
     public String comments(@PathVariable Integer courseId, Model model) {
-        List<CommentDTO> comments = commentService.getAllCommentDTO(courseId);
+        List<CommentDTO> comments = commentService.getAllCommentDTO2(courseId);
         model.addAttribute("comments", comments);
         return "home/data :: commentList";
     }
@@ -52,7 +52,7 @@ public class CommentHomeController {
         //comment.setAvatar("/blog/images/1005-100x100.jpg");
         //comment.setNickname("admin");//前端传进来了 但是是没用的
         comment.setAvatar(user.getAvatar());
-        comment.setNickname(user.getUserName());
+        //comment.setNickname(user.getUserName());
         comment.setCommentLike(0);
         comment.setCommentDate(new Date());
 

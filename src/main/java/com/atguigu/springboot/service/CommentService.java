@@ -26,6 +26,11 @@ public class CommentService {
     public List<CommentDTO> getAllCommentDTO(Integer courseId){
         return commentDTOMapper.getAllCommentDTO(courseId);
     }
+
+    public List<CommentDTO> getAllCommentDTO2(Integer courseId){
+        return commentDTOMapper.getAllCommentDTO2(courseId);
+    }
+
     public int insert(Comment comment){
         return commentMapper.insert(comment);
     }

@@ -103,6 +103,8 @@ public class UserLoginController {
             }
             //虽然用户名不能重复
             session.setAttribute("loginUser",users.get(0));
+            //成功之后要去掉错误信息
+            session.removeAttribute("loginMsg");
             return "redirect:/home/index";
         }
         //登陆失败

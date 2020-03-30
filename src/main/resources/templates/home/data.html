@@ -107,9 +107,12 @@
               <!--<input type="hidden" name="blog.id">-->
               <input type="hidden" name="user.id" th:value="${session.loginUser}!=null ? ${session.loginUser.userId}">
               <input type="hidden" name="course.id" th:value="${course.courseId}">
+              <!-- 仅仅是表示在那一个人的评论里面回复 -->
               <input type="hidden" name="parentComment.id">
               <!-- 如果是在回复别人的下面 再at人 才需要这个  正常情况必须保持空，因为我发布（评论）是同一个按钮 -->
-              <input type="hidden" name="parent_parentComment.id">
+              <!-- 别人回复的那个人的名字 -->
+              <input type="hidden" name="replyname">
+
               <div class="field">
                 <!-- 这里的样式height=112px是最小了，写1也是显示112px -->
                 <textarea style="width: 650px; height: 112px;" name="content" placeholder="请输入评论信息..."></textarea>
@@ -171,7 +174,7 @@
                           <a class="author" >
                             <span th:text="${reply.nickname}">小红</span>
                             <!--<div class="ui mini basic teal left pointing label m-padded-mini" th:if="${reply.adminComment}">博主</div>-->
-                            &nbsp;<span th:text="|@ ${reply.parentComment.nickname}|" class="m-teal">@ 小白</span>
+                            &nbsp;<span th:text="|@ ${reply.replyname}|" class="m-teal">@ 小白</span>
                           </a>
                           <div class="metadata">
                             <span class="date" th:text="${#dates.format(reply.commentDate,'yyyy-MM-dd HH:mm')}">Today at 5:42PM</span>
@@ -183,7 +186,9 @@
                             <a class="reply" data-userid="-1" data-commentid="1" title="为他点赞~"
                                th:attr="data-commentid=${reply.commentId},data-userid=${session.loginUser}!=null ? ${session.loginUser.userId}:-1" onclick="like(this)"><i class="thumbs up icon"></i>点赞数：[[${reply.commentLike}]]</a>
                             &nbsp;&nbsp;&nbsp;
-                            <a class="reply" data-commentid="1" data-commentnickname="Matt" th:attr="data-commentid=${reply.commentId},data-commentnickname=${reply.nickname}" onclick="reply(this)"><i class="comment icon"></i> 回复</a>
+                            <a class="reply" data-commentid="1" data-commentnickname="Matt"
+                               th:attr="data-commentid=${comment.commentId},data-commentnickname=${reply.nickname}"
+                               onclick="reply(this)"><i class="comment icon"></i> 回复</a>
                           </div>
                         </div>
                       </div>
@@ -418,7 +423,8 @@
         "userId" : $("[name='user.id']").val(),
         "parentCommentId" : $("[name='parentComment.id']").val(),
         "courseId" : $("[name='course.id']").val(),
-        "nickname": $("[name='nickname']").val(),
+        //"nickname": $("[name='nickname']").val(),
+        "nickname": $("[name='replyname']").val(),
         "commentText" : $("[name='content']").val()
       },function (responseTxt, statusTxt, xhr) {
 //        $(window).scrollTo($('#comment-container'),500);
@@ -431,6 +437,8 @@
       //$("[name='parentComment.id']").val(-1);
       $("[name='content']").attr("placeholder", "请输入评论信息...");
       //$("[name='nickname']").val('');   有登录名了 不用清除了
+      $("[name='parentComment.id']").val('');   //所属于的父节点
+      $("[name='replyname']").val('');    //回复的人的名字
     }
 
     //点击回复的按钮
@@ -438,10 +446,22 @@
       var commentId = $(obj).data('commentid');
       var commentNickname = $(obj).data('commentnickname');
       alert(commentId + " " + commentNickname);
+        $("[name='parentComment.id']").val(commentId);
       $("[name='content']").attr("placeholder", "@"+commentNickname).focus();
-      $("[name='parentComment.id']").val(commentId);
+        $("[name='replyname']").val(commentNickname);
       $(window).scrollTo($('#comment-form'),500);
     }
+
+    //点击回复的按钮
+    /*function replyOthers(obj) {
+        var commentId = $(obj).data('parentCommentId');
+        var commentNickname = $(obj).data('commentnickname');
+        alert(commentId + " " + commentNickname);
+        $("[name='parentComment.id']").val(commentId);
+        $("[name='content']").attr("placeholder", "@"+commentNickname).focus();
+        $("[name='replyname']").val(commentNickname);
+        $(window).scrollTo($('#comment-form'),500);
+    }*/
 
     //点赞按钮，这个功能 暂时不会写。。。
     //点赞评论功能完成啦~
