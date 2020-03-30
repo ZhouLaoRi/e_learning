@@ -47,10 +47,15 @@
           </div>
 
           <!--赞赏，点开会有2个二维码 太叼了-->
-          <!--<div class="ui  attached padded segment">
+          <div class="ui  attached padded segment">
             <div>
-              <div class="ui center aligned basic segment">
-                <button id="payButton" class="ui orange basic circular button">赞赏</button>
+              <div class="ui left aligned basic segment">
+                <button id="likeButton" th:onclick="likeCourse([[${course.courseId}]])" class="ui orange basic circular button"><i class="thumbs up icon"></i>点赞 [[${course.courseLike}]]</button>
+
+                <button class="ui orange basic circular button"><i class="eye icon"></i>观看 [[${course.courseView}]]</button>
+              </div>
+              <!--<div class="ui center aligned basic segment">
+                <button id="payButton" class="ui orange basic circular button"><i class="thumbs up icon"></i>点赞</button>
               </div>
               <div class="ui payQR flowing popup transition hidden">
                 <div class="ui orange basic label">
@@ -65,9 +70,9 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div>-->
             </div>
-          </div>-->
+          </div>
 
           <!--<div class="ui attached positive message" th:if="${blog.shareStatement}">-->
           <div class="ui attached positive message">
@@ -100,8 +105,11 @@
             <!-- 用来留言的 -->
             <div id="comment-form" class="ui form">
               <!--<input type="hidden" name="blog.id">-->
+              <input type="hidden" name="user.id" th:value="${session.loginUser}!=null ? ${session.loginUser.userId}">
               <input type="hidden" name="course.id" th:value="${course.courseId}">
               <input type="hidden" name="parentComment.id">
+              <!-- 如果是在回复别人的下面 再at人 才需要这个  正常情况必须保持空，因为我发布（评论）是同一个按钮 -->
+              <input type="hidden" name="parent_parentComment.id">
               <div class="field">
                 <!-- 这里的样式height=112px是最小了，写1也是显示112px -->
                 <textarea style="width: 650px; height: 112px;" name="content" placeholder="请输入评论信息..."></textarea>
@@ -146,10 +154,12 @@
                         How artistic!
                       </div>
                       <div class="actions">
-                        <a class="reply" data-commentid="1" title="为他点赞~" th:attr="data-commentid=${comment.commentId}" onclick="like(this)"><i class="thumbs up icon"></i>点赞数：[[${comment.commentLike}]]</a>
+                        <a class="reply" data-userid="-1" data-commentid="1" title="为他点赞~" th:attr="data-commentid=${comment.commentId},
+                        data-userid=${session.loginUser}!=null ? ${session.loginUser.userId}:-1"
+                           onclick="like(this)"><i class="thumbs up icon"></i>点赞数：[[${comment.commentLike}]]</a>
                         &nbsp;&nbsp;&nbsp;
                         <!--<a class="reply" data-commentid="1" data-commentnickname="Matt" th:attr="data-commentid=${comment.id},data-commentnickname=${comment.nickname}" onclick="reply(this)">回复</a>-->
-                        <a class="reply" data-commentid="1" data-commentnickname="Matt" th:attr="data-commentid=${comment.commentId},data-commentnickname=${comment.nickname}" onclick="reply(this)">回复</a>
+                        <a class="reply" data-commentid="1" data-commentnickname="Matt" th:attr="data-commentid=${comment.commentId},data-commentnickname=${comment.nickname}" onclick="reply(this)"><i class="comments icon"></i>回复</a>
                       </div>
                     </div>
                     <div class="comments" th:if="${#arrays.length(comment.replyComments)}>0">
@@ -170,9 +180,10 @@
                             How artistic!
                           </div>
                           <div class="actions">
-                            <a class="reply" data-commentid="1" title="为他点赞~" th:attr="data-commentid=${reply.commentId}" onclick="like(this)"><i class="thumbs up icon"></i>点赞数：[[${reply.commentLike}]]</a>
+                            <a class="reply" data-userid="-1" data-commentid="1" title="为他点赞~"
+                               th:attr="data-commentid=${reply.commentId},data-userid=${session.loginUser}!=null ? ${session.loginUser.userId}:-1" onclick="like(this)"><i class="thumbs up icon"></i>点赞数：[[${reply.commentLike}]]</a>
                             &nbsp;&nbsp;&nbsp;
-                            <a class="reply" data-commentid="1" data-commentnickname="Matt" th:attr="data-commentid=${reply.commentId},data-commentnickname=${reply.nickname}" onclick="reply(this)">回复</a>
+                            <a class="reply" data-commentid="1" data-commentnickname="Matt" th:attr="data-commentid=${reply.commentId},data-commentnickname=${reply.nickname}" onclick="reply(this)"><i class="comments icon"></i>回复</a>
                           </div>
                         </div>
                       </div>
@@ -289,6 +300,10 @@
       $('.m-item').toggleClass('m-mobile-hide');
     });
 
+    $('.ui.dropdown').dropdown({
+        on : 'hover'
+    });
+
     $('#payButton').popup({
       popup : $('.payQR.popup'),
       on : 'click',
@@ -396,7 +411,7 @@
     
     function postData() {
       $("#comment-container").load("/crud/home/comments",{
-        "userId" : "1",
+        "userId" : $("[name='user.id']").val(),
         "parentCommentId" : $("[name='parentComment.id']").val(),
         "courseId" : $("[name='course.id']").val(),
         "nickname": $("[name='nickname']").val(),
@@ -418,17 +433,85 @@
     function reply(obj) {
       var commentId = $(obj).data('commentid');
       var commentNickname = $(obj).data('commentnickname');
+      alert(commentId + " " + commentNickname);
       $("[name='content']").attr("placeholder", "@"+commentNickname).focus();
       $("[name='parentComment.id']").val(commentId);
       $(window).scrollTo($('#comment-form'),500);
     }
 
     //点赞按钮，这个功能 暂时不会写。。。
+    //点赞评论功能完成啦~
     function like(obj) {
         var commentId = $(obj).data('commentid');
-        $("[id='commentid']").attr("placeholder", "@"+commentNickname).focus();
-        $("[name='parentComment.id']").val(commentId);
-        $(window).scrollTo($('#comment-form'),500);
+        var userId = $(obj).data('userid');
+        //alert(commentId + " " + userId);
+
+        //未登录
+        if(userId == -1){
+            alert("您未登录无法点赞");
+            return;
+        }
+        /*var text1 = $(obj).text();
+        alert(text1);
+        text1 = parseInt(text1.replace("点赞数：",""));
+        alert(text1);
+        text1 += 1;
+        alert(text1);
+        $(obj).html("<i class=\"thumbs up icon\"></i>点赞数："+text1);*/
+
+        $.ajax({
+            url:"/crud/home/comments/like",
+            type:"POST",
+            data:{
+                commentId:commentId,
+                userId:userId
+            },
+            success:function(data){
+                //alert(data);
+                var text1 = $(obj).text();
+
+                text1 = parseInt(text1.replace("点赞数：",""));
+                if(data){
+                    text1 += 1;
+                    alert("评论点赞成功");
+                }else {
+                    text1 -= 1;
+                    alert("取消点赞成功");
+                }
+                $(obj).html("<i class=\"thumbs up icon\"></i>点赞数："+text1);
+            }
+        });
+    }
+
+
+    //点赞课程功能 ，user后台自己获取吧
+    function likeCourse(courseId) {
+        var btn = $("#likeButton");
+
+        $.ajax({
+            url:"/crud/home/courses/like",
+            type:"POST",
+            data:{
+                courseId:courseId
+            },
+            success:function(data){
+                //alert(data);
+                var text1 = btn.text();
+
+                text1 = parseInt(text1.replace("点赞 ",""));
+                if(data == 1){
+                    text1 += 1;
+                    alert("评论点赞成功");
+                }else if(data == 0){
+                    text1 -= 1;
+                    alert("取消点赞成功");
+                }else {
+                    //data = -1
+                    alert("您未登录无法点赞");
+                }
+                btn.html("<i class=\"thumbs up icon\"></i>点赞 "+text1);
+            }
+        });
     }
 
     //相关推荐

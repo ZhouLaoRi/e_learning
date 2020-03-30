@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <!-- 同时出现2个会报错 Attribute "xmlns:th" appears more than once in element 我这里是抽取的公共部分才没事 -->
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head th:fragment="head(title)">
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!--<title th:replace="${title}">博客详情</title>-->
   <title>企业在线学习平台</title>
@@ -15,6 +15,8 @@
   <link rel="stylesheet" href="../static/css/me.css" th:href="@{/blog/css/me.css}">
   <!-- 新加的登陆注册的css -->
   <link rel="stylesheet" href="../css/new.css" th:href="@{/sign/css/new.css}">
+  <!-- blog后台管理新增的 -->
+  <link rel="stylesheet" href="../../static/lib/editormd/css/editormd.min.css" th:href="@{/blog/lib/editormd/css/editormd.min.css}">
   <script>
       function checkUser(user,typeId) {
           if(user == null){
@@ -103,6 +105,19 @@
 
       <a href="https://www.baidu.com/" th:href="@{/user/logout}" class="m-item item m-mobile-hide"><i class="sign out icon" ></i>退出</a>
 
+      <!-- 模板自带的登陆 -->
+      <div class="right m-item m-mobile-hide menu">
+        <div class="ui dropdown  item">
+          <div class="text">
+            <img class="ui avatar image" th:if="${session.loginUser}!=null" th:src="@{${session.loginUser.avatar}}">
+            <span th:text="${session.loginUser}!=null ? ${session.loginUser.userName}">李仁密</span>
+          </div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <a href="#" th:href="@{/user/logout}" class="item">注销</a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <!-- 这个不知道是啥，注释了页面也没有少东西 -->
@@ -248,6 +263,8 @@
   <script src="../static/lib/tocbot/tocbot.min.js" th:src="@{/blog/lib/tocbot/tocbot.min.js}"></script>
   <script src="../static/lib/qrcode/qrcode.min.js" th:src="@{/blog/lib/qrcode/qrcode.min.js}"></script>
   <script src="../static/lib/waypoints/jquery.waypoints.min.js" th:src="@{/blog/lib/waypoints/jquery.waypoints.min.js}"></script>
+  <!-- 管理后台才有的js -->
+  <script src="../../static/lib/editormd/editormd.min.js" th:src="@{/blog/lib/editormd/editormd.min.js}"></script>
   <script>
     $('#newblog-container').load(/*[[@{/footer/newblog}]]*/"/footer/newblog");
   </script>

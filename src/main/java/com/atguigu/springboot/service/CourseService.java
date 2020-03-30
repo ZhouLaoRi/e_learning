@@ -57,6 +57,10 @@ public class CourseService {
         courseMapper.likeCourse(courseId);
     }
 
+    public void dislikeCourse(Integer courseId) {
+        courseMapper.dislikeCourse(courseId);
+    }
+
     public List<Integer> showPersonalRecommended(Integer userId) {
         return courseMapper.showPersonalRecommended(userId);
     }

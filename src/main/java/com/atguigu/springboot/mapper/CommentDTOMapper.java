@@ -16,4 +16,6 @@ public interface CommentDTOMapper {
     void likeCommentDTO(Integer commentId);
 
     void saveComment(Comment comment);
+
+    void dislikeCommentDTO(Integer commentId);
 }

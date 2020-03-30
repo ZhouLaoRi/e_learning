@@ -342,6 +342,10 @@
     update course set course_like = course_like + 1 where course_id = #{courseId,jdbcType=INTEGER}
   </update>
 
+  <update id="dislikeCourse" parameterType="java.lang.Integer">
+    update course set course_like = course_like - 1 where course_id = #{courseId,jdbcType=INTEGER}
+  </update>
+
   <select id="showPersonalRecommended" parameterType="java.lang.Integer" resultType="java.lang.Integer">
     SELECT
         type_id

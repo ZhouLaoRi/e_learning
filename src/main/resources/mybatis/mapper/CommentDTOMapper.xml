@@ -90,4 +90,11 @@
       #{commentLike,jdbcType=INTEGER},#{parentCommentId,jdbcType=INTEGER},#{courseId,jdbcType=INTEGER})
   </insert>
 
+    <update id="dislikeCommentDTO" parameterType="java.lang.Integer">
+    UPDATE COMMENT
+	  SET COMMENT.comment_like = COMMENT.comment_like - 1
+    WHERE
+      comment_id = #{commentId,jdbcType=INTEGER}
+  </update>
+
 </mapper>

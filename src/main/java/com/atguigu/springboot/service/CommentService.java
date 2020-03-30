@@ -49,4 +49,8 @@ public class CommentService {
     public void deleteByPrimaryKey(Integer commentId) {
         commentMapper.deleteByPrimaryKey(commentId);
     }
+
+    public void dislikeCommentDTO(Integer commentId) {
+        commentDTOMapper.dislikeCommentDTO(commentId);
+    }
 }
