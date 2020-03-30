@@ -163,13 +163,15 @@ public class DataController {
 
 
     @RequestMapping("/dataDownload/{dataId}")
-    public void dataDownload(@PathVariable Integer dataId,HttpServletResponse response) {
+    public void dataDownload(@PathVariable Integer dataId ,HttpServletResponse response) {
         Data data = dataService.selectByPrimaryKey(dataId);
         String path = data.getDataPath();
         String[] strings = path.split("/");
         String fileName = strings[strings.length-1];
+        //String fileName = "usingthymeleaf.pdf";
         // 告诉浏览器输出内容为流
         response.setHeader("content-type", "application/octet-stream;charset=utf-8");
+        response.setContentType("application/octet-stream");
 
         try {
             response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes("UTF-8"), "ISO8859-1"));
@@ -178,14 +180,19 @@ public class DataController {
         }
         byte[] buff = new byte[1024];
         BufferedInputStream bis = null;
-        OutputStream os = null;
         try {
-            os = response.getOutputStream();
+            String classpath = ResourceUtils.getURL("classpath:").getPath() + "static";
+            /*bis = new BufferedInputStream(new FileInputStream(
+                    new File("C:\\Users\\Administrator\\Desktop\\"
+                            + fileName)));*/
             bis = new BufferedInputStream(new FileInputStream(
-                    new File("F:\\JetBrains\\IdeaProjects2\\e_learning\\src\\main\\resources\\uploads\\"+ fileName)));
+                    new File(classpath + path)));
+            System.out.println(classpath + path);
+
+            OutputStream os = response.getOutputStream();
             int i = bis.read(buff);
             while (i != -1) {
-                os.write(buff, 0, buff.length);
+                os.write(buff, 0, i);
                 os.flush();
                 i = bis.read(buff);
             }

@@ -61,17 +61,19 @@ public class UserLoginController {
     @PostMapping(value="/user/login")
     public String login(@RequestParam("userName") String userName,
                         @RequestParam("userPassword") String userPassword,
-                        Map<String,Object> map, HttpSession session,
+                        HttpSession session,
                         @RequestParam String verifyCode){
         //首先验证验证码是否存在
         String trueVerifyCode = (String) session.getAttribute("verifyCode");
         if (trueVerifyCode == null) {
-            map.put("msg","需要刷新验证码");
+            //map.put("loginMsg","需要刷新验证码");
+            session.setAttribute("loginMsg","需要刷新验证码");
             return "redirect:/home/index";
         }
         //判断验证码是否输入正确（验证码忽略大小写）
         if (!trueVerifyCode.equalsIgnoreCase(verifyCode)) {
-            map.put("msg","验证码不正确");
+            //map.put("loginMsg","验证码不正确");
+            session.setAttribute("loginMsg","验证码不正确");
             return "redirect:/home/index";
         }
 
@@ -84,7 +86,8 @@ public class UserLoginController {
             criteria.andDeleteTimeIsNull();
             List<User> users = userService.selectByExample(userExample);
             if(users.size() == 0){
-                map.put("msg","用户不存在");
+                //map.put("loginMsg","用户不存在");
+                session.setAttribute("loginMsg","用户不存在");
                 return "redirect:/home/index";
             }
 
@@ -94,7 +97,8 @@ public class UserLoginController {
             users = userService.selectByExample(userExample);
 
             if(users.size() == 0){
-                map.put("msg","密码错误");
+                //map.put("loginMsg","密码错误");
+                session.setAttribute("loginMsg","密码错误");
                 return "redirect:/home/index";
             }
             //虽然用户名不能重复
@@ -102,7 +106,8 @@ public class UserLoginController {
             return "redirect:/home/index";
         }
         //登陆失败
-        map.put("loginMsg","用户名密码错误");
+        //map.put("loginMsg","用户名密码错误");
+        session.setAttribute("loginMsg","用户名密码错误");
         return "login";
     }
 

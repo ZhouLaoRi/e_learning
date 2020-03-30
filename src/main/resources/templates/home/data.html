@@ -159,7 +159,7 @@
                            onclick="like(this)"><i class="thumbs up icon"></i>点赞数：[[${comment.commentLike}]]</a>
                         &nbsp;&nbsp;&nbsp;
                         <!--<a class="reply" data-commentid="1" data-commentnickname="Matt" th:attr="data-commentid=${comment.id},data-commentnickname=${comment.nickname}" onclick="reply(this)">回复</a>-->
-                        <a class="reply" data-commentid="1" data-commentnickname="Matt" th:attr="data-commentid=${comment.commentId},data-commentnickname=${comment.nickname}" onclick="reply(this)"><i class="comments icon"></i>回复</a>
+                        <a class="reply" data-commentid="1" data-commentnickname="Matt" th:attr="data-commentid=${comment.commentId},data-commentnickname=${comment.nickname}" onclick="reply(this)"><i class="comment icon"></i> 回复</a>
                       </div>
                     </div>
                     <div class="comments" th:if="${#arrays.length(comment.replyComments)}>0">
@@ -183,7 +183,7 @@
                             <a class="reply" data-userid="-1" data-commentid="1" title="为他点赞~"
                                th:attr="data-commentid=${reply.commentId},data-userid=${session.loginUser}!=null ? ${session.loginUser.userId}:-1" onclick="like(this)"><i class="thumbs up icon"></i>点赞数：[[${reply.commentLike}]]</a>
                             &nbsp;&nbsp;&nbsp;
-                            <a class="reply" data-commentid="1" data-commentnickname="Matt" th:attr="data-commentid=${reply.commentId},data-commentnickname=${reply.nickname}" onclick="reply(this)"><i class="comments icon"></i>回复</a>
+                            <a class="reply" data-commentid="1" data-commentnickname="Matt" th:attr="data-commentid=${reply.commentId},data-commentnickname=${reply.nickname}" onclick="reply(this)"><i class="comment icon"></i> 回复</a>
                           </div>
                         </div>
                       </div>
@@ -216,10 +216,14 @@
             <div class="ui teal segment">
               <div class="ui fluid vertical menu" >
                 <!--<a href="#" th:href="@{/home/course/{courseId}/{dataNum}(courseId=${course.courseId},dataNum=${dataStat.index})}" target="_blank" class="item"  th:each="data,dataStat : ${datas}">-->
-                <a th:onclick="dataCheck([[${data.dataType}]],[[${course.courseId}]],[[${data.dataPath}]])" class="item"  th:each="data,dataStat : ${datas}">
-                  <span th:text="'P'+${dataStat.index + 1}+'&nbsp;&nbsp;'+${data.dataName}">视频1</span>
-                  <div class="ui teal basic left pointing label" th:text="下载">下载</div>
-                </a>
+                <div class="item" th:each="data,dataStat : ${datas}">
+                  <a style="cursor: pointer;" th:onclick="dataCheck([[${data.dataType}]],[[${course.courseId}]],[[${data.dataPath}]])" >
+                    <span th:text="'P'+${dataStat.index + 1}+'&nbsp;&nbsp;'+${data.dataName}">视频1</span>
+                  </a>
+                  <a th:href="@{/back/data/dataDownload/}+${data.dataId}" class="ui teal basic left pointing label" >
+                    <div th:text="下载">下载</div>
+                  </a>
+                </div>
               </div>
             </div>
           </div>

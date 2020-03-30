@@ -49,7 +49,7 @@ public class MyMvcConfig implements WebMvcConfigurer {
         //SpringBoot已经做好了静态资源映射     并没有。。。
         //后台拦截器
         registry.addInterceptor(new ManagerLoginHandlerInterceptor()).addPathPatterns("/back/**").excludePathPatterns("/index.html","/","/manager/login",
-                "/asserts/**","/webjars/**","/home/verifyCode/getVerifyCode");
+                "/asserts/**","/webjars/**","/home/verifyCode/getVerifyCode","/back/data/dataDownload/**");
 
 
         //前台拦截器，只要拦截评论功能吧

@@ -86,11 +86,13 @@
           <input type="text" name="nickname" placeholder="未登录" th:value="${session.loginUser}!=null ? ${session.loginUser.userName}">
         </div>-->
 
-        <div class="m-item item m-mobile-hide">
-          <!-- th:if 是直接不显示整个标签 -->
-          <p style="color:red" text="没有就显示这个" th:text="${msg}有东西？" th:if="${not #strings.isEmpty(msg)}"></p>
-        </div>
+      </div>
 
+      <div class="m-item item m-mobile-hide">
+        <!-- th:if 是直接不显示整个标签 -->
+        <!--<p style="color:red" text="没有就显示这个" th:text="${loginMsg}+有东西？" th:if="${not #strings.isEmpty(loginMsg)}"></p>-->
+        <p style="color:red" text="没有就显示这个" th:text="${session.loginMsg}!=null ? ${session.loginMsg} : ''"></p>
+        <!--<label th:text="没有就显示这个"></label>-->
       </div>
 
       <div class="m-item item m-mobile-hide">
