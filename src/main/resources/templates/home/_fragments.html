@@ -41,7 +41,9 @@
                       window.open(target);
                       break;
                   case 4:
-                      var day = "星期四";
+                      var target = "/crud/home/user/getUserInfo";
+                      //alert(target);
+                      window.open(target);
                       break;
                   case 5:
                       var day = "星期五";
@@ -68,6 +70,7 @@
       <a href="#" th:href="@{/home/showPersonalRecommended}" th:onclick="checkUser([[${session.loginUser}]]);" target="_blank" class="m-item item m-mobile-hide" th:classappend="${n==3} ? 'active'"><i class="mini tags icon"></i>个人推荐</a>-->
       <a th:onclick="checkUser([[${session.loginUser}]],2);" target="_blank" class="m-item item m-mobile-hide" th:classappend="${n==2} ? 'active'"><i class="mini tags icon"></i>个人历史</a>
       <a th:onclick="checkUser([[${session.loginUser}]],3);" target="_blank" class="m-item item m-mobile-hide" th:classappend="${n==3} ? 'active'"><i class="mini tags icon"></i>个人推荐</a>
+      <a th:onclick="checkUser([[${session.loginUser}]],4);" target="_blank" class="m-item item m-mobile-hide" th:classappend="${n==4} ? 'active'"><i class="mini tags icon"></i>个人信息</a>
       <!--<a th:onclick="checkUser([[${session.loginUser}]],3);" class="m-item item m-mobile-hide" th:classappend="${n==5} ? 'active'"><i class="mini tags icon"></i>个人推荐2</a>-->
 
       <div class="right m-item item m-mobile-hide">
@@ -123,9 +126,9 @@
     </div>
   </div>
   <!-- 这个不知道是啥，注释了页面也没有少东西 -->
-  <!--<a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+  <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
     <i class="sidebar icon"></i>
-  </a>-->
+  </a>
 </nav>
 
 

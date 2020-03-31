@@ -28,6 +28,7 @@ function signclose() {
     document.getElementById('signform').style.display="none"
     document.getElementById('registerform').style.display="none"
 }
+
 function loading() {
     document.getElementById('registerloading').style.display=""
 
@@ -193,7 +194,7 @@ function run(){
     // 手机号码为空
     var telephone = document.form1.telephone.value;
     if(telephone == "" || telephone.length == 0){
-        alert("手机号码");
+        alert("手机号码不能为空");
         return false;
     }
     // 可以提交了

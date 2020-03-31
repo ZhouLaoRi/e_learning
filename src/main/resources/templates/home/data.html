@@ -287,6 +287,7 @@
     </ol>
   </div>
 
+  <!-- 这个好像是右下角那个微信？ -->
   <div id="qrcode" class="ui wechat-qr flowing popup transition hidden "style="width: 130px !important;">
     <!--<img src="./static/images/wechat.jpg" alt="" class="ui rounded image" style="width: 120px !important;">--> 这里是啥？
   </div>
@@ -303,6 +304,7 @@
   <th:block th:replace="home/_fragments :: script"></th:block>
 
 
+  <!-- 这个th:inline="javascript" 就是thymeleaf的js模板部分呀 -->
   <script th:inline="javascript">
 
     $('.menu.toggle').click(function () {
