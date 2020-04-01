@@ -54,6 +54,7 @@
 									<th>上传时间</th>
 									<th>操作</th>
 									<th>上传资源</th>
+									<th>下载资源</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -84,6 +85,11 @@
 											<input type="file" name="file"/>
 											<input type="submit" value="上传" onclick="upload()"/>
 										</form>
+									</td>
+									<td>
+										<a th:href="@{/back/data/dataDownload/}+${data.dataId}">
+											<div th:text="下载">下载</div>
+										</a>
 									</td>
 								</tr>
 							</tbody>

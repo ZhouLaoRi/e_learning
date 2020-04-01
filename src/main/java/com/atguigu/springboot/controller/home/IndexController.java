@@ -1,6 +1,7 @@
 package com.atguigu.springboot.controller.home;
 
 import com.atguigu.springboot.dto.CommentDTO;
+import com.atguigu.springboot.dto.TypeAndCourseDTO;
 import com.atguigu.springboot.entity.*;
 import com.atguigu.springboot.service.*;
 import com.github.pagehelper.PageHelper;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -40,7 +42,25 @@ public class IndexController {
 
         model.addAttribute("pageInfo",pageInfo);
 
-        model.addAttribute("types", typeService.selectAllType());
+        List<Type> types = typeService.selectAllType();
+        model.addAttribute("types", types);
+
+        //这个是用于将type和course合并一起的
+        List<TypeAndCourseDTO> typeAndCourseDTOList = new ArrayList<>();
+        for (Type type:types) {
+            //setType
+            TypeAndCourseDTO typeAndCourseDTO = new TypeAndCourseDTO();
+            typeAndCourseDTO.setType(type);
+            //setCourseList
+            CourseExample courseExample = new CourseExample();
+            courseExample.setOrderByClause(" course_view DESC,course_like DESC,course_id");
+            PageHelper.startPage(0, 10);
+            List<Course> courseList = courseService.selectByExample(courseExample);
+            typeAndCourseDTO.setCourseList(courseList);
+
+            typeAndCourseDTOList.add(typeAndCourseDTO);
+        }
+        model.addAttribute("typeAndCourseDTOList", typeAndCourseDTOList);
         return "home/index";
     }
 

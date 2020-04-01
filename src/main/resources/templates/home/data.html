@@ -21,7 +21,7 @@
             <div class="ui horizontal link list">
               <div class="item">
                 <!--<img src="https://unsplash.it/100/100?image=1005" th:src="@{${datas[0].dataPath}}"  alt="" class="ui avatar image">-->
-                <img src="https://unsplash.it/100/100?image=1005" alt="" class="ui avatar image">
+                <img src="https://unsplash.it/100/100?image=1005" th:src="@{${course.courseAvatar}}" alt="" class="ui avatar image">
                 <div class="content"><a href="#" class="header" th:text="${course.courseName}">李仁密</a></div>
               </div>
               <!--<div class="item">
@@ -32,17 +32,19 @@
               </div>-->
             </div>
           </div>
-          <div class="ui attached segment">
+          <div class="ui attached segment" id="videoPart">
             <!--图片区域-->
 
-            <!--<label th:text="${datas[0].dataPath}" ></label>
-            <label th:text="${datas[dataNum].dataPath}" ></label>-->
+            <!--<label th:text="${datas[0].dataPath}" ></label>-->
+            <label th:text="${dataNum}" ></label><br/>
+            <label th:text="${datas[dataNum].dataType}" ></label><br/>
+            <label th:text="${datas[dataNum].dataPath}" ></label>
             <br>
-              <audio id="audioData" th:src="@{${datas[dataNum].dataPath}}" controls="controls" style="display: none"></audio>
+              <audio id="audioData" th:src="${datas[dataNum].dataType}==2 ? @{${datas[dataNum].dataPath}} : ''" controls="controls" ></audio>
               <video id="videoData" name="videoName" align="center" controls="controls"
                      class="ui fluid rounded image" style="width: 650px; height: 420px;">
                 <!--<source th:src="@{/media/data1.mp4}" type="video/mp4">-->
-                <source th:src="@{${datas[dataNum].dataPath}}" type="video/mp4">
+                <source th:src="${datas[dataNum].dataType}==1 ? @{${datas[dataNum].dataPath}} : ''" type="video/mp4">
               </video>
           </div>
 
@@ -592,6 +594,38 @@
             alert("资源出错，请联系管理员");
         }
     }
+
+    //页面加载时执行的函数
+    //jQuery 与$ 等价
+    $(function () {
+        //alert("???");
+        //$("#videoData").style.display="none";
+        //$("#audioData").style.display="";
+
+        /*<![CDATA[*/
+        var dataType = /*[[${datas[dataNum].dataType}]]*/ 1;
+        //alert(dataType);
+        /*]]>*/
+        if(dataType == 1){
+            document.getElementById('videoData').style.display="";
+            document.getElementById('audioData').style.display="none";
+        }else if(dataType == 2){
+            document.getElementById('videoData').style.display="none";
+            document.getElementById('audioData').style.display="";
+        }else{
+            document.getElementById('videoData').style.display="none";
+            document.getElementById('audioData').style.display="none";
+            /*<![CDATA[*/
+            var dataPath = /*[[${datas[dataNum].dataPath}]]*/ "/uploads/course/计算机视觉/data1.mp4";
+            //alert(dataPath);
+            var target = "/crud/preview?dataPath=" + dataPath;
+            //alert(target);
+            window.open(target);
+            /*]]>*/
+        }
+
+    })
+
   </script>
 </body>
 </html>
