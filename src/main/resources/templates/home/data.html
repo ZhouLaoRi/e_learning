@@ -36,9 +36,9 @@
             <!--图片区域-->
 
             <!--<label th:text="${datas[0].dataPath}" ></label>-->
-            <label th:text="${dataNum}" ></label><br/>
+            <!--<label th:text="${dataNum}" ></label><br/>
             <label th:text="${datas[dataNum].dataType}" ></label><br/>
-            <label th:text="${datas[dataNum].dataPath}" ></label>
+            <label th:text="${datas[dataNum].dataPath}" ></label>-->
             <br>
               <audio id="audioData" th:src="${datas[dataNum].dataType}==2 ? @{${datas[dataNum].dataPath}} : ''" controls="controls" ></audio>
               <video id="videoData" name="videoName" align="center" controls="controls"

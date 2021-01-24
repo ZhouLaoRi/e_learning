@@ -31,9 +31,19 @@
 					<label>上传者</label>
 					<input name="courseAuthor" type="text" class="form-control" placeholder="聪明的作者" th:value="${course.courseAuthor}">
 				</div>
-				<div class="form-group">
+				<!--<div class="form-group">
 					<label>封面路径</label>
 					<input name="courseAvatar" type="text" class="form-control" placeholder="/text/1.jpg" th:value="${course.courseAvatar}">
+				</div>-->
+				<div class="form-group">
+					<label>封面图片</label>
+					<!--<input name="courseAvatar" type="text" class="form-control" placeholder="/text/1.jpg" th:value="${course.courseAvatar}">-->
+				</div>
+				<div>
+					<img id="userImg" name="courseAuthor" src="https://unsplash.it/800/450?image=1005" th:src="@{${course.courseAvatar}}" alt="" class="ui rounded image">
+				</div>
+				<div class="form-group">
+					<input type="file" name="file" value="选择图片"  onchange="showImg(this)"/>
 				</div>
 				<div class="form-group">
 					<label>难易度</label>

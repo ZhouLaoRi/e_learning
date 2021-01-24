@@ -24,7 +24,7 @@ public class CourseHomeController {
 
     @PostMapping("/courses/like")
     @ResponseBody
-    public String commentsLike(UserLike userLike, HttpSession session) {
+    public String courseLike(UserLike userLike, HttpSession session) {
         User user = (User) session.getAttribute("loginUser");
         if(user == null){
             return "-1";

@@ -3,6 +3,7 @@ package com.atguigu.springboot.controller.back;
 import com.atguigu.springboot.entity.Manager;
 import com.atguigu.springboot.entity.ManagerExample;
 import com.atguigu.springboot.service.ManagerService;
+import com.atguigu.springboot.utils.MD5Utils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.annotations.Param;
@@ -72,6 +73,7 @@ public class ManagerController {
     @PutMapping("/manager")
     public String updateManager(Manager manager){
         manager.setUpdateTime(new Date());
+        manager.setManagerPassword(MD5Utils.MD5(manager.getManagerPassword()));
         managerService.updateByPrimaryKeySelective(manager);
         return "redirect:/back/manager/managers";
     }

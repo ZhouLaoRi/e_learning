@@ -6,7 +6,7 @@
 <body>
 
   <!--导航-->
-  <nav th:replace="home/_fragments :: menu(1)"  class="ui inverted attached segment m-padded-tb-mini m-shadow-small" ></nav>
+  <nav th:replace="home/_fragments :: menu(4)"  class="ui inverted attached segment m-padded-tb-mini m-shadow-small" ></nav>
 
   <!-- 新玩意e 这个 -->
   <div class="ui attached pointing menu">
@@ -79,16 +79,16 @@
 
       <form id="blog-avatar-form" action="#" th:object="${session.loginUser}" th:fragment="userAvatar"
             th:action="@{/home/userUpload/}+*{userId}" method="POST" enctype="multipart/form-data" class="file ui form">
-        <div class="required field">
+        <!--<div class="required field">
           <div class="ui left labeled input">
             <label class="ui teal basic label">头像地址</label>
             <input type="text" name="avatar" th:value="*{avatar}" placeholder="头像地址">
           </div>
-        </div>
+        </div>-->
         <div>
             <img id="userImg" src="https://unsplash.it/800/450?image=1005" th:src="@{*{avatar}}" alt="" class="ui rounded image">
         </div>
-        <input type="file" name="file" onchange="showImg(this)"/>
+        <input type="file" name="file" value="选择图片"  onchange="showImg(this)"/>
         <input type="submit" value="上传" onclick="upload()"/>
       </form>
 

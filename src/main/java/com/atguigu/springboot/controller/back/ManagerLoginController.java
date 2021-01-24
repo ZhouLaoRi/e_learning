@@ -68,7 +68,8 @@ public class ManagerLoginController {
             }
             //虽然用户名不能重复
             session.setAttribute("loginManager",managers.get(0));
-            return "redirect:/main.html";
+            //return "redirect:/main.html";
+            return "redirect:/back/course/courses";
         }
         //登陆失败
         map.put("msg","用户名密码错误");

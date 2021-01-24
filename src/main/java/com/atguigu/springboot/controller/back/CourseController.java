@@ -45,7 +45,7 @@ public class CourseController {
         }
         criteria.andDeleteTimeIsNull();
 
-        PageHelper.startPage(pageNum, 5);
+        PageHelper.startPage(pageNum, 10);
         List<Course> courses = courseService.selectByExample(courseExample);
         PageInfo<Course> pageInfo = new PageInfo<Course>(courses);
         model.addAttribute("courses",courses);
@@ -88,7 +88,9 @@ public class CourseController {
         if(course.getCourseName() != null){
             criteria.andCourseNameEqualTo(course.getCourseName());
         }
-        PageHelper.startPage(pageNum, 5);
+        PageHelper.startPage(pageNum, 10);
+        //我没改模糊查询，学习那边倒是改了。。。我也不知道哪里用过了
+        //List<Course> courses = courseService.selectByQuery(query);
         List<Course> courses = courseService.selectByExample(courseExample);
         PageInfo<Course> pageInfo = new PageInfo<Course>(courses);
         return pageInfo;
@@ -109,6 +111,7 @@ public class CourseController {
         course.setUpdateTime(new Date());
         course.setCourseView(0);
         course.setCourseLike(0);
+        course.setCourseAvatar("/image/course/1005-100x100.jpg");
         courseService.insert(course);
         //同时分类里面的总数也要加1
         typeService.addTotalOne(course.getTypeId());
@@ -142,7 +145,7 @@ public class CourseController {
         course.setCourseId(id);
         course.setDeleteTime(new Date());
         courseService.updateByPrimaryKeySelective(course);
-        return "redirect:/courses";
+        return "redirect:/back/course/courses";
     }
 
     //课程恢复
@@ -152,7 +155,7 @@ public class CourseController {
         return "redirect:/back/course/courses";
     }
 
-
+    //上传课程封面
     @RequestMapping("/courseUpload/{courseId}")
     public String courseUpload(@PathVariable Integer courseId, MultipartFile file) {
         if(file == null) {
@@ -184,6 +187,7 @@ public class CourseController {
     }
 
 
+    //这个功能先匿了
     @RequestMapping("/courseDownload/{courseId}")
     public void dataDownload(@PathVariable Integer courseId, HttpServletResponse response) {
         Course course = courseService.selectByPrimaryKey(courseId);

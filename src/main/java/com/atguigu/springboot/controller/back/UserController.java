@@ -12,6 +12,7 @@ import com.atguigu.springboot.utils.MD5Utils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.annotations.Param;
+import org.apache.tomcat.util.net.IPv6Utils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ResourceUtils;
@@ -78,6 +79,7 @@ public class UserController {
     @PutMapping("/user")
     public String updateUser(User user){
         user.setUpdateTime(new Date());
+        user.setUserPassword(MD5Utils.MD5(user.getUserPassword()));
         userService.updateByPrimaryKeySelective(user);
         return "redirect:/back/user/users";
     }

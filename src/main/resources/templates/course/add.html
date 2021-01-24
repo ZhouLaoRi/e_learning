@@ -20,23 +20,29 @@
 						<!--<input type="hidden" name="courseId" th:value="${course.courseId}">-->
 						<div class="form-group">
 							<label>课程名字</label>
-							<input name="courseName" type="text" class="form-control" placeholder="C语言"th:value="${course.courseName}">
+							<input name="courseName" type="text" class="form-control" th:value="${course.courseName}">
 						</div>
 						<div class="form-group">
 							<label>课程简介</label>
-							<input name="courseIntro" type="text" class="form-control" placeholder="C语言是最难学的语言" th:value="${course.courseIntro}">
+							<input name="courseIntro" type="text" class="form-control" th:value="${course.courseIntro}">
 						</div>
 						<div class="form-group">
 							<label>上传者</label>
-							<input name="courseAuthor" type="text" class="form-control" placeholder="聪明的作者" th:value="${course.courseAuthor}">
+							<input name="courseAuthor" type="text" class="form-control" th:value="${course.courseAuthor}">
 						</div>
 						<div class="form-group">
-							<label>封面路径</label>
-							<input name="courseAvatar" type="text" class="form-control" placeholder="/text/1.jpg" th:value="${course.courseAvatar}">
+							<label>封面图片</label>
+							<!--<input name="courseAvatar" type="text" class="form-control" placeholder="/text/1.jpg" th:value="${course.courseAvatar}">-->
+						</div>
+						<div>
+							<img id="userImg" src="https://unsplash.it/800/450?image=1005" th:src="@{/blog/images/avatar.png}" alt="" class="ui rounded image">
+						</div>
+						<div class="form-group">
+							<input type="file" name="file" value="选择图片"  onchange="showImg(this)"/>
 						</div>
 						<div class="form-group">
 							<label>难易度</label>
-							<input name="courseLevel" type="text" class="form-control" placeholder="1" th:value="${course.courseLevel}">
+							<input name="courseLevel" type="text" class="form-control" th:value="${course.courseLevel}">
 						</div>
 						<div class="form-group">
 							<label>分类</label><!-- 提交的是分类的id -->
@@ -46,6 +52,16 @@
 						</div>
 						<button type="submit" class="btn btn-primary" >添加</button>
 					</form>
+
+					<!--<form id="blog-avatar-form" action="#" th:object="${session.loginUser}" th:fragment="userAvatar"
+						  th:action="@{/home/userUpload/}+*{userId}" method="POST" enctype="multipart/form-data" class="file ui form">
+
+						<div>
+							<img id="userImg" src="https://unsplash.it/800/450?image=1005" th:src="@{*{avatar}}" alt="" class="ui rounded image">
+						</div>
+						<input type="file" name="file" value="选择图片"  onchange="showImg(this)"/>
+						<input type="submit" value="上传" onclick="upload()"/>
+					</form>-->
 				</main>
 			</div>
 		</div>
@@ -94,6 +110,20 @@
 					}
 				}
 			});
+
+
+            function showImg(file) {
+                var reader = new FileReader();	// 实例化一个FileReader对象，用于读取文件
+                var img = document.getElementById('userImg'); 	// 获取要显示图片的标签
+
+                //读取File对象的数据
+                reader.onload = function (evt) {
+                    //img.width = "80";
+                    //img.height = "80";
+                    img.src = evt.target.result;
+                }
+                reader.readAsDataURL(file.files[0]);
+            }
 		</script>
 
 	</body>

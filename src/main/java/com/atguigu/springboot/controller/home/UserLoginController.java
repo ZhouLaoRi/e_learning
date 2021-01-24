@@ -40,7 +40,7 @@ public class UserLoginController {
         //因为钱有小数
         user.setMoney("0.00");
         user.setJifen(0);
-        //userService.insert(user);
+        userService.insert(user);
         return "redirect:/home/index";
     }
 
